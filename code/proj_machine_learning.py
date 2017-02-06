@@ -1,0 +1,30 @@
+#!usr/bin/python3.5
+#-*-coding:UTF-8 -*
+
+from tkinter import *
+
+fenetre = Tk()
+panel_principal = PanedWindow(fenetre, orient=VERTICAL)
+panel_principal.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx=2)
+canvas = Canvas(panel_principal,width = 150, height = 120,background = 'yellow')
+
+panel_principal.add(canvas)
+
+panel_button = PanedWindow(fenetre,orient = HORIZONTAL)
+
+button_fermer = Button(panel_button, text = "Fermer", command = fenetre.quit)
+button_generer = Button(panel_button, text = "Generer")
+button_recommencer = Button(panel_button, text = "Recommencer")
+button_option = Button(panel_button, text = "Option")
+
+panel_button.add(button_fermer)
+panel_button.add(button_generer)
+panel_button.add(button_recommencer)
+panel_button.add(button_option)
+
+panel_principal.add(panel_button)
+
+panel_principal.pack()
+
+fenetre.mainloop()
+
