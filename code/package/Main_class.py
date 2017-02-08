@@ -10,11 +10,11 @@ class Main_class:
 		if not isinstance(text,str):
 			raise TypeError("erreur parametre n'est pas de type str")
 		text += "\n"
-		with open('../journal/fichier.txt', 'a') as mon_fichier:
+		with open('./code/journal/fichier.txt', 'a') as mon_fichier:
 			mon_fichier.write(text)
 
 	def _get_log(self):
-		with open('../journal/fichier.txt', 'r') as mon_fichier:
+		with open('./code/journal/fichier.txt', 'r') as mon_fichier:
 			texte = mon_fichier.read()
 		return texte
 
