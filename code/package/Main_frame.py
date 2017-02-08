@@ -10,6 +10,7 @@ class Main_frame(Main_class,Frame):
 		Frame.__init__(self, fenetre, width=768, height=576, **kwargs)
 		self.pack(fill=BOTH)
 		Main_class.__init__(self)
+		self._set_log("initialisation de l'application")
 
 		self.panel_principal = PanedWindow(self, orient=VERTICAL)
 		self.panel_principal.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx=2)
@@ -19,7 +20,7 @@ class Main_frame(Main_class,Frame):
 
 		self.panel_button = PanedWindow(self,orient = HORIZONTAL)
 
-		self.button_fermer = Button(self.panel_button, text = "Fermer", command = self.quit)
+		self.button_fermer = Button(self.panel_button, text = "Fermer", command = self.quitter_application)
 		self.button_generer = Button(self.panel_button, text = "Generer")
 		self.button_recommencer = Button(self.panel_button, text = "Recommencer")
 		self.button_option = Button(self.panel_button, text = "Option")
@@ -33,7 +34,9 @@ class Main_frame(Main_class,Frame):
 
 		self.panel_principal.pack()
 
-
+	def quitter_application(self):
+		self._set_log("arret de l'application")
+		self.quit()
 
 
 
