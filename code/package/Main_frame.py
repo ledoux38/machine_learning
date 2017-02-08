@@ -3,14 +3,15 @@
 
 from Main_class import *
 from tkinter import *
+from Frame_journal import*
 
 
-class Main_frame(Main_class,Frame):
+class Main_frame(Frame):
 	def __init__(self,fenetre,**kwargs):
 		Frame.__init__(self, fenetre, width=768, height=576, **kwargs)
 		self.pack(fill=BOTH)
-		Main_class.__init__(self)
-		self._set_log("initialisation de l'application")
+		self.log = Main_class()
+		self.log._set_log("initialisation de l'interface principale")
 
 		self.panel_principal = PanedWindow(self, orient=VERTICAL)
 		self.panel_principal.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx=2)
@@ -23,7 +24,7 @@ class Main_frame(Main_class,Frame):
 		self.button_fermer = Button(self.panel_button, text = "Fermer", command = self.quitter_application)
 		self.button_generer = Button(self.panel_button, text = "Generer")
 		self.button_recommencer = Button(self.panel_button, text = "Recommencer")
-		self.button_option = Button(self.panel_button, text = "Option")
+		self.button_option = Button(self.panel_button, text = "journal",command = self.interface_journal)
 
 		self.panel_button.add(self.button_option)
 		self.panel_button.add(self.button_recommencer)
@@ -35,10 +36,11 @@ class Main_frame(Main_class,Frame):
 		self.panel_principal.pack()
 
 	def quitter_application(self):
-		self._set_log("arret de l'application")
+		self.log._set_log("arret de l'application")
 		self.quit()
 
-
+	def interface_journal(self):
+		pass
 
 
 
