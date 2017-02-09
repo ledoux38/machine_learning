@@ -1,7 +1,7 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
 
-import Main_class
+from log import *
 from tkinter import *
 
 class Interface_journal(Frame):
