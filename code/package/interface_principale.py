@@ -1,17 +1,17 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
 
-from Main_class import *
+from log import *
 from tkinter import *
-from Frame_journal import*
+from interface_journal import*
 
 
 class Interface_principale(Frame):
 	def __init__(self,fenetre,**kwargs):
 		Frame.__init__(self, fenetre, width=768, height=576, **kwargs)
 		self.pack(fill=BOTH)
-		self.log = Main_class()
-		self.log._set_log("initialisation de l'interface principale")
+
+		Log.set_log("initialisation de l'interface principale")
 
 		self.panel_principal = PanedWindow(self, orient=VERTICAL)
 		self.panel_principal.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx=2)
@@ -36,7 +36,7 @@ class Interface_principale(Frame):
 		self.panel_principal.pack()
 
 	def quitter_application(self):
-		self.log._set_log("arret de l'application")
+		Log.set_log("arret de l'application")
 		self.quit()
 
 	def interface_journal(self):
