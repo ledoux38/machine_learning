@@ -1,32 +1,35 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
 
-from log import *
+
 from tkinter import *
+class Interface_journal(Tk):
+	def __init__(self,parent):
+		Tk.__init__(self,parent)
+		self.title("MNIST")
+		self.resizable(False,False)
+		self.initialize()
 
-class Interface_journal(Frame):
-	def __init__(self,fenetre,**kwargs):
-		Frame.__init__(self, fenetre, width=768, height=576, **kwargs)
-		self.pack(fill=BOTH)
-		self.panel_principal = PanedWindow(self, orient=VERTICAL)
-		self.panel_principal.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx=2)
-		self.text = Text(self.panel_principal,background = 'white')
-		self.panel_principal.add(self.text)
+	def initialize(self):
+		self.grid()
+		text = Text(self,background = 'white').grid(row=0,column=0,columnspan=2,sticky='NSEW')
+        
+		bp_button_ok = Button(self, text = "Ok",command= self.fermeture_interface()).grid(row=1,column=0,sticky='EW')
 
-		self.panel_boutton = PanedWindow(self, orient = HORIZONTAL)
-		self.bp_button_ok = Button(self.panel_boutton, text = "Ok")
-		self.bp_button_RAZ = Button(self.panel_boutton, text = "RAZ")
+		bp_button_RAZ = Button(self, text = "RAZ").grid(row=1,column=1,sticky='EW')
 
-		self.panel_boutton.add(self.bp_button_ok)
-		self.panel_boutton.add(self.bp_button_RAZ)
+		self.grid_columnconfigure(0,weight=1)
+		self.grid_columnconfigure(1,weight=1)
 
-		self.panel_principal.add(self.panel_boutton)
+		self.grid_rowconfigure(0,weight=10)
+		self.grid_rowconfigure(1,weight=0)
 
-		self.panel_principal.pack()
+	def fermeture_interface(self):
+		self.quit()
 
-"""
-b = Tk()
-a = Interface_journal(b)
-a.mainloop()
-a.destroy()
-"""
+	def raz_journal(self):
+		pass
+
+if __name__ == "__main__":
+	app = Interface_journal(None)
+	app.mainloop()
