@@ -24,7 +24,7 @@ class Interface_principale(Tk):
 
 		bp_recommencer = Button(self, text = "Recommencer").grid(row=1,column=1,sticky='EW')
 
-		bp_journal = Button(self, text = "journal").grid(row=1,column=2,sticky='EW')
+		bp_journal = Button(self, text = "journal",command = self.ouvrir_journal).grid(row=1,column=2,sticky='EW')
 
 		bp_quit = Button(self, text = "Fermer",command = self.quitter_interface).grid(row=1,column=3,sticky='EW')
 
@@ -39,6 +39,9 @@ class Interface_principale(Tk):
 
 	def quitter_interface(self):
 		self.quit()
+
+	def ouvrir_journal(self):
+		inter_journal = Interface_journal(None)
 
 if __name__ == "__main__":
 	app = Interface_principale(None)
