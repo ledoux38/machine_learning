@@ -26,7 +26,7 @@ class Interface_principale(Tk):
 
 		bp_journal = Button(self, text = "journal").grid(row=1,column=2,sticky='EW')
 
-		bp_quit = Button(self, text = "Fermer").grid(row=1,column=3,sticky='EW')
+		bp_quit = Button(self, text = "Fermer",command = self.quitter_interface).grid(row=1,column=3,sticky='EW')
 
 
 		self.grid_columnconfigure(0,weight=1)
@@ -37,6 +37,8 @@ class Interface_principale(Tk):
 		self.grid_rowconfigure(0,weight=10)
 		self.grid_rowconfigure(1,weight=0)
 
+	def quitter_interface(self):
+		self.quit()
 
 if __name__ == "__main__":
 	app = Interface_principale(None)
