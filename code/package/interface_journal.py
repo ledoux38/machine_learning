@@ -26,7 +26,7 @@ class Interface_journal(Tk):
 		self.grid_rowconfigure(1,weight=0)
 
 	def fermeture_interface(self):
-		self.quit()
+		self.destroy()
 
 	def insert_text(self):
 		with open('./journal/fichier.txt', 'r') as mon_fichier:
