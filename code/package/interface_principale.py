@@ -32,7 +32,7 @@ class Interface_principale(Tk):
 		self.bp_quit.grid(row=1,column=3,sticky='EW')
 
 		self.grid_columnconfigure(0,weight=1)
-		self.grid_rowconfigure(0,weight=10)
+		self.grid_rowconfigure(0,weight=1)
 		self.grid_rowconfigure(1,weight=0)
 
 	def quitter_interface(self):
@@ -48,6 +48,6 @@ class Interface_principale(Tk):
 if __name__ == "__main__":
 	app = Interface_principale(None)
 	app.title("MNIST")
-	#app.resizable(False,False)
+	app.resizable(False,False)
 	app.mainloop()
 

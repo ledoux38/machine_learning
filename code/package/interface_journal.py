@@ -12,12 +12,15 @@ class Interface_journal(Tk):
 
 	def initialize(self):
 		self.grid()
-		self.text = Text(self,background = 'white').grid(row=0,column=0,columnspan=2,sticky='NSEW')
+		self.text = Text(self,background = 'white')
+		self.text.grid(row=0,column=0,columnspan=2,sticky='NSEW')
 		self.insert_text()
         
-		bp_button_ok = Button(self, text = "Ok",command= self.fermeture_interface).grid(row=1,column=0,sticky='EW')
+		bp_button_ok = Button(self, text = "Ok",command= self.fermeture_interface)
+		bp_button_ok.grid(row=1,column=0,sticky='EW')
 
-		bp_button_RAZ = Button(self, text = "RAZ",command= self.raz_journal).grid(row=1,column=1,sticky='EW')
+		bp_button_RAZ = Button(self, text = "RAZ",command= self.raz_journal)
+		bp_button_RAZ.grid(row=1,column=1,sticky='EW')
 
 		self.grid_columnconfigure(0,weight=1)
 		self.grid_columnconfigure(1,weight=1)
@@ -31,7 +34,7 @@ class Interface_journal(Tk):
 	def insert_text(self):
 		with open('./journal/fichier.txt', 'r') as mon_fichier:
 			log = mon_fichier.read()
-		#self.text.insert()
+		self.text.insert(END,log)
 
 	def raz_journal(self):
 		log =""
