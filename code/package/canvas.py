@@ -4,7 +4,7 @@
 from tkinter import *
 
 class interface_canvas(Canvas):
-	def __init__ (self, parent, hauteur, longueur):
+	def __init__ (self, parent, hauteur = 28, longueur = 28):
 		Canvas.__init__(self, parent, height = hauteur, width = longueur)
 
 		self.bind("<B1-Motion>", self.creation_forme)
@@ -13,7 +13,7 @@ class interface_canvas(Canvas):
 		self.create_rectangle((event.x,event.y),(event.x,event.y),fill = 'black')
 
 	def tout_supprimer(self):
-		pass
+		self.select_clear(self.find_all())
 
 if __name__ == "__main__":
 	app = Tk()
