@@ -7,8 +7,6 @@ from tkinter import *
 from interface_journal import*
 
 
-
-from tkinter import *
 class Interface_principale(Tk):
 	def __init__(self,parent):
 		Tk.__init__(self,parent)
@@ -18,16 +16,20 @@ class Interface_principale(Tk):
 	def initialize(self):
 		self.grid()
 
-		canvas = Canvas(self,background = 'yellow').grid(row=0,column=0,columnspan=4,sticky='NSEW')
+		canvas = Canvas(self,background = 'yellow')
+		canvas.grid(row=0,column=0,columnspan=4,sticky='NSEW')
 
-		bp_generer = Button(self, text = "Generer").grid(row=1,column=0,sticky='EW')
+		bp_generer = Button(self, text = "Generer")
+		bp_generer.grid(row=1,column=0,sticky='EW')
 
-		bp_recommencer = Button(self, text = "Recommencer").grid(row=1,column=1,sticky='EW')
+		bp_recommencer = Button(self, text = "Recommencer")
+		bp_recommencer.grid(row=1,column=1,sticky='EW')
 
-		bp_journal = Button(self, text = "journal",command = self.ouvrir_journal).grid(row=1,column=2,sticky='EW')
-
-		bp_quit = Button(self, text = "Fermer",command = self.quitter_interface).grid(row=1,column=3,sticky='EW')
-
+		bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
+		bp_journal.grid(row=1,column=2,sticky='EW')
+		
+		bp_quit = Button(self, text = "Fermer",command = self.quitter_interface)
+		bp_quit.grid(row=1,column=3,sticky='EW')
 
 		self.grid_columnconfigure(0,weight=1)
 		self.grid_columnconfigure(1,weight=1)
