@@ -17,7 +17,7 @@ class Interface_principale(Tk):
 		self.grid()
 
 		canvas = interface_canvas(self, hauteur = 28, longueur = 28)
-		canvas.grid(row=0,column=0,columnspan=4,sticky='NSEW')
+		canvas.grid(row=0,column=0,columnspan=4)
 
 		bp_generer = Button(self, text = "Generer")
 		bp_generer.grid(row=1,column=0,sticky='EW')
@@ -50,3 +50,4 @@ if __name__ == "__main__":
 	app.title("MNIST")
 	app.resizable(False,False)
 	app.mainloop()
+
