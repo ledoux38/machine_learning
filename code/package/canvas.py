@@ -13,7 +13,7 @@ class interface_canvas(Canvas):
 		self.create_rectangle((event.x,event.y),(event.x,event.y),fill = 'black')
 
 	def tout_supprimer(self):
-		self.select_clear(self.find_all())
+		self.delete(ALL)
 
 if __name__ == "__main__":
 	app = Tk()
