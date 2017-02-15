@@ -5,7 +5,7 @@
 from log import *
 from tkinter import *
 from interface_journal import*
-
+from canvas import *
 
 class Interface_principale(Tk):
 	def __init__(self,parent):
@@ -16,7 +16,7 @@ class Interface_principale(Tk):
 	def initialize(self):
 		self.grid()
 
-		canvas = Canvas(self,background = 'yellow')
+		canvas = interface_canvas(self, hauteur = 28, longueur = 28)
 		canvas.grid(row=0,column=0,columnspan=4,sticky='NSEW')
 
 		bp_generer = Button(self, text = "Generer")
@@ -27,7 +27,7 @@ class Interface_principale(Tk):
 
 		bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
 		bp_journal.grid(row=1,column=2,sticky='EW')
-		
+
 		bp_quit = Button(self, text = "Fermer",command = self.quitter_interface)
 		bp_quit.grid(row=1,column=3,sticky='EW')
 
