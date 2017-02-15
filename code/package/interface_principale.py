@@ -16,13 +16,13 @@ class Interface_principale(Tk):
 	def initialize(self):
 		self.grid()
 
-		self.canvas = interface_canvas(self, hauteur = 28, longueur = 28)
-		self.canvas.grid(row=0,column=0,columnspan=4)
+		self.canvas = interface_canvas(self)
+		self.canvas.grid(row=0,column=1)
 
 		self.bp_generer = Button(self, text = "Generer")
 		self.bp_generer.grid(row=1,column=0,sticky='EW')
 
-		self.bp_recommencer = Button(self, text = "Recommencer")
+		self.bp_recommencer = Button(self, text = "Recommencer", command = self.recommencer_dessin)
 		self.bp_recommencer.grid(row=1,column=1,sticky='EW')
 
 		self.bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
@@ -32,10 +32,6 @@ class Interface_principale(Tk):
 		self.bp_quit.grid(row=1,column=3,sticky='EW')
 
 		self.grid_columnconfigure(0,weight=1)
-		self.grid_columnconfigure(1,weight=1)
-		self.grid_columnconfigure(2,weight=1)
-		self.grid_columnconfigure(3,weight=1)
-
 		self.grid_rowconfigure(0,weight=10)
 		self.grid_rowconfigure(1,weight=0)
 
@@ -45,9 +41,13 @@ class Interface_principale(Tk):
 	def ouvrir_journal(self):
 		inter_journal = Interface_journal(None)
 
+	def recommencer_dessin(self):
+		self.canvas.tout_supprimer()
+
+
 if __name__ == "__main__":
 	app = Interface_principale(None)
 	app.title("MNIST")
-	app.resizable(False,False)
+	#app.resizable(False,False)
 	app.mainloop()
 
