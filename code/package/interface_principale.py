@@ -16,20 +16,20 @@ class Interface_principale(Tk):
 	def initialize(self):
 		self.grid()
 
-		canvas = interface_canvas(self, hauteur = 28, longueur = 28)
-		canvas.grid(row=0,column=0,columnspan=4)
+		self.canvas = interface_canvas(self, hauteur = 28, longueur = 28)
+		self.canvas.grid(row=0,column=0,columnspan=4)
 
-		bp_generer = Button(self, text = "Generer")
-		bp_generer.grid(row=1,column=0,sticky='EW')
+		self.bp_generer = Button(self, text = "Generer")
+		self.bp_generer.grid(row=1,column=0,sticky='EW')
 
-		bp_recommencer = Button(self, text = "Recommencer")
-		bp_recommencer.grid(row=1,column=1,sticky='EW')
+		self.bp_recommencer = Button(self, text = "Recommencer")
+		self.bp_recommencer.grid(row=1,column=1,sticky='EW')
 
-		bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
-		bp_journal.grid(row=1,column=2,sticky='EW')
+		self.bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
+		self.bp_journal.grid(row=1,column=2,sticky='EW')
 
-		bp_quit = Button(self, text = "Fermer",command = self.quitter_interface)
-		bp_quit.grid(row=1,column=3,sticky='EW')
+		self.bp_quit = Button(self, text = "Fermer",command = self.quitter_interface)
+		self.bp_quit.grid(row=1,column=3,sticky='EW')
 
 		self.grid_columnconfigure(0,weight=1)
 		self.grid_columnconfigure(1,weight=1)
