@@ -26,26 +26,27 @@ class Interface_principale(Tk):
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
 		self.config(menu = menu_bar)
 
-		self.canvas = interface_canvas(self, longueur = 65, hauteur = 50)
-		self.canvas.grid(row=0,column=0,columnspan = 2, rowspan = 4, sticky = "NSEW")
+		self.canvas = interface_canvas(self, longueur = 50, hauteur = 50)
+		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NSEW")
 
-		self.bp_generer = Button(self, text = "Generer")
-		self.bp_generer.grid(row=0,column=2,sticky='EW')
+		frame = Frame(self)
+		self.bp_generer = Button(frame, text = "Generer")
+		self.bp_generer.grid(row = 0, column = 0, sticky = 'EW')
 
-		self.bp_recommencer = Button(self, text = "Recommencer", command = self.recommencer_dessin)
-		self.bp_recommencer.grid(row=1,column=2,sticky='EW')
+		self.bp_recommencer = Button(frame, text = "Recommencer", command = self.recommencer_dessin)
+		self.bp_recommencer.grid(row = 1, column = 0, sticky = 'EW')
 
-		"""
-		self.bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
-		self.bp_journal.grid(row=1,column=2,sticky='EW')
-		"""
+		frame.grid(row = 2, column = 2, sticky = "EW")
+		
+		#self.bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
+		#self.bp_journal.grid(row=1,column=2,sticky='EW')
 
-		self.bp_quit = Button(self, text = "Fermer",command = self.quitter_interface)
-		self.bp_quit.grid(row=2,column=2,sticky='EW')
+		self.bp_quit = Button(self, text = "Fermer", command = self.quitter_interface)
+		self.bp_quit.grid(row = 4, column = 2, sticky = 'EW')
 
-		self.grid_columnconfigure(0,weight=1)
-		self.grid_rowconfigure(0,weight=0)
-		self.grid_rowconfigure(1,weight=0)
+		self.grid_columnconfigure(0, weight = 1)
+		self.grid_rowconfigure(0, weight = 0)
+		self.grid_rowconfigure(2, weight = 1)
 
 	def quitter_interface(self):
 		self.quit()
