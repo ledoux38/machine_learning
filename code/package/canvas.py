@@ -4,7 +4,7 @@
 from tkinter import *
 
 class interface_canvas(Canvas):
-	def __init__ (self, parent, hauteur = 48, longueur = 48):
+	def __init__ (self, parent, hauteur = 48, longueur = 48, outline = "black"):
 		Canvas.__init__(self, parent, height = hauteur, width = longueur)
 
 		self.bind("<B1-Motion>", self.creation_forme)
