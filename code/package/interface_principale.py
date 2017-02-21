@@ -30,7 +30,7 @@ class Interface_principale(Tk):
 		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NSEW")
 
 		frame = Frame(self)
-		self.bp_generer = Button(frame, text = "Generer")
+		self.bp_generer = Button(frame, text = "Generer", command = self.generer)
 		self.bp_generer.grid(row = 0, column = 0, sticky = 'EW')
 
 		self.bp_recommencer = Button(frame, text = "Recommencer", command = self.recommencer_dessin)
@@ -56,8 +56,11 @@ class Interface_principale(Tk):
 
 	def recommencer_dessin(self):
 		self.canvas.tout_supprimer()
+		self.canvas.reset_tableau()
+
 
 	def generer(self):
+		self.canvas.get_tableau()
 		tkinter.messagebox.showinfo("Information","Boutton <generer> non implémenté \n Prochainement!!")
 
 	def ouvrir_option(self):
@@ -68,6 +71,6 @@ class Interface_principale(Tk):
 if __name__ == "__main__":
 	app = Interface_principale(None)
 	app.title("MNIST")
-	#app.resizable(False,False)
+	app.resizable(False,False)
 	app.mainloop()
 
