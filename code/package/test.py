@@ -428,7 +428,7 @@ if __name__ == "__main__":
 
 """
 
-
+"""
 from tkinter import *
 from numpy import *
 
@@ -449,7 +449,14 @@ class interface_canvas(Canvas):
 		else:
 			i = self.create_line(self.old_position,(event.x,event.y))
 			self.old_position = (event.x,event.y)
-		print(i,self.index(i,0))
+		print(i,self.coords(i))
+		variable_x = self.coords(i)
+		variable_x = variable_x[0]
+		variable_y = self.coords(i)
+		variable_y = variable_y[1]
+		self.tableau[variable_x][variable_y] = 1
+
+		print(variable_x,"  :  ",variable_y)
 
 	def reset_position(self,event):
 		self.old_position = (0,0)
@@ -462,29 +469,15 @@ class interface_canvas(Canvas):
 
 if __name__ == "__main__":
 	app = Tk()
-	canvas = interface_canvas(app, 100, 100)
-	canvas.pack()
-
-	app.mainloop()
-
-"""
-class interface_canvas(Canvas):
-	def __init__ (self, parent, hauteur = 48, longueur = 48):
-		Canvas.__init__(self, parent, height = hauteur, width = longueur)
-
-		self.bind("<B1-Motion>", self.creation_forme)
-
-	def creation_forme(self,event):
-		i = self.create_rectangle((event.x,event.y),(event.x,event.y),fill = 'black')
-		#print(i,self.index(i,0))
-
-	def tout_supprimer(self):
-		self.delete(ALL)
-
-if __name__ == "__main__":
-	app = Tk()
-	canvas = interface_canvas(app, 100, 100)
+	canvas = interface_canvas(app, 50, 50)
 	canvas.pack()
 
 	app.mainloop()
 """
+
+from tkinter import *
+from numpy import *
+
+tableau = zeros((50,50),dtype = 'i')
+tableau[40][40] = 5
+print(tableau)
