@@ -15,7 +15,7 @@ class interface_canvas(Canvas):
 		self.bind("<B1-Motion>", self.creation_forme)
 		self.bind("<ButtonRelease>",self.reset_position)
 		self.old_position = (0,0)
-		self.tableau = zeros((hauteur,longueur),dtype = 'i')
+		
 		self.nb_item = 0
 
 	def creation_forme(self,event):
@@ -27,6 +27,9 @@ class interface_canvas(Canvas):
 			self.old_position = (event.x,event.y)
 
 	def creation_tableau(self):
+		pass
+		"""
+		tableau = zeros((int(self.cget('height')), int(self.cget('width'))),dtype = 'i')
 		compteur = 1
 		while compteur <= self.nb_item:
 			variable_x = self.coords(compteur)
@@ -35,22 +38,33 @@ class interface_canvas(Canvas):
 			variable_y = self.coords(compteur)
 			variable_y = int(variable_y[1])
 
-			self.tableau[variable_x][variable_y] = 1
+			tableau[variable_x][variable_y] = 1
 			#print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, self.tableau[variable_x][variable_y])
 			compteur += 1
-
+		"""
 
 	def reset_position(self,event):
 		self.old_position = (0,0)
 
 	def tout_supprimer(self):
 		self.delete(ALL)
+		self.nb_item = 0
 
 	def get_tableau(self):
-		return self.tableau
+		tableau = zeros((int(self.cget('height')), int(self.cget('width'))),dtype = 'i')
+		compteur = 1
+		while compteur <= self.nb_item:
+			variable_x = self.coords(compteur)
+			variable_x = int(variable_x[0])
 
-	def reset_tableau(self):
-		self.tableau = zeros((self.canvas_hauteur ,self.canvas_longueur),dtype = 'i')
+			variable_y = self.coords(compteur)
+			variable_y = int(variable_y[1])
+
+			tableau[variable_x][variable_y] = 1
+			#print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, self.tableau[variable_x][variable_y])
+			compteur += 1
+		return tableau
+
 
 
 
