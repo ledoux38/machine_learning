@@ -4,7 +4,7 @@
 
 from log import *
 from tkinter import *
-from interface_journal import*
+from interface_option import *
 from canvas import *
 import tkinter.messagebox
 
@@ -44,6 +44,8 @@ class Interface_principale(Tk):
 		self.bp_quit = Button(self, text = "Fermer", command = self.quitter_interface)
 		self.bp_quit.grid(row = 4, column = 2, sticky = 'EW')
 
+		self.inter_option = Interface_option(None)
+		self.inter_option.destroy()
 		self.grid_columnconfigure(0, weight = 1)
 		self.grid_rowconfigure(0, weight = 0)
 		self.grid_rowconfigure(2, weight = 1)
@@ -56,15 +58,16 @@ class Interface_principale(Tk):
 
 	def recommencer_dessin(self):
 		self.canvas.tout_supprimer()
-		self.canvas.reset_tableau()
+		
 
 
 	def generer(self):
-		self.canvas.get_tableau()
+		print(self.canvas.get_tableau())
 		tkinter.messagebox.showinfo("Information","Boutton <generer> non implémenté \n Prochainement!!")
 
 	def ouvrir_option(self):
-		tkinter.messagebox.showinfo("Information","menu <option> non implémenté \n Prochainement!!")
+		self.inter_option = Interface_option(None)
+		#tkinter.messagebox.showinfo("Information","menu <option> non implémenté \n Prochainement!!")
 
 
 
