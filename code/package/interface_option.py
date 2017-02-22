@@ -4,6 +4,7 @@
 
 
 from tkinter import *
+from interface_journal import*
 import tkinter.messagebox
 
 class Interface_option(Tk):
@@ -65,9 +66,12 @@ class Interface_option(Tk):
 
 		frame_opt_canvas.grid(row = 1, column = 0, sticky = 'EW')
 
-		#self.bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
-		#self.bp_journal.grid(row=1,column=2,sticky='EW')
+		frame_bp_opt = Frame(self)
 
+		self.bp_journal = Button(frame_bp_opt, text = "journal",command = self.ouvrir_journal)
+		self.bp_journal.grid(row=0,column=0,sticky='W')
+
+		frame_bp_opt.grid(row = 2, column = 0, sticky = "EW")
 
 		frame_bp_command_inter = Frame(self)
 
@@ -77,7 +81,7 @@ class Interface_option(Tk):
 		self.bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = self.quitter_interface)
 		self.bp_quit.grid(row=0,column=1,sticky='EW')
 		
-		frame_bp_command_inter.grid(row = 2, column = 0, sticky = "EW")
+		frame_bp_command_inter.grid(row = 3, column = 0, sticky = "EW")
 
 		self.grid_columnconfigure(0,weight=1)
 		self.grid_rowconfigure(0,weight=0)
