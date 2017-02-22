@@ -96,37 +96,11 @@ class Interface_option(Tk):
 	def ouvrir_journal(self):
 		inter_journal = Interface_journal(None)
 
-	def get_value_adress_picture(self):
-		pass
-
-	def get_value_adress_log(self):
-		pass
-
-	def get_value_longueur_canvas(self):
-		pass
-
-	def get_value_hauteur_canvas(self):
-		pass
-
-	def get_value_epaisseur(self):
-		pass
-
-	def set_value_adress_picture(self, value):
-		pass
-
-	def set_value_adress_log(self, value):
-		pass
-
-	def set_value_longueur_canvas(self, value):
-		pass
-
-	def set_value_hauteur_canvas(self, value):
-		pass
-
-	def set_value_epaisseur(self, value):
-		pass
+	def get_param(self):
+		print("canvas longueur:", self.value_long.get(), "canvas hauteur:", self.value_hot.get(), "canvas epaisseur:", self.value_epais.get())
 
 if __name__ == "__main__":
 	app = Interface_option(None)
+	app.get_param()
 	app.mainloop()
 
