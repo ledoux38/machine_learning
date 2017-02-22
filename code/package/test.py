@@ -33,6 +33,8 @@ class interface_canvas(Canvas):
 		self.delete(ALL)
 
 	def creation_tableau(self):
+
+		tableau = zeros((int(self.cget('height')), int(self.cget('width'))),dtype = 'i')
 		compteur = 1
 		while compteur <= self.nb_item:
 			variable_x = self.coords(compteur)
@@ -41,8 +43,8 @@ class interface_canvas(Canvas):
 			variable_y = self.coords(compteur)
 			variable_y = int(variable_y[1])
 
-			self.tableau[variable_x][variable_y] = 1
-			print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, self.tableau[variable_x][variable_y])
+			tableau[variable_x][variable_y] = 1
+			print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, tableau[variable_x][variable_y])
 			compteur += 1
 
 	def tableau_numpy(self,event):
