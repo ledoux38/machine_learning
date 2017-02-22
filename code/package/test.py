@@ -15,25 +15,16 @@ class interface_canvas(Canvas):
 		self.bind("<ButtonPress-3>",self.tableau_numpy)
 		self.old_position = (0,0)
 		self.tableau = zeros((hauteur,longueur),dtype = 'i')
+		self.nb_item = 0
 
 	def creation_forme(self,event):
 		if self.old_position == (0,0):
 			self.old_position = (event.x,event.y)
 
 		else:
-			i = self.create_line(self.old_position,(event.x,event.y))
+			self.nb_item = self.create_line(self.old_position,(event.x,event.y))
 			self.old_position = (event.x,event.y)
-		print(i,self.coords(i))
-
-		variable_x = self.coords(i)
-		variable_x = int(variable_x[0])
-
-		variable_y = self.coords(i)
-		variable_y = int(variable_y[1])
-
-		self.tableau[variable_x][variable_y] = 1
-
-		print(variable_x,"  :  ",variable_y)
+		print(self.nb_item,self.coords(self.nb_item))
 
 	def reset_position(self,event):
 		self.old_position = (0,0)
@@ -41,15 +32,31 @@ class interface_canvas(Canvas):
 	def tout_supprimer(self):
 		self.delete(ALL)
 
+	def creation_tableau(self):
+		compteur = 1
+		while compteur <= self.nb_item:
+			variable_x = self.coords(compteur)
+			variable_x = int(variable_x[0])
+
+			variable_y = self.coords(compteur)
+			variable_y = int(variable_y[1])
+
+			self.tableau[variable_x][variable_y] = 1
+			print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, self.tableau[variable_x][variable_y])
+			compteur += 1
+
 	def tableau_numpy(self,event):
+		set_printoptions(threshold = nan)
+		self.creation_tableau()
 		print(self.tableau)
-		save("numpy_array.npy",self.tableau)
-		print(load("numpy_array.npy"))
+#		save("numpy_array.npy",self.tableau)
+#		print(load("numpy_array.npy"))
+	
 			
                 
 if __name__ == "__main__":
 	app = Tk()
-	canvas = interface_canvas(app, 10, 10)
+	canvas = interface_canvas(app, 50, 50)
 	canvas.pack()
 
 	app.mainloop()
