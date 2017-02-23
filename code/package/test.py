@@ -5,6 +5,8 @@
 
 from tkinter import *
 from numpy import *
+#from PIL import ImageGrab
+
 
 class interface_canvas(Canvas):
 	def __init__ (self, parent, hauteur = 48, longueur = 48, outline = "black"):
@@ -12,7 +14,7 @@ class interface_canvas(Canvas):
 
 		self.bind("<B1-Motion>", self.creation_forme)
 		self.bind("<ButtonRelease>",self.reset_position)
-		self.bind("<ButtonPress-3>",self.tableau_numpy)
+		self.bind("<ButtonPress-3>",self.sauvegarde_image)
 		self.old_position = (0,0)
 		self.tableau = zeros((hauteur,longueur),dtype = 'i')
 		self.nb_item = 0
@@ -47,12 +49,15 @@ class interface_canvas(Canvas):
 			print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, tableau[variable_x][variable_y])
 			compteur += 1
 
-	def tableau_numpy(self,event):
-		set_printoptions(threshold = nan)
-		self.creation_tableau()
-		print(self.tableau)
-#		save("numpy_array.npy",self.tableau)
-#		print(load("numpy_array.npy"))
+	def sauvegarde_image(self,event):
+		self.postscript(file="fichier.bmp")
+		#x = self.winfo_rootx()
+		#y = self.winfo_rooty()
+		#w = self.winfo_width()
+		#h = self.winfo_height()
+
+		#image = ImageGrab.grab((x+2, y+2, x+w-2, y+h-2))
+		#image.save("tmp.bmp")
 	
 			
                 
