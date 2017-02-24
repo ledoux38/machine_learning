@@ -49,9 +49,11 @@ class interface_canvas(Canvas):
 		return tableau
 
 	def sauvegarde_canvas(self, filename):
+
 		if not isinstance(filename, str):
-			raise TypeError("error file is not {} is this str ".format(type(filename))
-		self.postscript(file=filename)
+			raise TypeError("error file is not {} is this str ".format(type(filename)))
+
+		self.postscript(file="fichier.ps")
 
 
 
