@@ -479,3 +479,241 @@ from numpy import *
 tableau = zeros((50,50),dtype = 'i')
 tableau[40][40] = 5
 print(tableau)
+
+
+
+
+from tkinter import *
+from numpy import *
+
+class interface_canvas(Canvas):
+	def __init__ (self, parent, hauteur = 48, longueur = 48, outline = "black"):
+		Canvas.__init__(self, parent, height = hauteur, width = longueur)
+
+		self.bind("<B1-Motion>", self.creation_forme)
+		self.bind("<ButtonRelease>",self.reset_position)
+		self.bind("<ButtonPress-3>",self.tableau_numpy)
+		self.old_position = (0,0)
+		self.tableau = zeros((hauteur,longueur),dtype = 'i')
+		self.nb_item = 0
+
+	def creation_forme(self,event):
+		if self.old_position == (0,0):
+			self.old_position = (event.x,event.y)
+
+		else:
+			self.nb_item = self.create_line(self.old_position,(event.x,event.y))
+			self.old_position = (event.x,event.y)
+		print(self.nb_item,self.coords(self.nb_item))
+
+	def reset_position(self,event):
+		self.old_position = (0,0)
+
+	def tout_supprimer(self):
+		self.delete(ALL)
+
+	def creation_tableau(self):
+		compteur = 1
+		while compteur <= self.nb_item:
+			variable_x = self.coords(compteur)
+			variable_x = int(variable_x[0])
+
+			variable_y = self.coords(compteur)
+			variable_y = int(variable_y[1])
+
+			self.tableau[variable_x][variable_y] = 1
+			print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, self.tableau[variable_x][variable_y])
+			compteur += 1
+
+	def tableau_numpy(self,event):
+		set_printoptions(threshold = nan)
+		self.creation_tableau()
+		print(self.tableau)
+#		save("numpy_array.npy",self.tableau)
+#		print(load("numpy_array.npy"))
+	
+			
+                
+if __name__ == "__main__":
+	app = Tk()
+	canvas = interface_canvas(app, 50, 50)
+	canvas.pack()
+
+	app.mainloop()
+
+"""
+from tkinter import *
+from numpy import *
+i = [5.0, 5.0, 22.0, 20.0]
+variable_x = i
+variable_x = int(variable_x[0])
+variable_y = i
+variable_y = int(variable_y[1])
+
+
+tableau = zeros((10,10),dtype = 'f')
+tableau[variable_x][variable_y] = 1
+
+print(tableau)
+"""
+
+
+
+
+"""
+
+from tkinter import *
+from numpy import *
+#from PIL import ImageGrab
+
+
+class interface_canvas(Canvas):
+	def __init__ (self, parent, hauteur = 48, longueur = 48, outline = "black"):
+		Canvas.__init__(self, parent, height = hauteur, width = longueur)
+
+		self.bind("<B1-Motion>", self.creation_forme)
+		self.bind("<ButtonRelease>",self.reset_position)
+		self.bind("<ButtonPress-3>",self.sauvegarde_image)
+		self.old_position = (0,0)
+		self.tableau = zeros((hauteur,longueur),dtype = 'i')
+		self.nb_item = 0
+
+	def creation_forme(self,event):
+		if self.old_position == (0,0):
+			self.old_position = (event.x,event.y)
+
+		else:
+			self.nb_item = self.create_line(self.old_position,(event.x,event.y), capstyle = 'round')
+			self.old_position = (event.x,event.y)
+		print(self.nb_item,self.coords(self.nb_item))
+
+	def reset_position(self,event):
+		self.old_position = (0,0)
+
+	def tout_supprimer(self):
+		self.delete(ALL)
+
+	def creation_tableau(self):
+
+		tableau = zeros((int(self.cget('height')), int(self.cget('width'))),dtype = 'i')
+		compteur = 1
+		while compteur <= self.nb_item:
+			variable_x = self.coords(compteur)
+			variable_x = int(variable_x[0])
+
+			variable_y = self.coords(compteur)
+			variable_y = int(variable_y[1])
+
+			tableau[variable_x][variable_y] = 1
+			print("id: ", compteur, "x: ", variable_x, "y: ", variable_y, tableau[variable_x][variable_y])
+			compteur += 1
+
+	def sauvegarde_image(self,event):
+		self.postscript(file="fichier.ps")
+		#x = self.winfo_rootx()
+		#y = self.winfo_rooty()
+		#w = self.winfo_width()
+		#h = self.winfo_height()
+
+		#image = ImageGrab.grab((x+2, y+2, x+w-2, y+h-2))
+		#image.save("tmp.bmp")
+	
+			
+"""
+
+
+
+"""
+from numpy import*
+from PIL import Image
+from matplotlib import*
+
+def charg_img(chm_acces):
+	img = open(chm_acces)
+	numpy_array = array(img)
+	print(numpy_array)
+"""
+
+#/////////////////////////////////////////////////////////
+"""
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import numpy as np
+
+def charg_img():
+	img = mpimg.imread('fichier.ps')
+	print(img)
+	imgplot = plt.imshow(img)
+	plt.show()
+
+if __name__ == "__main__":
+	charg_img()
+"""
+#////////////////////////////////////////////////////////
+
+#ETAPE INITIALE
+
+"""
+from tkinter import *
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import numpy as np
+
+def charg_img():
+	img = mpimg.imread('fichier.ps')
+	print(img)
+	imgplot = plt.imshow(img)
+	plt.show()
+
+if __name__ == "__main__":
+
+	# ETAPE CREATION FENETRE
+	app = Tk()
+	canvas = Canvas(app, height = 60, width = 60)
+	# ETAPE CREATION ITEM
+	canvas.create_line((10, 10), (50, 50), (10,50), capstyle = 'round')
+	
+	#ETAPE DE SAUVEGARDE
+	canvas.postscript(file="fichier.ps", height = int(canvas.cget('height')), width = int(canvas.cget('width')))
+
+	canvas.pack()
+	app.mainloop()
+
+	#ETAPE DE CHARGEMENT DE DONNEE
+	img = mpimg.imread('fichier.ps')
+	#ETAPE D'AFFICHAGE DONNÉE
+	imgplot = plt.imshow(img)
+	plt.show()
+
+"""
+
+"""
+from tkinter import *
+from matplotlib.pyplot  import *
+from matplotlib.image  import *
+from numpy import *
+
+if __name__ == "__main__":
+
+	# ETAPE CREATION FENETRE
+	app = Tk()
+	canvas = Canvas(app, height = 60, width = 60)
+	# ETAPE CREATION ITEM
+	canvas.create_line((10, 10), (50, 50), (10,50), capstyle = 'round')
+	
+	#ETAPE DE SAUVEGARDE
+	I = canvas.postscript(height = int(canvas.cget('height')), width = int(canvas.cget('width')))
+	#print(I)
+	o = array(I)
+	print(o)
+
+
+	#ETAPE DE CHARGEMENT DE DONNEE
+	img = imread('fichier.eps')
+	#ETAPE D'AFFICHAGE DONNÉE
+	imgplot = imshow(o)
+	show()
+
+	canvas.pack()
+	app.mainloop()
+"""
