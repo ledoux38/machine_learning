@@ -2,10 +2,11 @@
 #-*-coding:UTF-8 -*
 
 
-
 from tkinter import *
 from numpy import *
-#from PIL import ImageGrab
+from PIL import Image
+from PIL import ImageDraw
+
 
 
 class interface_canvas(Canvas):
@@ -24,7 +25,7 @@ class interface_canvas(Canvas):
 			self.old_position = (event.x,event.y)
 
 		else:
-			self.nb_item = self.create_line(self.old_position,(event.x,event.y))
+			self.nb_item = self.create_line(self.old_position,(event.x,event.y), capstyle = 'round')
 			self.old_position = (event.x,event.y)
 		print(self.nb_item,self.coords(self.nb_item))
 
@@ -50,36 +51,18 @@ class interface_canvas(Canvas):
 			compteur += 1
 
 	def sauvegarde_image(self,event):
-		self.postscript(file="fichier.bmp")
-		#x = self.winfo_rootx()
-		#y = self.winfo_rooty()
-		#w = self.winfo_width()
-		#h = self.winfo_height()
+		image = Image.new("RGB", (int(self.cget('height')), int(self.cget('width'))), "white")
+		draw = ImageDraw.Draw(image)
 
-		#image = ImageGrab.grab((x+2, y+2, x+w-2, y+h-2))
-		#image.save("tmp.bmp")
-	
+		for x in self.find_all():
+			draw.line((self.coords(x)), fill = "black")
+			print(x, " : ", self.coords(x))
+		del draw
+		image.save("trace.png", "PNG")
 			
-                
 if __name__ == "__main__":
+
 	app = Tk()
-	canvas = interface_canvas(app, 50, 50)
+	canvas = interface_canvas(app)
 	canvas.pack()
-
 	app.mainloop()
-
-"""
-from tkinter import *
-from numpy import *
-i = [5.0, 5.0, 22.0, 20.0]
-variable_x = i
-variable_x = int(variable_x[0])
-variable_y = i
-variable_y = int(variable_y[1])
-
-
-tableau = zeros((10,10),dtype = 'f')
-tableau[variable_x][variable_y] = 1
-
-print(tableau)
-"""
