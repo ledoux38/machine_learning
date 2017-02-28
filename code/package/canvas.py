@@ -8,6 +8,7 @@ from PIL import Image
 from PIL import ImageDraw
 
 
+
 class interface_canvas(Canvas):
 	"""
 	canvas personaliser pour dessiner des lignes
@@ -23,6 +24,28 @@ class interface_canvas(Canvas):
 		self.bind("<B1-Motion>", self.creation_forme)
 		self.bind("<ButtonRelease>", self.reset_position)
 		self.old_position = (0,0)
+
+	def __repr__(self):
+		"""
+		methode de classe qui permet l'affichage dans l'interpréteur
+		"""
+		items = str()
+		for x in self.find_all():
+			items += "{}: {} \n".format(x,self.coords(x))
+
+		return items
+
+	def __str__(self):
+		"""
+		methode de classe qui permet l'affichage via le print
+		"""
+
+		items = str()
+		for x in self.find_all():
+			items += "{}: {} \n".format(x,self.coords(x))
+
+		return 	items
+
 
 	def creation_forme(self, event):
 		"""
@@ -56,6 +79,7 @@ class interface_canvas(Canvas):
 if __name__ == "__main__":
 	app = Tk()
 	canvas = interface_canvas(app, 100, 100)
+	canvas.create_line(0,0,99,99)
 	canvas.pack()
-
+	print(canvas)
 	app.mainloop()
