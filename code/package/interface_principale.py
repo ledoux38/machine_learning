@@ -7,12 +7,15 @@ from tkinter import *
 from interface_option import *
 from canvas import *
 import tkinter.messagebox
+from numpy import *
+from img import*
 
 class Interface_principale(Tk):
 	def __init__(self,parent):
 		Tk.__init__(self,parent)
 
 		self.initialize()
+
 
 	def initialize(self):
 		self.grid()
@@ -46,9 +49,13 @@ class Interface_principale(Tk):
 
 		self.inter_option = Interface_option(None)
 		self.inter_option.destroy()
+
+		self.image = img()
+
 		self.grid_columnconfigure(0, weight = 1)
 		self.grid_rowconfigure(0, weight = 0)
 		self.grid_rowconfigure(2, weight = 1)
+		
 
 	def quitter_interface(self):
 		self.quit()
@@ -62,13 +69,15 @@ class Interface_principale(Tk):
 
 
 	def generer(self):
-		print(self.canvas.get_tableau())
+		self.image = self.canvas
+		arr = array(self.image)
+		print(arr)
 		tkinter.messagebox.showinfo("Information","Boutton <generer> non implémenté \n Prochainement!!")
 
 	def ouvrir_option(self):
 		self.inter_option = Interface_option(None)
 		#tkinter.messagebox.showinfo("Information","menu <option> non implémenté \n Prochainement!!")
-
+	
 
 
 if __name__ == "__main__":
