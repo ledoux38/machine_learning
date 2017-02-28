@@ -85,25 +85,43 @@ class img:
 		"""
 
 		if not save:
-			return
+			return None
 		else:
 			self.image.save(save)
+			return save
 
 
-	def sauv_canvas_tmp(self, type_img):
-		pass
+
+	def get_data(self):
+		"""
+		methode de classe qui retourne une list de l'image
+		"""
+
+		return list(self._image.getdata())
 
 	image = property(_get_image, _set_image)
 
 from canvas import *
 if __name__ == "__main__":
 
+	
 	app = Tk()
-	appcanvas = interface_canvas(app)
-	appcanvas.create_line(0, 0, 45, 45)
-	sauv = img()
-	sauv.image = appcanvas
-	print(sauv.image)
+	appcanvas = interface_canvas(app, hauteur = 5, longueur = 5)
+	appcanvas.create_line(0, 0, 4, 4)
+	im = img(appcanvas)
+	i = im.get_data()
+	print(i)
 	appcanvas.pack()
 	app.mainloop()
-	sauv.sauv_img()
+	
+
+	"""
+	image = Image.new("RGB", (10,10), "white")
+	draw = ImageDraw.Draw(image)
+	draw.line((0,0,9,9), fill = "black")
+	del draw
+	print(image)
+	i = list(image.getdata())
+	print(i)
+	"""
+
