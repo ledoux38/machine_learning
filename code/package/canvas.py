@@ -52,34 +52,6 @@ class interface_canvas(Canvas):
 		self.delete(ALL)
 
 
-	def image(self):
-		"""
-		methode de classe qui redessine le canvas dans une image vierge
-		"""
-
-		image = Image.new("RGB", (int(self.cget('height')), int(self.cget('width'))), "white")
-		draw = ImageDraw.Draw(image)
-
-		for x in self.find_all():
-			draw.line((self.coords(x)), fill = "black")
-		del draw
-		return image
-
-
-	def sauvegarder(self, obj_image):
-		"""
-		methode de classe qui sauvegarde le dessin
-		"""
-
-		save = asksaveasfilename(defaultextension = '.JPG', initialdir = '/home/ledoux/Images/')
-		obj_image.save(save)
-
-	def sauv_canvas_tmp(self, filename, type_img):
-		"""
-		methode de classe qui permet de sauvegarder temporairement les images
-		"""
-
-		pass
 
 if __name__ == "__main__":
 	app = Tk()
