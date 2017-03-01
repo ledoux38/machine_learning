@@ -11,6 +11,16 @@ from numpy import *
 from img import*
 
 class Interface_principale(Tk):
+	"""
+	interface principale du programme
+	la classe manage toute le programme:-les options
+										-initialisation
+										-quitter_interface
+										-generer
+										-ouvrir_option
+
+	"""
+
 	def __init__(self,parent):
 		Tk.__init__(self,parent)
 
@@ -18,6 +28,10 @@ class Interface_principale(Tk):
 
 
 	def initialize(self):
+		"""
+		methode de class qui permet d'initialiser les bouttons pour les autre fonctions
+		"""
+
 		self.grid()
 
 		menu_bar = Menu(self)
@@ -41,9 +55,6 @@ class Interface_principale(Tk):
 
 		frame.grid(row = 2, column = 2, sticky = "EW")
 		
-		#self.bp_journal = Button(self, text = "journal",command = self.ouvrir_journal)
-		#self.bp_journal.grid(row=1,column=2,sticky='EW')
-
 		self.bp_quit = Button(self, text = "Fermer", command = self.quitter_interface)
 		self.bp_quit.grid(row = 4, column = 2, sticky = 'EW')
 
@@ -58,25 +69,38 @@ class Interface_principale(Tk):
 		
 
 	def quitter_interface(self):
+		"""
+		methode de class qui permet de quitter le programme
+		"""
+
 		self.quit()
 
-	def ouvrir_journal(self):
-		inter_journal = Interface_journal(None)
-
 	def recommencer_dessin(self):
+		"""
+		methode de class qui permet de reset le canevas
+		"""
+
 		self.canvas.tout_supprimer()
 		
 
 
 	def generer(self):
-		self.image = self.canvas
-		arr = array(self.image)
+		"""
+		methode de class qui permet d'initialiser la recuperation du tableau
+		"""
+
+		self.image._set_image(self.canvas)
+		#creation du tableau numpy et recuperation de la list de l'image
+		arr = array(self.image.get_data())
 		print(arr)
-		tkinter.messagebox.showinfo("Information","Boutton <generer> non implémenté \n Prochainement!!")
+		tkinter.messagebox.showinfo("Information","programme en cours de realisation \n Prochainement!!")
 
 	def ouvrir_option(self):
+		"""
+		methode de class qui permet d'acceder au option
+		"""
+
 		self.inter_option = Interface_option(None)
-		#tkinter.messagebox.showinfo("Information","menu <option> non implémenté \n Prochainement!!")
 	
 
 
