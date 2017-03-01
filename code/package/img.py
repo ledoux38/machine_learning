@@ -36,6 +36,45 @@ class img:
 		creation d'une image pillow vierge
 		"""
 	
+	def __repr__(self):
+		"""
+		methode de class pour la visualisation du tableau via l'interpreteur
+		"""
+
+		width,height=self._image.size
+
+		arr = self.get_data()
+
+		i = ""
+		u = 0
+		for x in arr:
+			i += "{}".format(x)
+			u += 1
+			if u == width:
+				u = 0
+				i += "\n"
+		return i
+
+	def __str__(self):
+		"""
+		methode de class pour la visualisation du tableau
+		"""
+
+		width,height=self._image.size
+
+		arr = self.get_data()
+
+		i = ""
+		u = 0
+		for x in arr:
+			i += "{}".format(x)
+			u += 1
+			if u == width:
+				u = 0
+				i += "\n"
+		return i
+
+
 	def creation_image(self, obj_canvas):
 		"""
 		creer une image via pillow
@@ -110,7 +149,7 @@ if __name__ == "__main__":
 	appcanvas.create_line(0, 0, 4, 4)
 	im = img(appcanvas)
 	i = im.get_data()
-	print(i)
+	print(im)
 	appcanvas.pack()
 	app.mainloop()
 	
