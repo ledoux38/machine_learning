@@ -6,19 +6,58 @@
 from tkinter import *
 from interface_journal import*
 import tkinter.messagebox
+import pickle
+import os
 
 class Options:
-	def __init__(self,parent):
+	def __init__(self):
 
-		self._ch_img
-		self._ch_log
-		self._h_canvas
-		self._l_canvas
-		self._e_t_canvas
-
+		param = self.chargement_opt()
+		print(param)
+		"""
+		self._ch_img = param["_ch_img"]
+		self._ch_log = param["_ch_log"]
+		self._h_canvas = param["_h_canvas"]
+		self._l_canvas = param["_l_canvas"]
+		self._e_t_canvas = param["_e_t_canvas"]
+		"""
 		self.app = Tk()
 		self.interface_option()
 
+
+	def sauvegarde_opt(self):
+		
+		with open("../param", 'wb') as fichier:
+			mon_fichier = pickle.Pickler(fichier)
+		pass
+
+	def chargement_opt(self):
+		"""
+		methode de class qui verifie l'existance du chemin du dossier param
+			si le chemin n'existe pas un dossier sera créée par defaut
+			et un fichier param par defaut sera crée
+		"""
+		pass
+		if os.path.exists("../param"):
+			if os.path.isfile("../param/param"):
+				try:
+					with open("../param/param", 'rb') as fichier:
+						mon_fichier = pickle.Unpickler(fichier)
+						parametre = mon_fichier.load()
+						return parametre
+				except IOError:
+					tkinter.messagebox.showinfo("Erreur Critique","le fichier param ne pas etre ouvert!")
+		else:
+			os.mkdir('../param')
+
+		
+
+	def get_attribut_defaut(self):
+		"""
+		methode de class qui renvoi les attributs par defauts
+		"""
+		dic = {"ch_img":"../img", "ch_log":"../journal", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
+		return dic
 
 	def interface_option(self):
 
@@ -114,6 +153,4 @@ class Options:
 		print("canvas longueur:", self.value_long.get(), "canvas hauteur:", self.value_hot.get(), "canvas epaisseur:", self.value_epais.get())
 
 if __name__ == "__main__":
-	app = Options(None)
-
-
+	app = Options()
