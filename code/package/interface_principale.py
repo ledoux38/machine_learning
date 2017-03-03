@@ -4,7 +4,7 @@
 
 from log import *
 from tkinter import *
-from interface_option import *
+from option import *
 from canvas import *
 import tkinter.messagebox
 from numpy import *
@@ -58,8 +58,7 @@ class Interface_principale(Tk):
 		self.bp_quit = Button(self, text = "Fermer", command = self.quitter_interface)
 		self.bp_quit.grid(row = 4, column = 2, sticky = 'EW')
 
-		self.inter_option = Interface_option(None)
-		self.inter_option.destroy()
+		self.inter_option = Options()
 
 		self.image = img()
 
@@ -100,7 +99,7 @@ class Interface_principale(Tk):
 		methode de class qui permet d'acceder au option
 		"""
 
-		self.inter_option = Interface_option(None)
+		self.inter_option.afficher()
 	
 
 

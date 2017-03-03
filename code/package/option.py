@@ -12,24 +12,15 @@ import os
 class Options:
 	def __init__(self):
 
-		param = self.chargement_opt()
-		print(param)
-		"""
-		self._ch_img = param["_ch_img"]
-		self._ch_log = param["_ch_log"]
-		self._h_canvas = param["_h_canvas"]
-		self._l_canvas = param["_l_canvas"]
-		self._e_t_canvas = param["_e_t_canvas"]
-		"""
-		self.app = Tk()
-		self.interface_option()
+		self.initialize()
+		self.set_param(self.chargement_opt())
 
 
-	def sauvegarde_opt(self):
+	def sauvegarde_opt(self, option):
 		
-		with open("../param", 'wb') as fichier:
+		with open("param", 'wb') as fichier:
 			mon_fichier = pickle.Pickler(fichier)
-		pass
+			mon_fichier.dump(option)
 
 	def chargement_opt(self):
 		"""
@@ -37,30 +28,55 @@ class Options:
 			si le chemin n'existe pas un dossier sera créée par defaut
 			et un fichier param par defaut sera crée
 		"""
-		pass
-		if os.path.exists("../param"):
-			if os.path.isfile("../param/param"):
-				try:
-					with open("../param/param", 'rb') as fichier:
-						mon_fichier = pickle.Unpickler(fichier)
-						parametre = mon_fichier.load()
-						return parametre
-				except IOError:
-					tkinter.messagebox.showinfo("Erreur Critique","le fichier param ne pas etre ouvert!")
-		else:
-			os.mkdir('../param')
+		try:
+			with open("param", 'rb') as fichier:
+				mon_fichier = pickle.Unpickler(fichier)
+				parametre = mon_fichier.load()
+				return parametre
 
-		
+		except FileNotFoundError:
 
-	def get_attribut_defaut(self):
+			self.sauvegarde_opt(self.get_param_defaut())
+			return self.get_param_defaut()
+
+	def get_param_defaut(self):
 		"""
 		methode de class qui renvoi les attributs par defauts
 		"""
-		dic = {"ch_img":"../img", "ch_log":"../journal", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
+		dic = {"ch_img":"/img", "ch_log":"/journal", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
 		return dic
 
-	def interface_option(self):
+	def get_param(self):
+		"""
+		methode de class qui renvoi les attributs des objet principaux de la classe
+		"""		
+		dic = {"ch_img":self.app.entry_ch_accees_image.get(), "ch_log":self.app.entry_ch_log.get(), "h_canvas":self.app.value_hot.get(), "l_canvas":self.app.value_long.get(), "e_t_canvas":self.app.value_epais.get()}
+		return dic
 
+	def set_param(self, option):
+		"""
+		methode de class qui modifie directement les attributs de la class
+		"""
+
+		self.app.entry_ch_accees_image.insert(0, option["ch_img"])
+		self.app.entry_ch_log.insert(0, option["ch_log"])
+		self.app.value_hot.set(option["h_canvas"])
+		self.app.value_long.set(option["l_canvas"])
+		self.app.value_epais.set(option["e_t_canvas"])
+
+	def afficher(self):
+		"""
+		methode de class qui affiche la fenetre
+		"""
+
+		self.app.mainloop()
+
+	def initialize(self):
+		"""
+		methode de class qui creer l'interface graphique
+		"""
+
+		self.app = Tk()
 		self.app.title("Options")
 		self.app.resizable(False,False)
 
@@ -135,22 +151,32 @@ class Options:
 		self.app.grid_columnconfigure(0,weight=1)
 		self.app.grid_rowconfigure(0,weight=0)
 		self.app.grid_rowconfigure(2,weight=1)
-		self.app.mainloop()
-
-	def initialize(self):
-		pass
 
 	def sauv_configuration(self):
-		tkinter.messagebox.showinfo("Information","Boutton <Appliquer> non implémenté \n Prochainement!!")
+		"""
+		methode de class qui sauvegarde la nouvelle configuration
+		"""
+
+		self.sauvegarde_opt(self.get_param())
 
 	def quitter_interface(self):
-		self.app.quit()
+		"""
+		methode de class qui permet de quitter
+		"""
 
-	def ouvrir_journal(self):
+		self.app.destroy()
+
+	def ouvrir_journal(self):		
+		"""
+		methode de class qui ouvre l'interface graphique
+		"""
+
 		inter_journal = Interface_journal(None)
 
-	def get_param(self):
-		print("canvas longueur:", self.value_long.get(), "canvas hauteur:", self.value_hot.get(), "canvas epaisseur:", self.value_epais.get())
+
+
+
 
 if __name__ == "__main__":
 	app = Options()
+	app.afficher()
