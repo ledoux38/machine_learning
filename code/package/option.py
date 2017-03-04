@@ -12,13 +12,7 @@ from functools import partial
 
 class Options:
 	def __init__(self):
-		param = self.chargement_opt()
-		self.ch_img = param["ch_img"]
-		self.ch_log = param["ch_log"]
-		self.h_canvas = param["h_canvas"]
-		self.l_canvas = param["l_canvas"]
-		self.e_t_canvas = param["e_t_canvas"]
-
+		self.param = self.chargement_opt()
 
 	def sauvegarde_opt(self, option):
 		"""
@@ -70,14 +64,14 @@ class Options:
 
 		label_ch_sauv_image = Label(frame_ch_accees, text = "Chemin d'accès image: ")
 		entry_ch_accees_image = Entry(frame_ch_accees)
-		entry_ch_accees_image.insert(0, self.ch_img)
+		entry_ch_accees_image.insert(0, self.param["ch_img"])
 
 		label_ch_sauv_image.grid(row = 0, column = 0)
 		entry_ch_accees_image.grid(row = 0, column = 1, sticky = 'EW')
 
 		label_ch_log = Label(frame_ch_accees, text = "Chemin d'accès log: ")
 		entry_ch_log = Entry(frame_ch_accees)
-		entry_ch_log.insert(0, self.ch_log)
+		entry_ch_log.insert(0, self.param["ch_log"])
 
 		label_ch_log.grid(row = 1, column = 0, sticky = 'E')		
 		entry_ch_log.grid(row = 1, column = 1, sticky = 'EW')		
@@ -88,7 +82,7 @@ class Options:
 		frame_opt_canvas = LabelFrame(app, text = "gestion de la table de dessin", padx = 5, pady = 5)
 
 		value_long = IntVar(frame_opt_canvas)
-		value_long.set(self.l_canvas)
+		value_long.set(self.param["h_canvas"])
 		scale_long = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = value_long, orient = 'h')
 		entry_long = Entry(frame_opt_canvas, textvariable = value_long, width = 10)
 		label_long = Label(frame_opt_canvas, text = "longueur canvas: ")
@@ -98,7 +92,7 @@ class Options:
 		entry_long.grid(row = 0, column = 2)
 
 		value_hot = IntVar(frame_opt_canvas)
-		value_hot.set(self.h_canvas)
+		value_hot.set(self.param["l_canvas"])
 		scale_hot = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = value_hot, orient = 'h')
 		entry_hot = Entry(frame_opt_canvas, textvariable = value_hot, width = 10)		
 		label_hot = Label(frame_opt_canvas, text = "hauteur canvas: ")
@@ -108,7 +102,7 @@ class Options:
 		entry_hot.grid(row = 1, column = 2)
 
 		value_epais = IntVar(frame_opt_canvas)
-		value_epais.set(self.e_t_canvas)
+		value_epais.set(self.param["e_t_canvas"])
 		scale_epais = Scale(frame_opt_canvas,from_= 1, to = 5, showvalue = False, variable = value_epais, orient = 'h')
 		entry_epais = Entry(frame_opt_canvas, textvariable = value_epais, width = 10)		
 		label_epais = Label(frame_opt_canvas, text = "épaisseur canvas: ")
@@ -149,17 +143,27 @@ class Options:
 		"""
 		if not isinstance(ch_img, Entry):
 			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_img)))
+		
 		if not isinstance(ch_log, Entry):
 			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_log)))		
+		
 		if not isinstance(value_long, IntVar):
 			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_long)))
+		
 		if not isinstance(value_hot, IntVar):
 			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_hot)))
+		
 		if not isinstance(value_epais, IntVar):
 			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_epais)))
 
-		dic = {"ch_img":ch_img.get(), "ch_log":ch_log.get(), "h_canvas":value_hot.get(), "l_canvas":value_long.get(), "e_t_canvas":value_epais.get()}
-		self.sauvegarde_opt(dic)
+
+		self.param["ch_img"] = ch_img.get()
+		self.param["ch_log"] = ch_log.get()
+		self.param["h_canvas"] = value_hot.get()
+		self.param["l_canvas"] = value_long.get()
+		self.param["e_t_canvas"] = value_epais.get()
+
+		self.sauvegarde_opt(self.param)
 
 	def quitter_interface(self, fenetre):
 		"""
@@ -183,4 +187,4 @@ class Options:
 
 if __name__ == "__main__":
 	app = Options()
-	app.initialize()
+	app.interface_option()
