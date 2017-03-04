@@ -56,7 +56,7 @@ class Options:
 		return dic
 
 
-	def initialize(self):
+	def interface_option(self):
 		"""
 		methode de class qui creer l'interface graphique
 		"""
