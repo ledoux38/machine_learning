@@ -99,7 +99,7 @@ class Interface_principale(Tk):
 		methode de class qui permet d'acceder au option
 		"""
 
-		self.inter_option.afficher()
+		self.inter_option.interface_option()
 	
 
 
