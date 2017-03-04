@@ -19,11 +19,13 @@ class Options:
 		self.l_canvas = param["l_canvas"]
 		self.e_t_canvas = param["e_t_canvas"]
 
-		#self.initialize()
-		#self.set_param(self.chargement_opt())
-
 
 	def sauvegarde_opt(self, option):
+		"""
+		methode de class qui permet la sauvegarde des données
+		"""
+		if not isinstance(option, dict):
+			raise TypeError("erreur option = {} n'est pas de type dict ".format(type(option)))
 		
 		with open("param", 'wb') as fichier:
 			mon_fichier = pickle.Pickler(fichier)
@@ -145,6 +147,17 @@ class Options:
 		"""
 		methode de class qui sauvegarde la nouvelle configuration
 		"""
+		if not isinstance(ch_img, Entry):
+			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_img)))
+		if not isinstance(ch_log, Entry):
+			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_log)))		
+		if not isinstance(value_long, IntVar):
+			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_long)))
+		if not isinstance(value_hot, IntVar):
+			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_hot)))
+		if not isinstance(value_epais, IntVar):
+			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_epais)))
+
 		dic = {"ch_img":ch_img.get(), "ch_log":ch_log.get(), "h_canvas":value_hot.get(), "l_canvas":value_long.get(), "e_t_canvas":value_epais.get()}
 		self.sauvegarde_opt(dic)
 
@@ -152,6 +165,8 @@ class Options:
 		"""
 		methode de class qui permet de quitter
 		"""
+		if not isinstance(fenetre, Tk):
+			raise TypeError("erreur option = {} n'est pas de type Tk ".format(type(fenetre)))
 
 		fenetre.destroy()
 
