@@ -8,6 +8,7 @@ from interface_journal import*
 import tkinter.messagebox
 import pickle
 import os
+from functools import partial
 
 class Options:
 	def __init__(self):
@@ -18,7 +19,7 @@ class Options:
 		self.l_canvas = param["l_canvas"]
 		self.e_t_canvas = param["e_t_canvas"]
 
-		self.initialize()
+		#self.initialize()
 		#self.set_param(self.chargement_opt())
 
 
@@ -81,67 +82,57 @@ class Options:
 		"""
 		methode de class qui creer l'interface graphique
 		"""
+		app = Tk()
+		app.title("Options")
+		app.resizable(False,False)
 
-		
-		
-		
-		
-		
+		app.grid()
 
-
-
-
-		self.app = Tk()
-		self.app.title("Options")
-		self.app.resizable(False,False)
-
-		self.app.grid()
-
-		frame_ch_accees = LabelFrame(self.app, text = "gestion des chemins d'accées", padx = 5, pady = 5)
+		frame_ch_accees = LabelFrame(app, text = "gestion des chemins d'accées", padx = 5, pady = 5)
 
 		label_ch_sauv_image = Label(frame_ch_accees, text = "Chemin d'accès image: ")
-		self.app.entry_ch_accees_image = Entry(frame_ch_accees)
-		self.app.entry_ch_accees_image.insert(0, self.ch_img)
+		app.entry_ch_accees_image = Entry(frame_ch_accees)
+		app.entry_ch_accees_image.insert(0, self.ch_img)
 
 		label_ch_sauv_image.grid(row = 0, column = 0)
-		self.app.entry_ch_accees_image.grid(row = 0, column = 1, sticky = 'EW')
+		app.entry_ch_accees_image.grid(row = 0, column = 1, sticky = 'EW')
 
 		label_ch_log = Label(frame_ch_accees, text = "Chemin d'accès log: ")
-		self.app.entry_ch_log = Entry(frame_ch_accees)
-		self.app.entry_ch_log.insert(0, self.ch_log)
+		app.entry_ch_log = Entry(frame_ch_accees)
+		app.entry_ch_log.insert(0, self.ch_log)
 
 		label_ch_log.grid(row = 1, column = 0, sticky = 'E')		
-		self.app.entry_ch_log.grid(row = 1, column = 1, sticky = 'EW')		
+		app.entry_ch_log.grid(row = 1, column = 1, sticky = 'EW')		
 
 		frame_ch_accees.grid(row = 0, column = 0, sticky = "EW")
 
 
-		frame_opt_canvas = LabelFrame(self.app, text = "gestion de la table de dessin", padx = 5, pady = 5)
+		frame_opt_canvas = LabelFrame(app, text = "gestion de la table de dessin", padx = 5, pady = 5)
 
-		self.app.value_long = IntVar(frame_opt_canvas)
-		self.app.value_long.set(self.l_canvas)
-		scale_long = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.app.value_long, orient = 'h')
-		entry_long = Entry(frame_opt_canvas, textvariable = self.app.value_long, width = 10)
+		app.value_long = IntVar(frame_opt_canvas)
+		app.value_long.set(self.l_canvas)
+		scale_long = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = app.value_long, orient = 'h')
+		entry_long = Entry(frame_opt_canvas, textvariable = app.value_long, width = 10)
 		label_long = Label(frame_opt_canvas, text = "longueur canvas: ")
 
 		label_long.grid(row = 0, column = 0, sticky = 'E')
 		scale_long.grid(row = 0, column = 1)
 		entry_long.grid(row = 0, column = 2)
 
-		self.app.value_hot = IntVar(frame_opt_canvas)
-		self.app.value_hot.set(self.h_canvas)
-		scale_hot = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.app.value_hot, orient = 'h')
-		entry_hot = Entry(frame_opt_canvas, textvariable = self.app.value_hot, width = 10)		
+		app.value_hot = IntVar(frame_opt_canvas)
+		app.value_hot.set(self.h_canvas)
+		scale_hot = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = app.value_hot, orient = 'h')
+		entry_hot = Entry(frame_opt_canvas, textvariable = app.value_hot, width = 10)		
 		label_hot = Label(frame_opt_canvas, text = "hauteur canvas: ")
 
 		label_hot.grid(row = 1, column = 0, sticky = 'E')
 		scale_hot.grid(row = 1, column = 1)
 		entry_hot.grid(row = 1, column = 2)
 
-		self.app.value_epais = IntVar(frame_opt_canvas)
-		self.app.value_epais.set(self.e_t_canvas)
-		scale_epais = Scale(frame_opt_canvas,from_= 1, to = 5, showvalue = False, variable = self.app.value_epais, orient = 'h')
-		entry_epais = Entry(frame_opt_canvas, textvariable = self.app.value_epais, width = 10)		
+		app.value_epais = IntVar(frame_opt_canvas)
+		app.value_epais.set(self.e_t_canvas)
+		scale_epais = Scale(frame_opt_canvas,from_= 1, to = 5, showvalue = False, variable = app.value_epais, orient = 'h')
+		entry_epais = Entry(frame_opt_canvas, textvariable = app.value_epais, width = 10)		
 		label_epais = Label(frame_opt_canvas, text = "épaisseur canvas: ")
 		
 		label_epais.grid(row = 2, column = 0, sticky = 'E')
@@ -151,26 +142,28 @@ class Options:
 
 		frame_opt_canvas.grid(row = 1, column = 0, sticky = 'EW')
 
-		frame_bp_opt = Frame(self.app)
+		frame_bp_opt = Frame(app)
 
-		self.app.bp_journal = Button(frame_bp_opt, text = "journal",command = self.ouvrir_journal)
-		self.app.bp_journal.grid(row=0,column=0,sticky='W')
+		app.bp_journal = Button(frame_bp_opt, text = "journal",command = self.ouvrir_journal)
+		app.bp_journal.grid(row=0,column=0,sticky='W')
 
 		frame_bp_opt.grid(row = 2, column = 0, sticky = "EW")
 
-		frame_bp_command_inter = Frame(self.app)
+		frame_bp_command_inter = Frame(app)
 
-		self.app.bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = self.sauv_configuration)
-		self.app.bp_appliquer.grid(row=0,column=0,sticky='EW')
+		app.bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = self.sauv_configuration)
+		app.bp_appliquer.grid(row=0,column=0,sticky='EW')
 
-		self.app.bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = self.quitter_interface)
-		self.app.bp_quit.grid(row=0,column=1,sticky='EW')
+		app.bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = partial(self.quitter_interface, app))
+		app.bp_quit.grid(row=0,column=1,sticky='EW')
 		
 		frame_bp_command_inter.grid(row = 3, column = 0, sticky = "EW")
 
-		self.app.grid_columnconfigure(0,weight=1)
-		self.app.grid_rowconfigure(0,weight=0)
-		self.app.grid_rowconfigure(2,weight=1)
+		app.grid_columnconfigure(0,weight=1)
+		app.grid_rowconfigure(0,weight=0)
+		app.grid_rowconfigure(2,weight=1)
+
+		app.mainloop()
 
 	def sauv_configuration(self):
 		"""
@@ -179,12 +172,12 @@ class Options:
 
 		self.sauvegarde_opt(self.get_param())
 
-	def quitter_interface(self):
+	def quitter_interface(self, fenetre):
 		"""
 		methode de class qui permet de quitter
 		"""
 
-		self.app.destroy()
+		fenetre.destroy()
 
 	def ouvrir_journal(self):		
 		"""
@@ -199,4 +192,4 @@ class Options:
 
 if __name__ == "__main__":
 	app = Options()
-	app.afficher()
+	app.initialize()
