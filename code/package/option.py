@@ -11,9 +11,15 @@ import os
 
 class Options:
 	def __init__(self):
+		param = self.chargement_opt()
+		self.ch_img = param["ch_img"]
+		self.ch_log = param["ch_log"]
+		self.h_canvas = param["h_canvas"]
+		self.l_canvas = param["l_canvas"]
+		self.e_t_canvas = param["e_t_canvas"]
 
 		self.initialize()
-		self.set_param(self.chargement_opt())
+		#self.set_param(self.chargement_opt())
 
 
 	def sauvegarde_opt(self, option):
@@ -76,6 +82,15 @@ class Options:
 		methode de class qui creer l'interface graphique
 		"""
 
+		
+		
+		
+		
+		
+
+
+
+
 		self.app = Tk()
 		self.app.title("Options")
 		self.app.resizable(False,False)
@@ -86,12 +101,14 @@ class Options:
 
 		label_ch_sauv_image = Label(frame_ch_accees, text = "Chemin d'accès image: ")
 		self.app.entry_ch_accees_image = Entry(frame_ch_accees)
+		self.app.entry_ch_accees_image.insert(0, self.ch_img)
 
 		label_ch_sauv_image.grid(row = 0, column = 0)
 		self.app.entry_ch_accees_image.grid(row = 0, column = 1, sticky = 'EW')
 
 		label_ch_log = Label(frame_ch_accees, text = "Chemin d'accès log: ")
 		self.app.entry_ch_log = Entry(frame_ch_accees)
+		self.app.entry_ch_log.insert(0, self.ch_log)
 
 		label_ch_log.grid(row = 1, column = 0, sticky = 'E')		
 		self.app.entry_ch_log.grid(row = 1, column = 1, sticky = 'EW')		
@@ -102,6 +119,7 @@ class Options:
 		frame_opt_canvas = LabelFrame(self.app, text = "gestion de la table de dessin", padx = 5, pady = 5)
 
 		self.app.value_long = IntVar(frame_opt_canvas)
+		self.app.value_long.set(self.l_canvas)
 		scale_long = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.app.value_long, orient = 'h')
 		entry_long = Entry(frame_opt_canvas, textvariable = self.app.value_long, width = 10)
 		label_long = Label(frame_opt_canvas, text = "longueur canvas: ")
@@ -111,6 +129,7 @@ class Options:
 		entry_long.grid(row = 0, column = 2)
 
 		self.app.value_hot = IntVar(frame_opt_canvas)
+		self.app.value_hot.set(self.h_canvas)
 		scale_hot = Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.app.value_hot, orient = 'h')
 		entry_hot = Entry(frame_opt_canvas, textvariable = self.app.value_hot, width = 10)		
 		label_hot = Label(frame_opt_canvas, text = "hauteur canvas: ")
@@ -120,6 +139,7 @@ class Options:
 		entry_hot.grid(row = 1, column = 2)
 
 		self.app.value_epais = IntVar(frame_opt_canvas)
+		self.app.value_epais.set(self.e_t_canvas)
 		scale_epais = Scale(frame_opt_canvas,from_= 1, to = 5, showvalue = False, variable = self.app.value_epais, orient = 'h')
 		entry_epais = Entry(frame_opt_canvas, textvariable = self.app.value_epais, width = 10)		
 		label_epais = Label(frame_opt_canvas, text = "épaisseur canvas: ")
