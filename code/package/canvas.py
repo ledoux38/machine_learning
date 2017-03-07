@@ -14,13 +14,27 @@ class interface_canvas(Canvas):
 	canvas personaliser pour dessiner des lignes
 	"""
 
-	def __init__ (self, parent, hauteur = 48, longueur = 48, outline = "black"):
+	def __init__ (self, parent, outline = "black", option_canvas = None):
 		"""
 		initialise la class:
 		"""
 
-		Canvas.__init__(self, parent, height = hauteur, width = longueur)
+		# si je n'initialise pas ma classe avec les options alors je donne des option par defaut
+		self.option = dict()
 
+		if option_canvas is None:
+			self.option = dict()
+			self.option["h_canvas"] = 48
+			self.option["l_canvas"] = 48
+			self.option["e_t_canvas"] = 1
+
+		else:
+			self.option = option_canvas
+
+		# je creer un canvas et je lui donne en parametre  les valeurs des options
+		Canvas.__init__(self, parent, height = self.option["h_canvas"], width = self.option["l_canvas"])
+
+		
 		self.bind("<B1-Motion>", self.creation_forme)
 		self.bind("<ButtonRelease>", self.reset_position)
 		self.old_position = (0,0)
@@ -74,12 +88,36 @@ class interface_canvas(Canvas):
 
 		self.delete(ALL)
 
+	def set_canvas(self, nouv_option):
+		"""
+		modifie les attributs du canvas
+		"""
+
+		if not isinstance(nouv_option, dict):
+			raise TypeError("erreur option = {} n'est pas de type dict ".format(type(nouv_option)))
+
+		self.configure(height = nouv_option['h_canvas'])
+		self.configure(width = nouv_option['l_canvas'])
 
 
 if __name__ == "__main__":
+	
+	option = dict()
+	option["h_canvas"] = 35
+	option["l_canvas"] = 35
+	option["e_t_canvas"] = 1
+
 	app = Tk()
-	canvas = interface_canvas(app, 100, 100)
-	canvas.create_line(0,0,99,99)
+	canvas = interface_canvas(app, option_canvas = option)
+	canvas.create_line(0,0,30,30)
+
+	option = dict()
+	option["h_canvas"] = 100
+	option["l_canvas"] = 100
+	option["e_t_canvas"] = 1
+
+	canvas.set_canvas(option)
+
 	canvas.pack()
 	print(canvas)
 	app.mainloop()
