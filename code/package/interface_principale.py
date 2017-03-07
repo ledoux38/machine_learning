@@ -23,7 +23,6 @@ class Interface_principale(Tk):
 
 	def __init__(self,parent):
 		Tk.__init__(self,parent)
-
 		self.initialize()
 
 
@@ -31,6 +30,12 @@ class Interface_principale(Tk):
 		"""
 		methode de class qui permet d'initialiser les bouttons pour les autre fonctions
 		"""
+		# instanciation de la class Options
+		self.inter_option = Options()
+		opt = self.inter_option.param
+
+
+		self.image = img()
 
 		self.grid()
 
@@ -43,7 +48,7 @@ class Interface_principale(Tk):
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
 		self.config(menu = menu_bar)
 
-		self.canvas = interface_canvas(self, longueur = 50, hauteur = 50)
+		self.canvas = interface_canvas(self, option_canvas = opt)
 		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NSEW")
 
 		frame = Frame(self)
@@ -58,9 +63,9 @@ class Interface_principale(Tk):
 		self.bp_quit = Button(self, text = "Fermer", command = self.quitter_interface)
 		self.bp_quit.grid(row = 4, column = 2, sticky = 'EW')
 
-		self.inter_option = Options()
+		
 
-		self.image = img()
+		
 
 		self.grid_columnconfigure(0, weight = 1)
 		self.grid_rowconfigure(0, weight = 0)
@@ -99,13 +104,19 @@ class Interface_principale(Tk):
 		methode de class qui permet d'acceder au option
 		"""
 
+		# je fais toutes les modifications dont j'ai besoins
 		self.inter_option.interface_option()
+
+		#quand le programme s'arrete je recharge les données
+		self.canvas.set_canvas(nouv_option = self.inter_option.param)
+
+
 	
 
 
 if __name__ == "__main__":
 	app = Interface_principale(None)
 	app.title("MNIST")
-	app.resizable(False,False)
+	app.resizable(True,True)
 	app.mainloop()
 
