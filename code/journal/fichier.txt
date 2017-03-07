@@ -1,8 +1,0 @@
-initialisation de l'application
-arret de l'application
-initialisation de l'interface principale
-arret de l'application
-test
-test
-test
-test
