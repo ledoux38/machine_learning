@@ -111,9 +111,9 @@ class Interface_principale(Tk):
 		#quand le programme s'arrete je recharge les données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
 
-		def sauv_img(self):
-			self.image._set_image(self.canvas)
-			self.image.sauv_img(self)
+	def sauv_img(self):
+		self.image._set_image(self.canvas)
+		self.image.sauv_img(self)
 	
 
 
