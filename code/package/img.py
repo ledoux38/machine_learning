@@ -14,7 +14,7 @@ class img:
 										 - Sauvegarde dans un fichier temporaire 
 	"""
 	
-	def __init__(self, obj_canvas = None, list_option = ['/home/ledoux/Images/', '.JPG']):
+	def __init__(self, obj_canvas = None, list_option = ['/home/ledoux/Documents/Programmation/python/python-le-on/proj/machine_learning/code/numero/', '.JPG']):
 		"""
 		if not isinstance(obj_canvas, Canvas):
 			raise TypeError("erreur obj_canvas = {} n'est pas de type Canvas ".format(type(obj_canvas)))
