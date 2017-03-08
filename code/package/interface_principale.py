@@ -44,6 +44,7 @@ class Interface_principale(Tk):
 		menu_fichier.add_command(label = "Generer", command = self.generer)
 		menu_fichier.add_command(label = "Recommencer", command = self.recommencer_dessin)
 		menu_fichier.add_command(label = "Option", command = self.ouvrir_option)
+		menu_fichier.add_command(label = "Sauver image", command = self.sauv_img)
 		menu_fichier.add_command(label = "Quitter", command = self.quitter_interface)
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
 		self.config(menu = menu_bar)
@@ -110,7 +111,9 @@ class Interface_principale(Tk):
 		#quand le programme s'arrete je recharge les données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
 
-
+		def sauv_img(self):
+			self.image._set_image(self.canvas)
+			self.image.sauv_img(self)
 	
 
 
