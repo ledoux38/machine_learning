@@ -113,7 +113,7 @@ class Interface_principale(Tk):
 
 	def sauv_img(self):
 		self.image._set_image(self.canvas)
-		self.image.sauv_img(self)
+		self.image.sauv_img()
 	
 
 

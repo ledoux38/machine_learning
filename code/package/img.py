@@ -126,6 +126,7 @@ class img:
 		if not save:
 			return None
 		else:
+			new_img = self.image.resize((28,28))
 			self.image.save(save)
 			return save
 
