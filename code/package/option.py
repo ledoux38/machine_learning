@@ -50,20 +50,13 @@ class Options:
 		return dic
 
 
-	def interface_option(self):
+	def interface_option(self,object_tk):
 		"""
 		methode de class qui creer l'interface graphique
 		"""
 
-		app = Tk()
-		app.title("Options")
-		app.resizable(False,False)
-
-		frame_principal = Frame(app)
+		frame_principal = Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
-		#app.grid()
-
-	
 
 		frame_ch_accees = LabelFrame(frame_principal, text = "gestion des chemins d'accées", padx = 5, pady = 5)
 
@@ -137,7 +130,7 @@ class Options:
 		bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais))
 		bp_appliquer.grid(row=0,column=0,sticky='EW')
 
-		bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = partial(self.quitter_interface, frame_principal))
+		bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = partial(self.quitter_interface, object_tk))
 		bp_quit.grid(row=0,column=1,sticky='EW')
 		
 		frame_bp_command_inter.grid(row = 3, column = 0, sticky = "EW")
@@ -200,4 +193,10 @@ class Options:
 if __name__ == "__main__":
 
 	a = Options()
-	a.interface_option()
+	app = Tk()
+	a.interface_option(app)
+	app.title("Options")
+	app.resizable(False,False)
+
+
+	
