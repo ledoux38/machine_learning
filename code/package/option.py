@@ -54,13 +54,18 @@ class Options:
 		"""
 		methode de class qui creer l'interface graphique
 		"""
+
 		app = Tk()
 		app.title("Options")
 		app.resizable(False,False)
 
-		app.grid()
+		frame_principal = Frame(app)
+		frame_principal.grid(row = 0, column = 0)
+		#app.grid()
 
-		frame_ch_accees = LabelFrame(app, text = "gestion des chemins d'accées", padx = 5, pady = 5)
+	
+
+		frame_ch_accees = LabelFrame(frame_principal, text = "gestion des chemins d'accées", padx = 5, pady = 5)
 
 		label_ch_sauv_image = Label(frame_ch_accees, text = "Chemin d'accès image: ")
 		entry_ch_accees_image = Entry(frame_ch_accees)
@@ -79,7 +84,7 @@ class Options:
 		frame_ch_accees.grid(row = 0, column = 0, sticky = "EW")
 
 
-		frame_opt_canvas = LabelFrame(app, text = "gestion de la table de dessin", padx = 5, pady = 5)
+		frame_opt_canvas = LabelFrame(frame_principal, text = "gestion de la table de dessin", padx = 5, pady = 5)
 
 		value_long = IntVar(frame_opt_canvas)
 		value_long.set(self.param["h_canvas"])
@@ -114,28 +119,35 @@ class Options:
 
 		frame_opt_canvas.grid(row = 1, column = 0, sticky = 'EW')
 
-		frame_bp_opt = Frame(app)
 
-		app.bp_journal = Button(frame_bp_opt, text = "journal",command = self.ouvrir_journal)
-		app.bp_journal.grid(row=0,column=0,sticky='W')
+
+
+
+		frame_bp_opt = Frame(frame_principal)
+
+		bp_journal = Button(frame_bp_opt, text = "journal",command = self.ouvrir_journal)
+		bp_journal.grid(row=0,column=0,sticky='W')
 
 		frame_bp_opt.grid(row = 2, column = 0, sticky = "EW")
 
-		frame_bp_command_inter = Frame(app)
 
-		app.bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais))
-		app.bp_appliquer.grid(row=0,column=0,sticky='EW')
 
-		app.bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = partial(self.quitter_interface, app))
-		app.bp_quit.grid(row=0,column=1,sticky='EW')
+		frame_bp_command_inter = Frame(frame_principal)
+
+		bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais))
+		bp_appliquer.grid(row=0,column=0,sticky='EW')
+
+		bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = partial(self.quitter_interface, frame_principal))
+		bp_quit.grid(row=0,column=1,sticky='EW')
 		
 		frame_bp_command_inter.grid(row = 3, column = 0, sticky = "EW")
 
-		app.grid_columnconfigure(0,weight=1)
-		app.grid_rowconfigure(0,weight=0)
-		app.grid_rowconfigure(2,weight=1)
+		frame_principal.grid_columnconfigure(0,weight=1)
+		frame_principal.grid_rowconfigure(0,weight=0)
+		frame_principal.grid_rowconfigure(2,weight=1)
 
 		app.mainloop()
+
 
 	def sauv_configuration(self, ch_img, ch_log, value_long, value_hot, value_epais):
 		"""
@@ -186,5 +198,6 @@ class Options:
 
 
 if __name__ == "__main__":
-	app = Options()
-	app.interface_option()
+
+	a = Options()
+	a.interface_option()
