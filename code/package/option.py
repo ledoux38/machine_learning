@@ -139,7 +139,6 @@ class Options:
 		frame_principal.grid_rowconfigure(0,weight=0)
 		frame_principal.grid_rowconfigure(2,weight=1)
 
-		app.mainloop()
 
 
 	def sauv_configuration(self, ch_img, ch_log, value_long, value_hot, value_epais):
@@ -197,6 +196,8 @@ if __name__ == "__main__":
 	a.interface_option(app)
 	app.title("Options")
 	app.resizable(False,False)
+	app.mainloop()
+
 
 
 	
