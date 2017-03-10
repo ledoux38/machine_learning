@@ -4,6 +4,7 @@
 
 from tkinter import *
 from functools import partial
+import tkinter.messagebox
 
 class journal:
 	def __init__(self, options):
@@ -35,8 +36,16 @@ class journal:
 		object_tk.destroy()
 
 	def insert_text(self):
-		with open(self.options["ch_log"], 'r') as mon_fichier:
-			log = mon_fichier.read()
+		log = ""
+		try:
+
+			with open(self.options["ch_log"], 'r') as mon_fichier:
+				log = mon_fichier.read()
+
+		except FileNotFoundError:
+			log = "Erreur dans le chemin d'acces du fichier log"
+			return log
+		else:
 			return log
 
 	def raz_journal(self, object_text):

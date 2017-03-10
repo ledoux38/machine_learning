@@ -106,7 +106,11 @@ class Interface_principale(Tk):
 		"""
 
 		# je fais toutes les modifications dont j'ai besoins
-		self.inter_option.interface_option()
+		
+
+		top = Toplevel(self)
+		top.title("Options")
+		self.inter_option.interface_option(top)
 
 		#quand le programme s'arrete je recharge les données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)

@@ -5,7 +5,7 @@
 
 from tkinter import *
 from interface_journal import*
-import tkinter.messagebox
+#import tkinter.messagebox
 import pickle
 import os
 from functools import partial
@@ -118,7 +118,7 @@ class Options:
 
 		frame_bp_opt = Frame(frame_principal)
 
-		bp_journal = Button(frame_bp_opt, text = "journal",command = self.ouvrir_journal)
+		bp_journal = Button(frame_bp_opt, text = "journal",command = partial(self.ouvrir_journal, object_tk))
 		bp_journal.grid(row=0,column=0,sticky='W')
 
 		frame_bp_opt.grid(row = 2, column = 0, sticky = "EW")
@@ -130,7 +130,7 @@ class Options:
 		bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais))
 		bp_appliquer.grid(row=0,column=0,sticky='EW')
 
-		bp_quit = Button(frame_bp_command_inter, text = "Quitter",command = partial(self.quitter_interface, object_tk))
+		bp_quit = Button(frame_bp_command_inter, text = "Fermer",command = partial(self.quitter_interface, object_tk))
 		bp_quit.grid(row=0,column=1,sticky='EW')
 		
 		frame_bp_command_inter.grid(row = 3, column = 0, sticky = "EW")
@@ -173,17 +173,24 @@ class Options:
 		"""
 		methode de class qui permet de quitter
 		"""
-		if not isinstance(fenetre, Tk):
-			raise TypeError("erreur option = {} n'est pas de type Tk ".format(type(fenetre)))
+		#if not isinstance(fenetre, Tk):
+		#	raise TypeError("erreur option = {} n'est pas de type Tk ".format(type(fenetre)))
 
 		fenetre.destroy()
 
-	def ouvrir_journal(self):		
+	def ouvrir_journal(self, fenetre):		
 		"""
 		methode de class qui ouvre l'interface graphique
 		"""
+		#if not isinstance(fenetre, Tk):
+		#	raise TypeError("erreur option = {} n'est pas de type Tk ".format(type(fenetre)))
 
-		inter_journal = Interface_journal(None)
+		inter_journ = journal(options = self.param)
+		top = Toplevel(fenetre)
+		top.title("Journal")
+		inter_journ.interface_journal(top)
+
+		#inter_journal = Interface_journal(None)
 
 
 
