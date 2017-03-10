@@ -46,7 +46,7 @@ class Options:
 		"""
 		methode de class qui renvoi les attributs par defauts
 		"""
-		dic = {"ch_img":"/img", "ch_log":"/journal", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
+		dic = {"ch_img":"./img", "ch_log":"./log/activity.log", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
 		return dic
 
 

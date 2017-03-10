@@ -6,8 +6,9 @@ from tkinter import *
 from functools import partial
 
 class journal:
-	def __init__(self):
-		pass
+	def __init__(self, options):
+		self.options = options
+
 
 	def interface_journal(self,object_tk):
 
@@ -34,21 +35,24 @@ class journal:
 		object_tk.destroy()
 
 	def insert_text(self):
-		with open('./log/activity.log', 'r') as mon_fichier:
+		with open(self.options["ch_log"], 'r') as mon_fichier:
 			log = mon_fichier.read()
 			return log
 
 	def raz_journal(self, object_text):
 		log =""
-		with open('./log/activity.log', 'w') as mon_fichier:
+		with open(self.options["ch_log"], 'w') as mon_fichier:
 			mon_fichier.write(log)
 			object_text.delete(0.0, END)
 
 
 if __name__ == "__main__":
-	a = journal()
+
+	dic = {"ch_img":"./img", "ch_log":"./log/activity.log", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
+
+	a = journal(options = dic)
 	app = Tk()
 	a.interface_journal(app)
-	app.title("Options")
+	app.title("journal")
 	app.resizable(False,False)
 	app.mainloop()
