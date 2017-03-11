@@ -11,7 +11,11 @@ class journal:
 		self.options = options
 
 
+
 	def interface_journal(self,object_tk):
+		"""
+		methode de class qui creer l'interface graphique
+		"""
 
 		frame_principal = Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
@@ -32,10 +36,23 @@ class journal:
 		frame_principal.grid_rowconfigure(0, weight=10)
 		frame_principal.grid_rowconfigure(1, weight=0)
 
+
+
 	def fermeture_interface(self, object_tk):
+		"""
+		methode de class qui permet de fermer les options
+		"""
+
+		#je supprime la fenetre
 		object_tk.destroy()
 
+
+
 	def insert_text(self):
+		"""
+		methode de class qui permet d'inserer le text dans l'entry
+		"""
+
 		log = ""
 		try:
 
@@ -48,10 +65,20 @@ class journal:
 		else:
 			return log
 
+
+
 	def raz_journal(self, object_text):
+		"""
+		methode de class qui permet de supprimer integralement le contenu du fichier
+		"""
+
+		#j'instancie une chaine de caractere
 		log =""
+
+		#j'ouvre le fichier a l'adresse indiquer et j'ecrase les données 
 		with open(self.options["ch_log"], 'w') as mon_fichier:
 			mon_fichier.write(log)
+			#j'ecrase aussi les données dans l'entry
 			object_text.delete(0.0, END)
 
 

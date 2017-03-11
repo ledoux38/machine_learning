@@ -5,7 +5,6 @@
 
 from tkinter import *
 from interface_journal import*
-#import tkinter.messagebox
 import pickle
 import os
 from functools import partial
@@ -13,12 +12,14 @@ from functools import partial
 class Options:
 	def __init__(self):
 		self.param = self.chargement_opt()
-		self.interface = False
+
+
 
 	def sauvegarde_opt(self, option):
 		"""
 		methode de class qui permet la sauvegarde des données
 		"""
+
 		if not isinstance(option, dict):
 			raise TypeError("erreur option = {} n'est pas de type dict ".format(type(option)))
 		
@@ -26,12 +27,15 @@ class Options:
 			mon_fichier = pickle.Pickler(fichier)
 			mon_fichier.dump(option)
 
+
+
 	def chargement_opt(self):
 		"""
 		methode de class qui verifie l'existance du chemin du dossier param
 			si le chemin n'existe pas un dossier sera créée par defaut
 			et un fichier param par defaut sera crée
 		"""
+
 		try:
 			with open("param", 'rb') as fichier:
 				mon_fichier = pickle.Unpickler(fichier)
@@ -43,19 +47,22 @@ class Options:
 			self.sauvegarde_opt(self.get_param_defaut())
 			return self.get_param_defaut()
 
+
+
 	def get_param_defaut(self):
 		"""
 		methode de class qui renvoi les attributs par defauts
 		"""
+
 		dic = {"ch_img":"./img", "ch_log":"./log/activity.log", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
 		return dic
+
 
 
 	def interface_option(self,object_tk):
 		"""
 		methode de class qui creer l'interface graphique
 		"""
-		self.interface = True
 
 		frame_principal = Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
@@ -111,11 +118,7 @@ class Options:
 		scale_epais.grid(row = 2, column = 1)
 		entry_epais.grid(row = 2, column = 2)
 
-
 		frame_opt_canvas.grid(row = 1, column = 0, sticky = 'EW')
-
-
-
 
 
 		frame_bp_opt = Frame(frame_principal)
@@ -132,7 +135,7 @@ class Options:
 		bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais))
 		bp_appliquer.grid(row=0,column=0,sticky='EW')
 
-		bp_quit = Button(frame_bp_command_inter, text = "Fermer",command = partial(self.quitter_interface, object_tk))
+		bp_quit = Button(frame_bp_command_inter, text = "Fermer",command = partial(self.fermeture_interface, object_tk))
 		bp_quit.grid(row=0,column=1,sticky='EW')
 		
 		frame_bp_command_inter.grid(row = 3, column = 0, sticky = "EW")
@@ -147,6 +150,7 @@ class Options:
 		"""
 		methode de class qui sauvegarde la nouvelle configuration
 		"""
+
 		if not isinstance(ch_img, Entry):
 			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_img)))
 		
@@ -171,29 +175,31 @@ class Options:
 
 		self.sauvegarde_opt(self.param)
 
-	def quitter_interface(self, fenetre):
+
+
+	def fermeture_interface(self, fenetre):
 		"""
-		methode de class qui permet de quitter
+		methode de class qui permet de fermer les options
 		"""
-		#if not isinstance(fenetre, Tk):
-		#	raise TypeError("erreur option = {} n'est pas de type Tk ".format(type(fenetre)))
-		self.interface = False
+
+		#je supprime la fenetre
 		fenetre.destroy()
+
+
 
 	def ouvrir_journal(self, fenetre):		
 		"""
 		methode de class qui ouvre l'interface graphique
 		"""
-		#if not isinstance(fenetre, Tk):
-		#	raise TypeError("erreur option = {} n'est pas de type Tk ".format(type(fenetre)))
-
-		inter_journ = journal(options = self.param)
-		top = Toplevel(fenetre)
-		top.title("Journal")
-		inter_journ.interface_journal(top)
 		
-
-		#inter_journal = Interface_journal(None)
+		# j'instancie la class journal
+		inter_journ = journal(options = self.param)
+		#je creer une fenetre 
+		top = Toplevel(fenetre)
+		#j'integre des options 
+		top.title("Journal")
+		#j'integre dans la la fenetre la frame de journal
+		inter_journ.interface_journal(top)
 
 
 

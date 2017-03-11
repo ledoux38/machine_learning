@@ -30,6 +30,7 @@ class Interface_principale(Tk):
 		"""
 		methode de class qui permet d'initialiser les bouttons pour les autre fonctions
 		"""
+
 		# instanciation de la class Options
 		self.inter_option = Options()
 		opt = self.inter_option.param
@@ -63,10 +64,6 @@ class Interface_principale(Tk):
 		
 		self.bp_quit = Button(self, text = "Fermer", command = self.quitter_interface)
 		self.bp_quit.grid(row = 4, column = 2, sticky = 'EW')
-
-		
-
-		
 
 		self.grid_columnconfigure(0, weight = 1)
 		self.grid_rowconfigure(0, weight = 0)
@@ -105,21 +102,31 @@ class Interface_principale(Tk):
 		methode de class qui permet d'acceder au option
 		"""
 
-		# je fais toutes les modifications dont j'ai besoins
-		
-		print(self.inter_option.param)
+		#je creer une fenetre pour inserer la frame de options
 		top = Toplevel(self)
+		#les parametres de la fenetre des options
 		top.title("Options")
+		#je fais apparaître la fenetre enfant sur la fenetre parent
+		top.transient(self)
+		#la fenêtre principale est bloquée par grab_set rend la fenêtre "modale"
+		top.grab_set()
+		#focus_set permet d'attraper les évènements sur la fenêtre principale
+		top.focus_set()
+		# je fais toutes les modifications dont j'ai besoins
 		self.inter_option.interface_option(top)
+		#pandant ce temps interface_principale et mit en pause
 		self.wait_window(top)
-		#top.mainloop()
-
-		#quand le programme s'arrete je recharge les données
+		#quand j'en n'ai fini avec les options je charge les nouvelles données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
-		print(self.inter_option.param)
 
 	def sauv_img(self):
+		"""
+		methode de class qui permet de sauvegarder l'image à un endroit donné par la class options
+		"""
+
+		#modification de l'image dans la fenetre 
 		self.image._set_image(self.canvas)
+		#enregistrement de l'image
 		self.image.sauv_img()
 	
 
@@ -127,6 +134,7 @@ class Interface_principale(Tk):
 if __name__ == "__main__":
 	app = Interface_principale(None)
 	app.title("MNIST")
+
 	app.resizable(True,True)
 	app.mainloop()
 
