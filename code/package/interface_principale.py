@@ -9,8 +9,9 @@ from canvas import *
 import tkinter.messagebox
 from numpy import *
 from img import*
+from functools import partial
 
-class Interface_principale(Tk):
+class Interface_principale:
 	"""
 	interface principale du programme
 	la classe manage toute le programme:-les options
@@ -21,61 +22,59 @@ class Interface_principale(Tk):
 
 	"""
 
-	def __init__(self,parent):
-		Tk.__init__(self,parent)
-		self.initialize()
+	def __init__(self):
+
+		# instanciation de la class Options
+		self.inter_option = Options()
+		self.opt = self.inter_option.param
+		self.image = img()
 
 
-	def initialize(self):
+
+	def interface_principale(self, object_tk):
 		"""
 		methode de class qui permet d'initialiser les bouttons pour les autre fonctions
 		"""
 
-		# instanciation de la class Options
-		self.inter_option = Options()
-		opt = self.inter_option.param
+		frame_principal = Frame(object_tk)
+		frame_principal.grid(row = 0, column = 0)
 
-
-		self.image = img()
-
-		self.grid()
-
-		menu_bar = Menu(self)
+		menu_bar = Menu(object_tk)
 		menu_fichier = Menu(menu_bar, tearoff = 0)
 		menu_fichier.add_command(label = "Generer", command = self.generer)
 		menu_fichier.add_command(label = "Recommencer", command = self.recommencer_dessin)
-		menu_fichier.add_command(label = "Option", command = self.ouvrir_option)
+		menu_fichier.add_command(label = "Option", command = partial(self.ouvrir_option, object_tk))
 		menu_fichier.add_command(label = "Sauver image", command = self.sauv_img)
-		menu_fichier.add_command(label = "Quitter", command = self.quitter_interface)
+		menu_fichier.add_command(label = "Quitter", command = partial(self.quitter_interface, object_tk))
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
-		self.config(menu = menu_bar)
+		object_tk.config(menu = menu_bar)
 
-		self.canvas = interface_canvas(self, option_canvas = opt)
+		self.canvas = interface_canvas(frame_principal, option_canvas = self.opt)
 		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NSEW")
 
-		frame = Frame(self)
-		self.bp_generer = Button(frame, text = "Generer", command = self.generer)
-		self.bp_generer.grid(row = 0, column = 0, sticky = 'EW')
+		frame = Frame(frame_principal)
+		bp_generer = Button(frame, text = "Generer", command = self.generer)
+		bp_generer.grid(row = 0, column = 0, sticky = 'EW')
 
-		self.bp_recommencer = Button(frame, text = "Recommencer", command = self.recommencer_dessin)
-		self.bp_recommencer.grid(row = 1, column = 0, sticky = 'EW')
+		bp_recommencer = Button(frame, text = "Recommencer", command = self.recommencer_dessin)
+		bp_recommencer.grid(row = 1, column = 0, sticky = 'EW')
 
 		frame.grid(row = 2, column = 2, sticky = "EW")
 		
-		self.bp_quit = Button(self, text = "Fermer", command = self.quitter_interface)
-		self.bp_quit.grid(row = 4, column = 2, sticky = 'EW')
+		bp_quit = Button(frame_principal, text = "Quitter", command =partial(self.quitter_interface, object_tk))
+		bp_quit.grid(row = 4, column = 2, sticky = 'EW')
 
-		self.grid_columnconfigure(0, weight = 1)
-		self.grid_rowconfigure(0, weight = 0)
-		self.grid_rowconfigure(2, weight = 1)
+		frame_principal.grid_columnconfigure(0, weight = 1)
+		frame_principal.grid_rowconfigure(0, weight = 0)
+		frame_principal.grid_rowconfigure(2, weight = 1)
 		
 
-	def quitter_interface(self):
+	def quitter_interface(self, object_tk):
 		"""
 		methode de class qui permet de quitter le programme
 		"""
 
-		self.quit()
+		object_tk.quit()
 
 	def recommencer_dessin(self):
 		"""
@@ -97,17 +96,17 @@ class Interface_principale(Tk):
 		print(arr)
 		tkinter.messagebox.showinfo("Information","programme en cours de realisation \n Prochainement!!")
 
-	def ouvrir_option(self):
+	def ouvrir_option(self, object_tk):
 		"""
 		methode de class qui permet d'acceder au option
 		"""
 
 		#je creer une fenetre pour inserer la frame de options
-		top = Toplevel(self)
+		top = Toplevel(object_tk)
 		#les parametres de la fenetre des options
 		top.title("Options")
 		#je fais apparaître la fenetre enfant sur la fenetre parent
-		top.transient(self)
+		top.transient(object_tk)
 		#la fenêtre principale est bloquée par grab_set rend la fenêtre "modale"
 		top.grab_set()
 		#focus_set permet d'attraper les évènements sur la fenêtre principale
@@ -115,7 +114,7 @@ class Interface_principale(Tk):
 		# je fais toutes les modifications dont j'ai besoins
 		self.inter_option.interface_option(top)
 		#pandant ce temps interface_principale et mit en pause
-		self.wait_window(top)
+		object_tk.wait_window(top)
 		#quand j'en n'ai fini avec les options je charge les nouvelles données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
 
@@ -132,9 +131,11 @@ class Interface_principale(Tk):
 
 
 if __name__ == "__main__":
-	app = Interface_principale(None)
-	app.title("MNIST")
+	a = Interface_principale()
 
-	app.resizable(True,True)
+	app = Tk()
+	a.interface_principale(app)
+	app.title("MNIST")
+	app.resizable(False, False)
 	app.mainloop()
 
