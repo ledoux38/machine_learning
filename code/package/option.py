@@ -191,13 +191,15 @@ class Options:
 		"""
 		methode de class qui ouvre l'interface graphique
 		"""
-		
+
 		# j'instancie la class journal
 		inter_journ = journal(options = self.param)
 		#je creer une fenetre 
 		top = Toplevel(fenetre)
 		#j'integre des options 
 		top.title("Journal")
+		#j'empeche la fenetre d'etre redimenssionner
+		top.resizable(False, False)
 		#j'integre dans la la fenetre la frame de journal
 		inter_journ.interface_journal(top)
 

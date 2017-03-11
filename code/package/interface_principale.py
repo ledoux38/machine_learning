@@ -111,6 +111,8 @@ class Interface_principale:
 		top.grab_set()
 		#focus_set permet d'attraper les évènements sur la fenêtre principale
 		top.focus_set()
+		#j'empeche la fenetre d'etre redimenssionner
+		top.resizable(False, False)
 		# je fais toutes les modifications dont j'ai besoins
 		self.inter_option.interface_option(top)
 		#pandant ce temps interface_principale et mit en pause
