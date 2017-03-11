@@ -107,13 +107,16 @@ class Interface_principale(Tk):
 
 		# je fais toutes les modifications dont j'ai besoins
 		
-
+		print(self.inter_option.param)
 		top = Toplevel(self)
 		top.title("Options")
 		self.inter_option.interface_option(top)
+		self.wait_window(top)
+		#top.mainloop()
 
 		#quand le programme s'arrete je recharge les données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
+		print(self.inter_option.param)
 
 	def sauv_img(self):
 		self.image._set_image(self.canvas)

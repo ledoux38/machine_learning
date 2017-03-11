@@ -13,6 +13,7 @@ from functools import partial
 class Options:
 	def __init__(self):
 		self.param = self.chargement_opt()
+		self.interface = False
 
 	def sauvegarde_opt(self, option):
 		"""
@@ -54,6 +55,7 @@ class Options:
 		"""
 		methode de class qui creer l'interface graphique
 		"""
+		self.interface = True
 
 		frame_principal = Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
@@ -175,7 +177,7 @@ class Options:
 		"""
 		#if not isinstance(fenetre, Tk):
 		#	raise TypeError("erreur option = {} n'est pas de type Tk ".format(type(fenetre)))
-
+		self.interface = False
 		fenetre.destroy()
 
 	def ouvrir_journal(self, fenetre):		
@@ -189,6 +191,7 @@ class Options:
 		top = Toplevel(fenetre)
 		top.title("Journal")
 		inter_journ.interface_journal(top)
+		
 
 		#inter_journal = Interface_journal(None)
 

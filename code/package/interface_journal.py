@@ -43,7 +43,7 @@ class journal:
 				log = mon_fichier.read()
 
 		except FileNotFoundError:
-			log = "Erreur dans le chemin d'acces du fichier log"
+			log = "Erreur dans le chemin d'acces du fichier {}".format(self.options["ch_log"])
 			return log
 		else:
 			return log
