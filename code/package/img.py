@@ -127,6 +127,7 @@ class img:
 			return None
 		else:
 			new_img = self.image.resize((28,28))
+			self._image = new_img
 			self.image.save(save)
 			return save
 
@@ -140,11 +141,17 @@ class img:
 			if not isinstance(resize, tuple):
 				raise TypeError("erreur resize = {} n'est pas de type resize = tuple ".format(type(resize)))
 
-			new_img = self._image.resize(resize)
+			new_img = self._image.resize((28,28))
+			self._image = new_img
 
+		print(self._image.getdata())
 		return list(self._image.getdata())
 
+
+
 	image = property(_get_image, _set_image)
+
+
 
 from canvas import *
 if __name__ == "__main__":

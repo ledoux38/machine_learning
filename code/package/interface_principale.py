@@ -97,7 +97,7 @@ class Interface_principale:
 		self.image._set_image(self.canvas)
 		#creation du tableau numpy et recuperation de la list de l'image
 		arr = array(self.image.get_data( resize = (28, 28)))
-		#print(self.image)
+		print(shape(arr))
 		
 		#je prepare les parametres de tensorflow
 		machine_learning(donnee = arr)
