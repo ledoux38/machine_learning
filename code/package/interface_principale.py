@@ -10,6 +10,7 @@ import tkinter.messagebox
 from numpy import *
 from img import*
 from functools import partial
+from Machine_learning import *
 
 class Interface_principale:
 	"""
@@ -69,12 +70,15 @@ class Interface_principale:
 		frame_principal.grid_rowconfigure(2, weight = 1)
 		
 
+
 	def quitter_interface(self, object_tk):
 		"""
 		methode de class qui permet de quitter le programme
 		"""
 
 		object_tk.quit()
+
+
 
 	def recommencer_dessin(self):
 		"""
@@ -92,9 +96,14 @@ class Interface_principale:
 
 		self.image._set_image(self.canvas)
 		#creation du tableau numpy et recuperation de la list de l'image
-		arr = array(self.image.get_data())
-		print(arr)
-		tkinter.messagebox.showinfo("Information","programme en cours de realisation \n Prochainement!!")
+		arr = array(self.image.get_data( resize = (28, 28)))
+		#print(self.image)
+		
+		#je prepare les parametres de tensorflow
+		machine_learning(donnee = arr)
+		
+		
+
 
 	def ouvrir_option(self, object_tk):
 		"""
@@ -119,6 +128,8 @@ class Interface_principale:
 		object_tk.wait_window(top)
 		#quand j'en n'ai fini avec les options je charge les nouvelles données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
+
+
 
 	def sauv_img(self):
 		"""
