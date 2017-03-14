@@ -132,10 +132,15 @@ class img:
 
 
 
-	def get_data(self):
+	def get_data(self, resize = None):
 		"""
 		methode de classe qui retourne une list de l'image
 		"""
+		if not resize == None:
+			if not isinstance(resize, tuple):
+				raise TypeError("erreur resize = {} n'est pas de type resize = tuple ".format(type(resize)))
+
+			new_img = self._image.resize(resize)
 
 		return list(self._image.getdata())
 
