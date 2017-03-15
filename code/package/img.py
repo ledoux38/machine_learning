@@ -143,8 +143,7 @@ class img:
 
 			new_img = self._image.resize((28,28))
 			self._image = new_img
-
-		print(self._image.getdata())
+			
 		return list(self._image.getdata())
 
 
