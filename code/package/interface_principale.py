@@ -96,11 +96,20 @@ class Interface_principale:
 
 		self.image._set_image(self.canvas)
 		#creation du tableau numpy et recuperation de la list de l'image
-		arr = array(self.image.get_data( resize = (28, 28)))
-		print(shape(arr))
+		liste = self.image.get_data( resize = (28, 28))
+		print(len(liste))
+		#print(liste[783])
 		
+		arr = zeros((28, 28))
+		print(shape(arr),"  :  ",size(arr))
+
+		#arr.reshape(28,28)
+		
+		#print( list(self._image.getdata()))
+
+
 		#je prepare les parametres de tensorflow
-		machine_learning(donnee = arr)
+		#machine_learning(donnee = arr)
 		
 		
 
@@ -144,6 +153,35 @@ class Interface_principale:
 
 
 if __name__ == "__main__":
+
+	liste = [(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255)]
+	print(len(liste))
+
+	#arr = zeros((3,3))
+
+	arr = array(liste[0],dtype = tuple)
+	append(arr,liste[1])
+	append(arr,liste[2])
+	append(arr,liste[3])
+	append(arr,liste[4])
+
+	print(shape(arr),"  :  ",size(arr), "\n", arr)
+
+	"""
+	x= 0
+	y= 0
+	num = 0
+	while y < 3:
+		while x <3:
+			arr[x][y] = liste[num]
+			x+=1
+			y+=1
+			num +=1
+	#arr = array(liste)
+	print(shape(arr),"  :  ",size(arr))
+	"""
+
+	"""
 	a = Interface_principale()
 
 	app = Tk()
@@ -151,4 +189,4 @@ if __name__ == "__main__":
 	app.title("MNIST")
 	app.resizable(False, False)
 	app.mainloop()
-
+	"""
