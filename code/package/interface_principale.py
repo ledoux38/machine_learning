@@ -27,7 +27,7 @@ class Interface_principale:
 		# instanciation de la class Options
 		self.inter_option = Options()
 		self.opt = self.inter_option.param
-		self.image = img()
+		self.image = img(option = self.opt)
 
 
 
@@ -49,8 +49,8 @@ class Interface_principale:
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
 		object_tk.config(menu = menu_bar)
 
-		self.canvas = interface_canvas(frame_principal, option_canvas = self.opt)
-		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NSEW")
+		self.canvas = interface_canvas(frame_principal, option = self.opt)
+		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NW")
 
 		frame = Frame(frame_principal)
 		bp_generer = Button(frame, text = "Generer", command = self.generer)
