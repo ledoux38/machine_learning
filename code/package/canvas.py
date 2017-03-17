@@ -14,22 +14,11 @@ class interface_canvas(Canvas):
 	canvas personaliser pour dessiner des lignes
 	"""
 
-	def __init__ (self, parent, outline = "black", option_canvas = None):
+	def __init__ (self, parent, outline = "black", option = {"ch_img":"./img", "ch_log":"./log/activity.log", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}):
 		"""
 		initialise la class:
 		"""
-
-		# si je n'initialise pas ma classe avec les options alors je donne des option par defaut
-		self.option = dict()
-
-		if option_canvas is None:
-			self.option = dict()
-			self.option["h_canvas"] = 48
-			self.option["l_canvas"] = 48
-			self.option["e_t_canvas"] = 1
-
-		else:
-			self.option = option_canvas
+		self.option = option
 
 		# je creer un canvas et je lui donne en parametre  les valeurs des options
 		Canvas.__init__(self, parent, height = self.option["h_canvas"], width = self.option["l_canvas"])
@@ -38,6 +27,8 @@ class interface_canvas(Canvas):
 		self.bind("<B1-Motion>", self.creation_forme)
 		self.bind("<ButtonRelease>", self.reset_position)
 		self.old_position = (0,0)
+
+
 
 	def __repr__(self):
 		"""
@@ -48,6 +39,8 @@ class interface_canvas(Canvas):
 			items += "{}: {} \n".format(x,self.coords(x))
 
 		return items
+
+
 
 	def __str__(self):
 		"""
@@ -61,6 +54,7 @@ class interface_canvas(Canvas):
 		return 	items
 
 
+
 	def creation_forme(self, event):
 		"""
 		methode de classe qui creer des lignes dans le canevas
@@ -70,8 +64,9 @@ class interface_canvas(Canvas):
 			self.old_position = (event.x, event.y)
 
 		else:
-			self.create_line(self.old_position, (event.x,event.y))
+			self.create_line(self.old_position, (event.x,event.y), width = self.option["e_t_canvas"], capstyle = "round",  joinstyle = "round" )
 			self.old_position = (event.x, event.y)
+
 
 
 	def reset_position(self, event):
@@ -81,12 +76,16 @@ class interface_canvas(Canvas):
 
 		self.old_position = (0,0)
 
+
+
 	def tout_supprimer(self):
 		"""
 		methode de classe qui supprime tout les items
 		"""
 
 		self.delete(ALL)
+
+
 
 	def set_canvas(self, nouv_option):
 		"""
@@ -100,6 +99,8 @@ class interface_canvas(Canvas):
 		self.configure(width = nouv_option['l_canvas'])
 
 
+
+
 if __name__ == "__main__":
 	
 	option = dict()
@@ -108,7 +109,7 @@ if __name__ == "__main__":
 	option["e_t_canvas"] = 1
 
 	app = Tk()
-	canvas = interface_canvas(app, option_canvas = option)
+	canvas = interface_canvas(app, option = option)
 	canvas.create_line(0,0,30,30)
 
 	option = dict()
