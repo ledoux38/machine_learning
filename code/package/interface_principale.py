@@ -95,23 +95,59 @@ class Interface_principale:
 		"""
 
 		self.image._set_image(self.canvas)
-		#creation du tableau numpy et recuperation de la list de l'image
-		liste = self.image.get_data( resize = (28, 28))
-		print(len(liste))
-		#print(liste[783])
-		
-		arr = zeros((28, 28))
-		print(shape(arr),"  :  ",size(arr))
+		#recuperation de la list de l'image
+		liste = self.image.get_data(resize = (28, 28))
 
-		#arr.reshape(28,28)
+		#recuperation d'une valeur de chaque tuple de pixel de l'image
+		nv_liste = list()
+		for x, cp in enumerate(liste):
+			nv_liste.append(liste[x][1])
+		#affichage de la nouvelle list
+		print("\n\n\n", nv_liste, len(nv_liste))
 		
-		#print( list(self._image.getdata()))
+		#conversion tout les 255 deviennent des 0 et inversement 
+		data = vectorize(lambda x: 255 - x)(nv_liste)
+		#affichage du tableau de numpy
+		print("\n\n\n", data, shape(data), type(data))
+
+		if self.opt["tensorflow"] == "machine_learning":
+			machine_learning(donnee = data)
+
+		elif self.opt["tensorflow"] == "machine_learning_v2":
+			machine_learning_v2(donnee = data)
+		
+		#conversion des pixels
+		#nv_liste = list()
+		#for x, cp in enumerate(liste):
+		#	nv_liste.append(liste[x][1]/255)
+
+		#integration de la liste dans un tableau de numpy
+		#arr = array(nv_liste)
+
+		#cretation d'un tableau a deux dimension
+		#arr = arr.reshape(28,28)
+
+		#lancement de tensorflow
+		"""
+		no_liste = list()
+		for x, cp in enumerate(nv_liste):
+			if nv_liste[x] == 1:
+				no_liste.append(0.)
+			else:
+				no_liste.append(1.)
+		"""
+		#data = vectorize(lambda x: 255 - x)(arr)
+		#print("\n\n\n",data, shape(data))
 
 
-		#je prepare les parametres de tensorflow
-		#machine_learning(donnee = arr)
-		
-		
+		"""
+		arr = array(nv_liste)
+		print("\n\n\n",arr, shape(arr))
+
+		#data = vectorize(lambda x: 255 - x)(arr)
+		print("\n\n\n",data, shape(data))
+		"""
+
 
 
 	def ouvrir_option(self, object_tk):
@@ -154,34 +190,6 @@ class Interface_principale:
 
 if __name__ == "__main__":
 
-	liste = [(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255),(255, 255, 255)]
-	print(len(liste))
-
-	#arr = zeros((3,3))
-
-	arr = array(liste[0],dtype = tuple)
-	append(arr,liste[1])
-	append(arr,liste[2])
-	append(arr,liste[3])
-	append(arr,liste[4])
-
-	print(shape(arr),"  :  ",size(arr), "\n", arr)
-
-	"""
-	x= 0
-	y= 0
-	num = 0
-	while y < 3:
-		while x <3:
-			arr[x][y] = liste[num]
-			x+=1
-			y+=1
-			num +=1
-	#arr = array(liste)
-	print(shape(arr),"  :  ",size(arr))
-	"""
-
-	"""
 	a = Interface_principale()
 
 	app = Tk()
@@ -189,4 +197,3 @@ if __name__ == "__main__":
 	app.title("MNIST")
 	app.resizable(False, False)
 	app.mainloop()
-	"""

@@ -54,7 +54,7 @@ class Options:
 		methode de class qui renvoi les attributs par defauts
 		"""
 
-		dic = {"ch_img":"./img", "ch_log":"./log/activity.log", "h_canvas":18, "l_canvas":18, "e_t_canvas":1}
+		dic = {"ch_img":"./img", "ch_log":"./log/activity.log", "h_canvas":18, "l_canvas":18, "e_t_canvas":1, "tensorflow":"machine_learning", "index_tensorflow":1 }
 		return dic
 
 
@@ -121,24 +121,35 @@ class Options:
 		frame_opt_canvas.grid(row = 1, column = 0, sticky = 'EW')
 
 
+		frame_choix_tensorflow = Frame(frame_principal)
+
+		choix = Variable(frame_choix_tensorflow, ('machine_learning', 'machine_learning_v2'))
+		lb_choix_tensorflow = Listbox(frame_choix_tensorflow, listvariable = choix, selectmode = "single")
+		lb_choix_tensorflow.grid(row=0,column=0,sticky='WE')
+		lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])
+		
+		frame_choix_tensorflow.grid(row = 2, column = 0, sticky = "EW")
+
+
+
 		frame_bp_opt = Frame(frame_principal)
 
 		bp_journal = Button(frame_bp_opt, text = "journal",command = partial(self.ouvrir_journal, object_tk))
 		bp_journal.grid(row=0,column=0,sticky='W')
 
-		frame_bp_opt.grid(row = 2, column = 0, sticky = "EW")
+		frame_bp_opt.grid(row = 3, column = 0, sticky = "EW")
 
 
 
 		frame_bp_command_inter = Frame(frame_principal)
 
-		bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais))
+		bp_appliquer = Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais, lb_choix_tensorflow))
 		bp_appliquer.grid(row=0,column=0,sticky='EW')
 
 		bp_quit = Button(frame_bp_command_inter, text = "Fermer",command = partial(self.fermeture_interface, object_tk))
 		bp_quit.grid(row=0,column=1,sticky='EW')
 		
-		frame_bp_command_inter.grid(row = 3, column = 0, sticky = "EW")
+		frame_bp_command_inter.grid(row = 4, column = 0, sticky = "EW")
 
 		frame_principal.grid_columnconfigure(0,weight=1)
 		frame_principal.grid_rowconfigure(0,weight=0)
@@ -146,7 +157,7 @@ class Options:
 
 
 
-	def sauv_configuration(self, ch_img, ch_log, value_long, value_hot, value_epais):
+	def sauv_configuration(self, ch_img, ch_log, value_long, value_hot, value_epais, value_selec_tensorflow):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration
 		"""
@@ -166,12 +177,16 @@ class Options:
 		if not isinstance(value_epais, IntVar):
 			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_epais)))
 
+		if not isinstance(value_selec_tensorflow, Listbox):
+			raise TypeError("erreur option = {} n'est pas de type Listbox ".format(type(value_selec_tensorflow)))
 
 		self.param["ch_img"] = ch_img.get()
 		self.param["ch_log"] = ch_log.get()
 		self.param["h_canvas"] = value_hot.get()
 		self.param["l_canvas"] = value_long.get()
 		self.param["e_t_canvas"] = value_epais.get()
+		self.param["tensorflow"] = value_selec_tensorflow.get(value_selec_tensorflow.curselection())
+		self.param["index_tensorflow"] = value_selec_tensorflow.curselection()
 
 		self.sauvegarde_opt(self.param)
 
