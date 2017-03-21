@@ -123,7 +123,7 @@ class Options:
 
 		frame_choix_tensorflow = Frame(frame_principal)
 
-		choix = Variable(frame_choix_tensorflow, ('machine_learning', 'machine_learning_v2'))
+		choix = Variable(frame_choix_tensorflow, ('machine_learning', 'machine_learning_v2', 'machine_learning_v3'))
 		lb_choix_tensorflow = Listbox(frame_choix_tensorflow, listvariable = choix, selectmode = "single")
 		lb_choix_tensorflow.grid(row=0,column=0,sticky='WE')
 		lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])

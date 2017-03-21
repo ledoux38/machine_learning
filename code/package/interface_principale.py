@@ -96,26 +96,31 @@ class Interface_principale:
 
 		self.image._set_image(self.canvas)
 		#recuperation de la list de l'image
-		liste = self.image.get_data(resize = (28, 28))
+		data = self.image.get_data(resize = (28, 28))
+		print("\n\n\n", data, len(data), type(data))
 
-		#recuperation d'une valeur de chaque tuple de pixel de l'image
-		nv_liste = list()
-		for x, cp in enumerate(liste):
-			nv_liste.append(liste[x][1])
-		#affichage de la nouvelle list
-		print("\n\n\n", nv_liste, len(nv_liste))
-		
+		data = array(data, dtype=float32)
+		#print("\n\n\n", data, shape(data), type(data))
+
 		#conversion tout les 255 deviennent des 0 et inversement 
-		data = vectorize(lambda x: 255 - x)(nv_liste)
+		data = vectorize(lambda x: 255 - x)(data)
 		#affichage du tableau de numpy
 		print("\n\n\n", data, shape(data), type(data))
 
+		#data = reshape(data, (28, 28))
+		print("\n\n\n", data, shape(data), type(data))
+		
+		
 		if self.opt["tensorflow"] == "machine_learning":
 			machine_learning(donnee = data)
 
 		elif self.opt["tensorflow"] == "machine_learning_v2":
 			machine_learning_v2(donnee = data)
+
+		elif self.opt["tensorflow"] == "machine_learning_v3":
+			machine_learning_v3(donnee = data)
 		
+
 		#conversion des pixels
 		#nv_liste = list()
 		#for x, cp in enumerate(liste):

@@ -82,7 +82,7 @@ class img:
 			raise TypeError("erreur obj_canvas = {} n'est pas de type Canvas ".format(type(obj_canvas)))
 
 		#creation d'une image pillow vierge
-		image = Image.new("RGB", (int(obj_canvas.cget('height')), int(obj_canvas.cget('width'))), "white")
+		image = Image.new("L", (int(obj_canvas.cget('height')), int(obj_canvas.cget('width'))), "white")
 		draw = ImageDraw.Draw(image)
 		
 		#ecriture sur l'image pillow
