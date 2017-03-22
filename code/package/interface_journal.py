@@ -7,7 +7,7 @@ from functools import partial
 import tkinter.messagebox
 
 class journal:
-	def __init__(self, options):
+	def __init__(self, options = {"ch_img":"./img", "ch_log":"./log/activity.log"}):
 		self.options = options
 
 
@@ -48,22 +48,30 @@ class journal:
 
 
 
-	def insert_text(self):
+	def insert_text(self, text = None):
 		"""
 		methode de class qui permet d'inserer le text dans l'entry
 		"""
-
 		log = ""
-		try:
 
-			with open(self.options["ch_log"], 'r') as mon_fichier:
-				log = mon_fichier.read()
-
-		except FileNotFoundError:
-			log = "Erreur dans le chemin d'acces du fichier {}".format(self.options["ch_log"])
+		if not text == None:
+			if not isinstance(text, str):
+				raise TypeError("erreur option = {} n'est pas de type list ".format(type(text)))
+			log = text
 			return log
+
 		else:
-			return log
+			
+			try:
+
+				with open(self.options["ch_log"], 'r') as mon_fichier:
+					log = mon_fichier.read()
+
+			except FileNotFoundError:
+				log = "Erreur dans le chemin d'acces du fichier {}".format(self.options["ch_log"])
+				return log
+			else:
+				return log
 
 
 

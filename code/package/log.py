@@ -1,24 +1,21 @@
-#!usr/bin/python3.5
-#-*-coding:UTF-8 -*
-	
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
  
 import logging
- 
+
 from logging.handlers import RotatingFileHandler
 
 class log:
-	def __init__(self, chemin_log = "log/activity.log", str_formatter = "%(asctime)s :: %(levelname)s :: %(message)s"):
+	def __init__(self):
 
 		if not isinstance(chemin_log, str) or not isinstance(str_formatter, str):
 			raise TypeError("erreur chemin_log = {} ou str_formatter = {} n'est pas de type str ".format(type(chemin_log), type(str_formatter)))
 
 		#recuperation ch fichier
-		self.ch_log = chemin_log
+		self.ch_log = ("log/activity.log")
 
 		#recuperation str_formatter
-		self.format_log = str_formatter
+		self.format_log = ("%(asctime)s :: %(levelname)s :: %(message)s")
 
 		# création de l'objet logger servir à écrire les logs
 		self.logger = logging.getLogger()
