@@ -65,11 +65,9 @@ class load_image:
 			return None
 			print("annuler")
 		else:
-			create_data(file_img = load)
+			self.create_data(file_img = load)
 			image = Image.open(load)
 			self.img_convert = ImageTk.PhotoImage(image)
-			#object_label.configure(width =  image.size[0])
-			#object_label.configure(height = image.size[1])
 			object_label.configure(image = self.img_convert)
 
 
