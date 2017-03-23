@@ -103,11 +103,17 @@ class Interface_principale:
 		#print("\n\n\n", data, shape(data), type(data))
 
 		#conversion tout les 255 deviennent des 0 et inversement 
-		data = vectorize(lambda x: 255 - x)(data)
+		data = vectorize(lambda x: 1 - x/255)(data)
 		#affichage du tableau de numpy
 		print("\n\n\n", data, shape(data), type(data))
+		
+		redim = reshape(data, (28, 28))
+		for i in range(28):
+			for j in range(28):
+				print("#" if redim[j,i] == 1 else " ", end= "")
+			print("")
 
-		#data = reshape(data, (28, 28))
+
 		print("\n\n\n", data, shape(data), type(data))
 		
 		

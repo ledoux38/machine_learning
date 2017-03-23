@@ -78,9 +78,22 @@ def machine_learning(donnee):
   print(sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
   print("test ", x,y_)
   print("sortie:{}".format(tf.cast(correct_prediction, tf.float32)))
-  
-  result = sess.run(tf.argmax(y,1), feed_dict={x: [donnee]})
 
+  data = mnist.test.images[0]
+  print("solution: {}".format(mnist.test.labels[0]))
+
+  redim = reshape(data, (28, 28))
+  for i in range(28):
+    for j in range(28):
+      print("#" if redim[i,j] >= 0.5 else " ", end= "")
+    print("")
+
+  print(mnist.test.images[0])
+
+
+
+  #result = sess.run(tf.argmax(y,1), feed_dict={x: [donnee]})
+  result = sess.run(y, feed_dict={x: [data]})
   print ('resultat'.join(map(str, result))) 
 
 #tensorflow de base modifier
