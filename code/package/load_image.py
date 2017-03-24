@@ -4,12 +4,16 @@
  
 from tkinter import *
 from tkinter.filedialog import *
-from numpy import *
+import numpy as np 
 from functools import partial
-from PIL import Image, ImageFont, ImageDraw, ImageTk
+import PIL.Image
+import PIL.ImageFont
+import PIL.ImageDraw
+import PIL.ImageTk
+#from PIL import Image, ImageFont, ImageDraw, ImageTk
 import scipy.ndimage
 from interface_journal import *
-
+from Machine_learning import *
 
 class load_image:
 	"""
@@ -45,7 +49,7 @@ class load_image:
 		bp_charger = Button(frame_bp, text = "Charger",command = partial(self.Charger, label))
 		bp_charger.grid(row=0,column=0,sticky='W')
  
-		bp_generer = Button(frame_bp, text = "Generer",command = partial(self.generer))
+		bp_generer = Button(frame_bp, text = "Generer",command = partial(self.generer, object_tk))
 		bp_generer.grid(row=0,column=1,sticky='W')
 		
 		bp_journal = Button(frame_bp, text = "Journal",command = partial(self.afficher_donnee, object_tk))
@@ -84,8 +88,8 @@ class load_image:
 			print("annuler")
 		else:
 			self.create_data(file_img = load)
-			image = Image.open(load)
-			self.img_convert = ImageTk.PhotoImage(image)
+			image = PIL.Image.open(load)
+			self.img_convert = PIL.ImageTk.PhotoImage(image)
 			object_label.configure(image = self.img_convert)
 
 
@@ -98,15 +102,17 @@ class load_image:
 		#les parametres de la fenetre des options
 		top.title("journal")
 		#j'empeche la fenetre d'etre redimenssionner
-		top.resizable(False, False)
+		#top.resizable(False, False)
 		# affiche le journal
 		self.journal.interface_journal(top)
 
-
-	def generer(self):
+	def generer(self, object_tk):
 		"""
 		generer tensorflow
 		"""
+		#self.afficher_donnee(object_tk)
+		#self.journal.insert_text("{}".format(self.tableau))
+		machine_learning(self.tableau)
 		pass
 
 	def create_data(self, file_img):
@@ -115,13 +121,19 @@ class load_image:
 		"""
 
 		#recupation des données
-		data = scipy.ndimage.imread(file_img, flatten=True)
+		self.tableau = scipy.ndimage.imread(file_img, flatten=True)
 		#si les dimentions des données sont differente de (28,28)
-		#je redimentionne le tableau 
-		if not shape(data) == (28, 28):
-			data = resize(data, (28, 28))
+		#je redimentionne le tableau
+		print(self.tableau, type(self.tableau), shape(self.tableau))
+		if not shape(self.tableau) == (28, 28):
+			self.tableau = resize(self.tableau, (28, 28))
+
+		self.tableau  = np.ndarray.flatten(self.tableau)
+		print(self.tableau, np.shape(self.tableau))
+		
+		self.tableau = np.vectorize(lambda x: 255 - x)(self.tableau)
 		#affichage des données
-		print(data, type(data), shape(data))
+		print(self.tableau, type(self.tableau), shape(self.tableau))
 
 
 if __name__ == "__main__":

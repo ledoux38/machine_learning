@@ -5,6 +5,7 @@
 from tkinter import *
 from functools import partial
 import tkinter.messagebox
+import tkinter.font as tkFont
 
 class journal:
 	def __init__(self, options = {"ch_img":"./img", "ch_log":"./log/activity.log"}):
@@ -20,7 +21,8 @@ class journal:
 		frame_principal = Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
 
-		self.text = Text(frame_principal, background = 'white')
+		helv36 = tkFont.Font(family='Helvetica', size=6, weight='bold')
+		self.text = Text(frame_principal, background = 'white', font = helv36)
 		self.text.grid(row=0,column=0, columnspan=2, sticky='NSEW')
 		#self.text.insert(END, self.insert_text(text_data))
 
