@@ -112,7 +112,7 @@ class load_image:
 		"""
 		#self.afficher_donnee(object_tk)
 		#self.journal.insert_text("{}".format(self.tableau))
-		machine_learning(self.tableau)
+		machine_learning_v3(self.tableau)
 		pass
 
 	def create_data(self, file_img):

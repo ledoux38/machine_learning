@@ -130,9 +130,7 @@ def machine_learning_v2(donnee):
 
 #tensorflow alternative
 def machine_learning_v3(donnee):
-
   mnist = input_data.read_data_sets("/home/ledoux/Documents/Programmation/python/python-le-on/proj/machine_learning/code/tensorflow/mnist/input_data/", one_hot=True)
-
   x = tf.placeholder(tf.float32, [None, 784])
   W = tf.Variable(tf.zeros([784, 10]))
   b = tf.Variable(tf.zeros([10]))
@@ -150,13 +148,14 @@ def machine_learning_v3(donnee):
   sess.run(init)
 
   for i in range(1000):
-      batch_xs, batch_ys = mnist.train.next_batch(1000)
-      sess.run(train_step, feed_dict= {x: batch_xs, y_: batch_ys})
+    batch_xs, batch_ys = mnist.train.next_batch(1000)
+    sess.run(train_step, feed_dict= {x: batch_xs, y_: batch_ys})
 
   print ("done with training")
+
   result = sess.run(tf.argmax(y,1), feed_dict={x: [donnee]})
 
-  print ('resultat'.join(map(str, result))) 
+  print (' '.join(map(str, result))) 
 
 
 
