@@ -6,12 +6,13 @@ from log import *
 from tkinter import *
 from option import *
 from canvas import *
-import tkinter.messagebox
 from numpy import *
 from img import*
 from functools import partial
 from Machine_learning import *
 
+import load_image as limg
+import tkinter.messagebox
 class Interface_principale:
 	"""
 	interface principale du programme
@@ -46,6 +47,7 @@ class Interface_principale:
 		menu_fichier.add_command(label = "Recommencer", command = self.recommencer_dessin)
 		menu_fichier.add_command(label = "Option", command = partial(self.ouvrir_option, object_tk))
 		menu_fichier.add_command(label = "Sauver image", command = self.sauv_img)
+		menu_fichier.add_command(label = "Charger image", command = partial(self.ouvrir_inter_charge_img, object_tk))
 		menu_fichier.add_command(label = "Quitter", command = partial(self.quitter_interface, object_tk))
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
 		object_tk.config(menu = menu_bar)
@@ -184,6 +186,28 @@ class Interface_principale:
 		object_tk.wait_window(top)
 		#quand j'en n'ai fini avec les options je charge les nouvelles données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
+
+	def ouvrir_inter_charge_img(self, object_tk):
+		"""
+		methode de class qui permet d'acceder à l'interface chargement image
+		"""
+		inter_char_img = limg.load_image(self.opt)
+		#je creer une fenetre pour inserer la frame de chargement image
+		top = Toplevel(object_tk)
+		#les parametres de la fenetre chargement image
+		top.title("Interface chargement image")
+		#je fais apparaître la fenetre enfant sur la fenetre parent
+		top.transient(object_tk)
+		#la fenêtre principale est bloquée par grab_set rend la fenêtre "modale"
+		top.grab_set()
+		#focus_set permet d'attraper les évènements sur la fenêtre principale
+		top.focus_set()
+		#j'empeche la fenetre d'etre redimenssionner
+		top.resizable(False, False)
+		# je fais toutes les modifications dont j'ai besoins
+		inter_char_img.interface_load_image(top)
+
+
 
 
 

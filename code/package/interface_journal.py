@@ -5,11 +5,12 @@
 from tkinter import *
 from functools import partial
 import tkinter.messagebox
+import tkinter.font as tkFont
 
 class journal:
-	def __init__(self, options):
+	def __init__(self, options = {"ch_img":"./img", "ch_log":"./log/activity.log"}):
 		self.options = options
-
+		self.text = None
 
 
 	def interface_journal(self,object_tk):
@@ -20,14 +21,15 @@ class journal:
 		frame_principal = Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
 
-		text = Text(frame_principal, background = 'white')
-		text.grid(row=0,column=0, columnspan=2, sticky='NSEW')
-		text.insert(END, self.insert_text())
+		helv36 = tkFont.Font(family='Helvetica', size=6, weight='bold')
+		self.text = Text(frame_principal, background = 'white', font = helv36)
+		self.text.grid(row=0,column=0, columnspan=2, sticky='NSEW')
+		#self.text.insert(END, self.insert_text(text_data))
 
 		bp_button_ok = Button(frame_principal, text = "Ok", command = partial(self.fermeture_interface, object_tk))
 		bp_button_ok.grid(row=1, column=0, sticky='EW')
 
-		bp_button_RAZ = Button(frame_principal, text = "RAZ", command = partial(self.raz_journal, text))
+		bp_button_RAZ = Button(frame_principal, text = "RAZ", command = partial(self.raz_journal))
 		bp_button_RAZ.grid(row=1, column=1, sticky='EW')
 
 		frame_principal.grid_columnconfigure(0, weight=1)
@@ -48,26 +50,49 @@ class journal:
 
 
 
-	def insert_text(self):
+	def insert_text(self, text = None):
 		"""
 		methode de class qui permet d'inserer le text dans l'entry
 		"""
-
-		log = ""
-		try:
-
-			with open(self.options["ch_log"], 'r') as mon_fichier:
-				log = mon_fichier.read()
-
-		except FileNotFoundError:
-			log = "Erreur dans le chemin d'acces du fichier {}".format(self.options["ch_log"])
-			return log
+		#je verifie que la fonction interface_journal est bien instancier correctement
+		if isinstance(self.text, Text):
+			#si j'envoi du text via la variable text, le parametre sera different	
+			if not text == None:
+				#je verifie que text et de type str
+				if not isinstance(text, str):
+					#si text different de str j'affiche une erreur
+					raise TypeError("erreur option = {} n'est pas de type str ".format(type(text)))
+				#sinon j'insert le texte dans self.text
+				self.text.insert(END, text)
+			#si variable text different de None j'affiche une erreur
 		else:
-			return log
+			raise NameError("erreur pour charger du texte dans Text il faut instancier la fonction <<interface_journal>>")
 
 
 
-	def raz_journal(self, object_text):
+	def charger_text(self, file = "ch_log"):
+		if isinstance(self.text, Text):
+			try:
+				with open(self.options["ch_log"], 'r') as mon_fichier:
+					log = mon_fichier.read()
+					self.text.insert(END, log)
+			except FileNotFoundError:
+				log = "Erreur dans le chemin d'acces du fichier {}".format(self.options["ch_log"])
+		else:
+			raise NameError("erreur pour charger du texte dans Text il faut instancier la fonction <<interface_journal>>")
+
+
+	def raz_journal(self):
+		"""
+		methode de class qui permet de supprimer integralement le contenu du fichier
+		"""
+		if isinstance(self.text, Text):
+			#j'ecrase les données dans l'entry
+			self.text.delete(0.0, END)
+		else:
+			raise NameError("erreur pour charger du texte dans Text il faut instancier la fonction <<interface_journal>>")
+
+	def raz_fichier_journal(self):
 		"""
 		methode de class qui permet de supprimer integralement le contenu du fichier
 		"""
@@ -78,8 +103,6 @@ class journal:
 		#j'ouvre le fichier a l'adresse indiquer et j'ecrase les données 
 		with open(self.options["ch_log"], 'w') as mon_fichier:
 			mon_fichier.write(log)
-			#j'ecrase aussi les données dans l'entry
-			object_text.delete(0.0, END)
 
 
 if __name__ == "__main__":
@@ -89,6 +112,7 @@ if __name__ == "__main__":
 	a = journal(options = dic)
 	app = Tk()
 	a.interface_journal(app)
+	a.charger_text()
 	app.title("journal")
 	app.resizable(False,False)
 	app.mainloop()
