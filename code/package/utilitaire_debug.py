@@ -29,9 +29,17 @@ def print_array(array):
 	return temp
 
 
+def print_array_convert(array, valeur1 = "#", valeur2 = ""):
+	array = reshape(array, (28, 28))
+	for i in range(28):
+		for j in range(28):
+			print(valeur1 if redim[i,j] == 1 else valeur2, end= "")
+		print("")
+
+
 
 if __name__ == "__main__":
-	i = np.eye(28)
+	i = np.eye(28, dtype = np.float64)
 	print (type(i))
 	print(print_array(i))
 
@@ -51,3 +59,6 @@ if __name__ == "__main__":
 
 	print (type(i))
 	print(print_array(i))
+
+
+
