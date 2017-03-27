@@ -166,6 +166,12 @@ def machine_learning_v3(donnee):
 
   print ("done with training")
 
+  redim = reshape(donnee, (28, 28))
+  for i in range(28):
+    for j in range(28):
+      print("#" if redim[i,j] >= 0.5 else " ", end= "")
+    print("")
+
   result = sess.run(tf.argmax(y,1), feed_dict={x: [donnee]})
 
   print (' '.join(map(str, result))) 

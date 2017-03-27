@@ -87,7 +87,7 @@ class img:
 		
 		#ecriture sur l'image pillow
 		for x in obj_canvas.find_all():
-			draw.line((obj_canvas.coords(x)), fill = "black", width = self.option["e_t_canvas"])
+			draw.line((obj_canvas.coords(x)), fill = "black" , width = self.option["e_t_canvas"])
 
 		del draw
 		return image

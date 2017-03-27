@@ -72,7 +72,7 @@ class load_image:
 		methode de class qui permet de quitter le programme
 		"""
 
-		object_tk.quit()
+		object_tk.destroy()
 
 
 

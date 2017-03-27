@@ -13,6 +13,7 @@ from Machine_learning import *
 
 import load_image as limg
 import tkinter.messagebox
+import utilitaire_debug as ud
 class Interface_principale:
 	"""
 	interface principale du programme
@@ -99,26 +100,15 @@ class Interface_principale:
 		self.image._set_image(self.canvas)
 		#recuperation de la list de l'image
 		data = self.image.get_data(resize = (28, 28))
-		print("\n\n\n", data, len(data), type(data))
-
+		#affichage du list
+		ud.print_array(data)
+		#creation d'un tableau de numpy type float
 		data = array(data, dtype=float32)
-		#print("\n\n\n", data, shape(data), type(data))
-
 		#conversion tout les 255 deviennent des 0 et inversement 
 		data = vectorize(lambda x: 1 - x/255)(data)
-		#affichage du tableau de numpy
-		print("\n\n\n", data, shape(data), type(data))
-		
-		redim = reshape(data, (28, 28))
-		for i in range(28):
-			for j in range(28):
-				print("#" if redim[j,i] == 1 else " ", end= "")
-			print("")
+		#affichage du tableau de numpy		
+		ud.print_array_convert(data, valeur = 1.0)
 
-
-		print("\n\n\n", data, shape(data), type(data))
-		
-		
 		if self.opt["tensorflow"] == "machine_learning":
 			machine_learning(donnee = data)
 
@@ -209,8 +199,6 @@ class Interface_principale:
 
 
 
-
-
 	def sauv_img(self):
 		"""
 		methode de class qui permet de sauvegarder l'image à un endroit donné par la class options
@@ -222,8 +210,8 @@ class Interface_principale:
 		self.image.sauv_img()
 	
 
-
 if __name__ == "__main__":
+
 
 	a = Interface_principale()
 
@@ -232,3 +220,4 @@ if __name__ == "__main__":
 	app.title("MNIST")
 	app.resizable(False, False)
 	app.mainloop()
+
