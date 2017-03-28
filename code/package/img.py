@@ -120,7 +120,7 @@ class img:
 		proposition a l'utilisateur de sauvegarder sont image
 		"""
 		
-		save = asksaveasfilename(defaultextension = ".JPG", initialdir = self.option["ch_img"])
+		save = asksaveasfilename(defaultextension = ".bmp", initialdir = self.option["ch_img"])
 		
 		#si sauvegarde annuler alors return sinon sauvegarde
 		if not save:
