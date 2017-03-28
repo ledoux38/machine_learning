@@ -124,10 +124,9 @@ class Options:
 		frame_choix_tensorflow = Frame(frame_principal)
 
 		choix = Variable(frame_choix_tensorflow, ('machine_learning', 'machine_learning_v2', 'machine_learning_v3'))
-		lb_choix_tensorflow = Listbox(frame_choix_tensorflow, listvariable = choix, selectmode = "single")
+		lb_choix_tensorflow = Listbox(frame_choix_tensorflow, listvariable = choix, selectmode = "single",  exportselection=0)
 		lb_choix_tensorflow.grid(row=0,column=0,sticky='WE')
 		lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])
-		
 		frame_choix_tensorflow.grid(row = 2, column = 0, sticky = "EW")
 
 
@@ -157,38 +156,77 @@ class Options:
 
 
 
-	def sauv_configuration(self, ch_img, ch_log, value_long, value_hot, value_epais, value_selec_tensorflow):
+	def sauv_configuration(self, item_ch_img, 
+							item_ch_log, 
+							item_value_long, 
+							item_value_hot, 
+							item_value_epais, 
+							item_value_selec_tensorflow):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration
 		"""
+		#sauvegarde des chemin de fichier
+		self.save_ch_accees(item_ch_img, item_ch_log)
+		#sauvegarde des attribut principaux du canvas
+		self.save_canvas(item_value_long, item_value_hot, item_value_epais)
+		#sauvegarde du choix de tensorflow
+		self.save_choix_tensorflow(item_value_selec_tensorflow)
+		#enregistrement des nouvelles obtions dans le fichiers param
+		self.sauvegarde_opt(self.param)
 
-		if not isinstance(ch_img, Entry):
+
+
+
+	def save_ch_accees(self, item_ch_img, item_ch_log):
+		"""
+		methode de class qui sauvegarde la nouvelle configuration des chemin d'accees
+		"""
+
+		if not isinstance(item_ch_img, Entry):
 			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_img)))
 		
-		if not isinstance(ch_log, Entry):
-			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_log)))		
+		if not isinstance(item_ch_log, Entry):
+			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_log)))	
+
+		self.param["ch_img"] = item_ch_img.get()
+		self.param["ch_log"] = item_ch_log.get()
+
+
+
+	def save_canvas(self, item_value_long, item_value_hot, item_value_epais):
+		"""
+		methode de class qui sauvegarde la nouvelle configuration attributs du canvas
+		"""
 		
-		if not isinstance(value_long, IntVar):
+		if not isinstance(item_value_long, IntVar):
 			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_long)))
 		
-		if not isinstance(value_hot, IntVar):
+		if not isinstance(item_value_hot, IntVar):
 			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_hot)))
 		
-		if not isinstance(value_epais, IntVar):
+		if not isinstance(item_value_epais, IntVar):
 			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_epais)))
 
-		if not isinstance(value_selec_tensorflow, Listbox):
-			raise TypeError("erreur option = {} n'est pas de type Listbox ".format(type(value_selec_tensorflow)))
+		self.param["h_canvas"] = item_value_hot.get()
+		self.param["l_canvas"] = item_value_long.get()
+		self.param["e_t_canvas"] = item_value_epais.get()
 
-		self.param["ch_img"] = ch_img.get()
-		self.param["ch_log"] = ch_log.get()
-		self.param["h_canvas"] = value_hot.get()
-		self.param["l_canvas"] = value_long.get()
-		self.param["e_t_canvas"] = value_epais.get()
-		self.param["tensorflow"] = value_selec_tensorflow.get(value_selec_tensorflow.curselection())
-		self.param["index_tensorflow"] = value_selec_tensorflow.curselection()
 
-		self.sauvegarde_opt(self.param)
+
+
+	def save_choix_tensorflow(self, item_value_selec_tensorflow):
+		"""
+		methode de class qui sauvegarde la nouvelle selection de tensorflow
+		"""
+
+		if not isinstance(item_value_selec_tensorflow, Listbox):
+			raise TypeError("erreur option = {} n'est pas de type Listbox ".format(type(item_value_selec_tensorflow)))
+
+		index = item_value_selec_tensorflow.curselection()
+		index = index[0]
+		print(index)
+		self.param["tensorflow"] = item_value_selec_tensorflow.get(index)
+		self.param["index_tensorflow"] = index
 
 
 
@@ -223,14 +261,41 @@ class Options:
 
 
 if __name__ == "__main__":
+	choix_version = 0
+	if choix_version == 0:
 
-	a = Options()
-	app = Tk()
-	a.interface_option(app)
-	app.title("Options")
-	app.resizable(False,False)
-	app.mainloop()
+		a = Options()
+		app = Tk()
+		a.interface_option(app)
+		app.title("Options")
+		app.resizable(False,False)
+		app.mainloop()
 
+
+	elif choix_version == 1:
+
+		root = Tk()
+	 
+		lb = Listbox(root, selectmode=SINGLE, exportselection=0)
+		lb.pack(padx=5, pady=5)
+		 
+		for item in ['un', 'deux', 'trois', 'quatre', 'cinq']:
+		    lb.insert(END, item)
+		 
+		l = Label(root, bg='white')
+		l.pack(padx=5, pady=5, fill=BOTH, expand=1)
+		 
+		def isselect(event=None):
+		    if lb.curselection():
+		        l.config(text='Selection actuelle : '+lb.get(lb.curselection()))
+		    else:
+		        l.config(text='Pas de selection')
+		 
+		e = Entry(root)
+		e.pack(padx=5, pady=5)
+		e.bind('<Button-1>' , isselect)
+		 
+		root.mainloop()
 
 
 	
