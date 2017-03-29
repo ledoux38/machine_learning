@@ -113,15 +113,14 @@ class load_image:
 		"""
 		generer tensorflow
 		"""
-		if tableau == None:
-			if self.option["tensorflow"] == "machine_learning":
-				machine_learning(donnee = self.tableau)
+		if self.option["tensorflow"] == "machine_learning":
+			Ml.machine_learning(donnee = self.tableau)
 
-			elif self.option["tensorflow"] == "machine_learning_v2":
-				machine_learning_v2(donnee = self.tableau)
+		elif self.option["tensorflow"] == "machine_learning_v2":
+			Ml.machine_learning_v2(donnee = self.tableau)
 
-			elif self.option["tensorflow"] == "machine_learning_v3":
-				machine_learning_v3(donnee = self.tableau)
+		elif self.option["tensorflow"] == "machine_learning_v3":
+			Ml.machine_learning_v3(donnee = self.tableau)
 
 
 
