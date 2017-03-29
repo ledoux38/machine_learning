@@ -79,16 +79,16 @@ def machine_learning(donnee):
   print("test ", x,y_)
   print("sortie:{}".format(tf.cast(correct_prediction, tf.float32)))
 
-  #data = mnist.test.images[0]
-  #print("solution: {}".format(mnist.test.labels[0]))
+  data = mnist.test.images[0]
+  print("solution: {}".format(mnist.test.labels[0]))
 
-  #redim = reshape(data, (28, 28))
-  #for i in range(28):
-   # for j in range(28):
-    #  print("#" if redim[i,j] >= 0.5 else " ", end= "")
-    #print("")
+  redim = reshape(data, (28, 28))
+  for i in range(28):
+    for j in range(28):
+      print("#" if redim[i,j] >= 0.5 else " ", end= "")
+    print("")
 
-  #print(mnist.test.images[0])
+  print(mnist.test.images[0])
 
 
 
