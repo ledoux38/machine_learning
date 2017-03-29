@@ -1,19 +1,21 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
 
-
-from log import *
-from tkinter import *
-from option import *
-from canvas import *
-from numpy import *
-from img import*
 from functools import partial
-from Machine_learning import *
 
+import log as Lg 
+import tkinter as Tk
+import option as Opt 
+import canvas as Cv
+import numpy as Np
+import img as Ig
+import Machine_learning as Mg
 import load_image as limg
 import tkinter.messagebox
 import utilitaire_debug as ud
+
+
+
 class Interface_principale:
 	"""
 	interface principale du programme
@@ -28,9 +30,9 @@ class Interface_principale:
 	def __init__(self):
 
 		# instanciation de la class Options
-		self.inter_option = Options()
+		self.inter_option = Opt.Options()
 		self.opt = self.inter_option.param
-		self.image = img(option = self.opt)
+		self.image = Ig.img(option = self.opt)
 
 
 
@@ -39,11 +41,11 @@ class Interface_principale:
 		methode de class qui permet d'initialiser les bouttons pour les autre fonctions
 		"""
 
-		frame_principal = Frame(object_tk)
+		frame_principal = Tk.Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
 
-		menu_bar = Menu(object_tk)
-		menu_fichier = Menu(menu_bar, tearoff = 0)
+		menu_bar = Tk.Menu(object_tk)
+		menu_fichier = Tk.Menu(menu_bar, tearoff = 0)
 		menu_fichier.add_command(label = "Generer", command = self.generer)
 		menu_fichier.add_command(label = "Recommencer", command = self.recommencer_dessin)
 		menu_fichier.add_command(label = "Option", command = partial(self.ouvrir_option, object_tk))
@@ -53,25 +55,25 @@ class Interface_principale:
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
 		object_tk.config(menu = menu_bar)
 
-		self.canvas = interface_canvas(frame_principal, option = self.opt)
+		self.canvas = Cv.interface_canvas(frame_principal, option = self.opt)
 		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NW")
 
-		frame = Frame(frame_principal)
-		bp_generer = Button(frame, text = "Generer", command = self.generer)
+		frame = Tk.Frame(frame_principal)
+		bp_generer = Tk.Button(frame, text = "Generer", command = self.generer)
 		bp_generer.grid(row = 0, column = 0, sticky = 'EW')
 
-		bp_recommencer = Button(frame, text = "Recommencer", command = self.recommencer_dessin)
+		bp_recommencer = Tk.Button(frame, text = "Recommencer", command = self.recommencer_dessin)
 		bp_recommencer.grid(row = 1, column = 0, sticky = 'EW')
 
 		frame.grid(row = 2, column = 2, sticky = "EW")
 		
-		bp_quit = Button(frame_principal, text = "Quitter", command =partial(self.quitter_interface, object_tk))
+		bp_quit = Tk.Button(frame_principal, text = "Quitter", command =partial(self.quitter_interface, object_tk))
 		bp_quit.grid(row = 4, column = 2, sticky = 'EW')
 
 		frame_principal.grid_columnconfigure(0, weight = 1)
 		frame_principal.grid_rowconfigure(0, weight = 0)
 		frame_principal.grid_rowconfigure(2, weight = 1)
-		
+
 
 
 	def quitter_interface(self, object_tk):
@@ -89,7 +91,7 @@ class Interface_principale:
 		"""
 
 		self.canvas.tout_supprimer()
-		
+
 
 
 	def generer(self):
@@ -103,20 +105,20 @@ class Interface_principale:
 		#affichage du list
 		ud.print_array(data)
 		#creation d'un tableau de numpy type float
-		data = array(data, dtype=float32)
+		data = Np.array(data, dtype=Np.float32)
 		#conversion tout les 255 deviennent des 0 et inversement 
 		#data = vectorize(lambda x: 1 - x/255)(data)
 		#affichage du tableau de numpy		
 		ud.print_array_convert(data, valeur = 0)
 
 		if self.opt["tensorflow"] == "machine_learning":
-			machine_learning(donnee = data)
+			Mg.machine_learning(donnee = data)
 
 		elif self.opt["tensorflow"] == "machine_learning_v2":
-			machine_learning_v2(donnee = data)
+			Mg.machine_learning_v2(donnee = data)
 
 		elif self.opt["tensorflow"] == "machine_learning_v3":
-			machine_learning_v3(donnee = data)
+			Mg.machine_learning_v3(donnee = data)
 		
 
 		#conversion des pixels
@@ -159,7 +161,7 @@ class Interface_principale:
 		"""
 
 		#je creer une fenetre pour inserer la frame de options
-		top = Toplevel(object_tk)
+		top = Tk.Toplevel(object_tk)
 		#les parametres de la fenetre des options
 		top.title("Options")
 		#je fais apparaître la fenetre enfant sur la fenetre parent
@@ -177,13 +179,16 @@ class Interface_principale:
 		#quand j'en n'ai fini avec les options je charge les nouvelles données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
 
+
+
+
 	def ouvrir_inter_charge_img(self, object_tk):
 		"""
 		methode de class qui permet d'acceder à l'interface chargement image
 		"""
 		inter_char_img = limg.load_image(self.opt)
 		#je creer une fenetre pour inserer la frame de chargement image
-		top = Toplevel(object_tk)
+		top = Tk.Toplevel(object_tk)
 		#les parametres de la fenetre chargement image
 		top.title("Interface chargement image")
 		#je fais apparaître la fenetre enfant sur la fenetre parent
@@ -208,14 +213,16 @@ class Interface_principale:
 		self.image._set_image(self.canvas)
 		#enregistrement de l'image
 		self.image.sauv_img()
-	
+
+
+
 
 if __name__ == "__main__":
 
 
 	a = Interface_principale()
 
-	app = Tk()
+	app = Tk.Tk()
 	a.interface_principale(app)
 	app.title("MNIST")
 	app.resizable(False, False)
