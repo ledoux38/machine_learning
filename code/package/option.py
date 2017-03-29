@@ -4,7 +4,7 @@
 
 
 import tkinter as Tk
-from interface_journal import*
+import interface_journal as Ij
 import pickle
 import os
 from functools import partial
@@ -245,7 +245,7 @@ class Options:
 		"""
 
 		# j'instancie la class journal
-		inter_journ = journal(options = self.param)
+		inter_journ = Ij.journal(options = self.param)
 		#je creer une fenetre 
 		top = Tk.Toplevel(fenetre)
 		#j'integre des options 

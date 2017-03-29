@@ -1,9 +1,8 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
  
- 
-from tkinter import *
-from tkinter.filedialog import *
+import tkinter as Tk
+import tkinter.filedialog as fd
 import numpy as np 
 from functools import partial
 import PIL.Image
@@ -12,8 +11,9 @@ import PIL.ImageDraw
 import PIL.ImageTk
 #from PIL import Image, ImageFont, ImageDraw, ImageTk
 import scipy.ndimage
-from interface_journal import *
-from Machine_learning import *
+import interface_journal as Ij
+import Machine_learning as Ml
+import utilitaire_debug as ud
 
 class load_image:
 	"""
@@ -21,7 +21,7 @@ class load_image:
 	"""
  
  
-	def __init__(self, option = {"ch_img":"./test"}):
+	def __init__(self, option = {"ch_img":"./test", "tensorflow" :"machine_learning"}):
 		if not isinstance(option, dict):
 			raise TypeError("erreur option = {} n'est pas de type list ".format(type(option)))
 
@@ -29,7 +29,7 @@ class load_image:
 		self.option = option
 		#ce tableau est rempli lors du chargement de l'image
 		self.tableau = None
-		self.journal = journal()
+		self.journal = Ij.journal()
 
 
 
@@ -38,24 +38,24 @@ class load_image:
 		methode de class qui creer l'interface graphique
 		"""
 
-		frame_principal = Frame(object_tk)
+		frame_principal = Tk.Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0, sticky='NSEW')
-		label = Label(frame_principal)
+		label = Tk.Label(frame_principal)
 		label.grid(row = 0, column = 0)
  
-		frame_bp = Frame(frame_principal)
+		frame_bp = Tk.Frame(frame_principal)
 		frame_bp.grid(row = 1, column = 0, sticky='NSEW')
  
-		bp_charger = Button(frame_bp, text = "Charger",command = partial(self.Charger, label))
+		bp_charger = Tk.Button(frame_bp, text = "Charger",command = partial(self.Charger, label))
 		bp_charger.grid(row=0,column=0,sticky='W')
  
-		bp_generer = Button(frame_bp, text = "Generer",command = partial(self.generer, object_tk))
+		bp_generer = Tk.Button(frame_bp, text = "Generer",command = partial(self.generer, object_tk))
 		bp_generer.grid(row=0,column=1,sticky='W')
 		
-		bp_journal = Button(frame_bp, text = "Journal",command = partial(self.afficher_donnee, object_tk))
+		bp_journal = Tk.Button(frame_bp, text = "Journal",command = partial(self.afficher_donnee, object_tk))
 		bp_journal.grid(row=0,column=2,sticky='W')
 		
-		bp_annuler = Button(frame_bp, text = "Fermer",command = partial(self.quitter_interface, object_tk))
+		bp_annuler = Tk.Button(frame_bp, text = "Fermer",command = partial(self.quitter_interface, object_tk))
 		bp_annuler.grid(row=0,column=3,sticky='W')
 
 
@@ -81,7 +81,7 @@ class load_image:
 		methode de class qui permet de reset le canevas
 		"""
 
-		load = askopenfilename(defaultextension = ".JPG", initialdir = self.option["ch_img"])
+		load = fd.askopenfilename(defaultextension = ".JPG", initialdir = self.option["ch_img"])
 
 		if not load:
 			return None
@@ -89,6 +89,7 @@ class load_image:
 		else:
 			self.create_data(file_img = load)
 			image = PIL.Image.open(load)
+			image = image.resize((100, 100))
 			self.img_convert = PIL.ImageTk.PhotoImage(image)
 			object_label.configure(image = self.img_convert)
 
@@ -98,7 +99,7 @@ class load_image:
 		"""
 		methode de class qui permet d'afficher les donnees
 		"""
-		top = Toplevel(object_tk)
+		top = Tk.Toplevel(object_tk)
 		#les parametres de la fenetre des options
 		top.title("journal")
 		#j'empeche la fenetre d'etre redimenssionner
@@ -106,14 +107,24 @@ class load_image:
 		# affiche le journal
 		self.journal.interface_journal(top)
 
+
+
 	def generer(self, object_tk):
 		"""
 		generer tensorflow
 		"""
-		#self.afficher_donnee(object_tk)
-		#self.journal.insert_text("{}".format(self.tableau))
-		machine_learning_v3(self.tableau)
-		pass
+		if tableau == None:
+			if self.option["tensorflow"] == "machine_learning":
+				machine_learning(donnee = self.tableau)
+
+			elif self.option["tensorflow"] == "machine_learning_v2":
+				machine_learning_v2(donnee = self.tableau)
+
+			elif self.option["tensorflow"] == "machine_learning_v3":
+				machine_learning_v3(donnee = self.tableau)
+
+
+
 
 	def create_data(self, file_img):
 		"""
@@ -124,21 +135,20 @@ class load_image:
 		self.tableau = scipy.ndimage.imread(file_img, flatten=True)
 		#si les dimentions des données sont differente de (28,28)
 		#je redimentionne le tableau
-		print(self.tableau, type(self.tableau), shape(self.tableau))
-		if not shape(self.tableau) == (28, 28):
+		if not np.shape(self.tableau) == (28, 28):
 			self.tableau = resize(self.tableau, (28, 28))
-
+		#conversion d'un tableau en une dimension
 		self.tableau  = np.ndarray.flatten(self.tableau)
-		print(self.tableau, np.shape(self.tableau))
-		
+		#affichage des données
+		ud.print_array_convert(self.tableau, valeur = 0.0)
 		self.tableau = np.vectorize(lambda x: 255 - x)(self.tableau)
 		#affichage des données
-		print(self.tableau, type(self.tableau), shape(self.tableau))
+		ud.print_array_convert(self.tableau, valeur = 255.0)
 
 
 if __name__ == "__main__":
 
 	limg = load_image()
-	app = Tk()
+	app = Tk.Tk()
 	limg.interface_load_image(app)
 	app.mainloop()
