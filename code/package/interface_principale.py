@@ -107,7 +107,7 @@ class Interface_principale:
 		#creation d'un tableau de numpy type float
 		data = Np.array(data, dtype=Np.float32)
 		#conversion tout les 255 deviennent des 0 et inversement 
-		#data = vectorize(lambda x: 1 - x/255)(data)
+		data = Np.vectorize(lambda x: 1 - x/255)(data)
 		#affichage du tableau de numpy		
 		ud.print_array_convert(data, valeur = 0)
 
