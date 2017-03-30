@@ -15,6 +15,119 @@ class Options:
 
 
 
+
+
+
+	def interface_option(self,object_tk):
+		"""
+		methode de class qui creer l'interface graphique
+		"""
+
+		frame_principal = Tk.Frame(object_tk)
+		frame_principal.grid(row = 0, column = 0)
+
+		frame_ch_accees = Tk.LabelFrame(frame_principal, text = "gestion des chemins d'accées", padx = 5, pady = 5)
+
+		label_ch_sauv_image = Tk.Label(frame_ch_accees, text = "Chemin d'accès image: ")
+		self.entry_ch_accees_image = Tk.Entry(frame_ch_accees)
+		self.entry_ch_accees_image.insert(0, self.param["ch_img"])
+
+		label_ch_sauv_image.grid(row = 0, column = 0)
+		self.entry_ch_accees_image.grid(row = 0, column = 1, sticky = 'EW')
+
+		label_ch_log = Tk.Label(frame_ch_accees, text = "Chemin d'accès log: ")
+		self.entry_ch_log = Tk.Entry(frame_ch_accees)
+		self.entry_ch_log.insert(0, self.param["ch_log"])
+
+		label_ch_log.grid(row = 1, column = 0, sticky = 'E')		
+		self.entry_ch_log.grid(row = 1, column = 1, sticky = 'EW')		
+
+
+		label_ch_mnist = Tk.Label(frame_ch_accees, text = "Chemin d'accès base Mnist: ")
+		self.entry_ch_mnist = Tk.Entry(frame_ch_accees)
+		self.entry_ch_mnist.insert(0, self.param["ch_mnist"])
+
+		label_ch_mnist.grid(row = 2, column = 0, sticky = 'E')		
+		self.entry_ch_mnist.grid(row = 2, column = 1, sticky = 'EW')	
+
+
+		frame_ch_accees.grid(row = 0, column = 0, sticky = "EW")
+
+
+		frame_opt_canvas = Tk.LabelFrame(frame_principal, text = "gestion de la table de dessin", padx = 5, pady = 5)
+
+		self.value_long = Tk.IntVar(frame_opt_canvas)
+		self.value_long.set(self.param["h_canvas"])
+		scale_long = Tk.Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.value_long, orient = 'h')
+		entry_long = Tk.Entry(frame_opt_canvas, textvariable = self.value_long, width = 10)
+		label_long = Tk.Label(frame_opt_canvas, text = "longueur canvas: ")
+
+		label_long.grid(row = 0, column = 0, sticky = 'E')
+		scale_long.grid(row = 0, column = 1)
+		entry_long.grid(row = 0, column = 2)
+
+		self.value_hot = Tk.IntVar(frame_opt_canvas)
+		self.value_hot.set(self.param["l_canvas"])
+		scale_hot = Tk.Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.value_hot, orient = 'h')
+		entry_hot = Tk.Entry(frame_opt_canvas, textvariable = self.value_hot, width = 10)		
+		label_hot = Tk.Label(frame_opt_canvas, text = "hauteur canvas: ")
+
+		label_hot.grid(row = 1, column = 0, sticky = 'E')
+		scale_hot.grid(row = 1, column = 1)
+		entry_hot.grid(row = 1, column = 2)
+
+		self.value_epais = Tk.IntVar(frame_opt_canvas)
+		self.value_epais.set(self.param["e_t_canvas"])
+		scale_epais = Tk.Scale(frame_opt_canvas,from_= 1, to = 5, showvalue = False, variable = self.value_epais, orient = 'h')
+		entry_epais = Tk.Entry(frame_opt_canvas, textvariable = self.value_epais, width = 10)		
+		label_epais = Tk.Label(frame_opt_canvas, text = "épaisseur canvas: ")
+		
+		label_epais.grid(row = 2, column = 0, sticky = 'E')
+		scale_epais.grid(row = 2, column = 1)
+		entry_epais.grid(row = 2, column = 2)
+
+		frame_opt_canvas.grid(row = 1, column = 0, sticky = 'EW')
+
+
+		frame_choix_tensorflow = Tk.Frame(frame_principal)
+
+		choix = Tk.Variable(frame_choix_tensorflow, ('machine learning basique', 'machine learning avancée'))
+		self.lb_choix_tensorflow = Tk.Listbox(frame_choix_tensorflow, listvariable = choix, selectmode = "single",  exportselection=0)
+		self.lb_choix_tensorflow.grid(row=0,column=0,sticky='WE')
+		self.lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])
+		frame_choix_tensorflow.grid(row = 2, column = 0, sticky = "EW")
+
+
+
+		frame_bp_opt = Tk.Frame(frame_principal)
+
+		bp_journal = Tk.Button(frame_bp_opt, text = "journal",command = partial(self.ouvrir_journal, object_tk))
+		bp_journal.grid(row=0,column=0,sticky='W')
+
+
+		bp_defaut = Tk.Button(frame_bp_opt, text = "Defaut",command = partial(self.opt_par_def))
+		bp_defaut.grid(row=0,column=1,sticky='W')
+
+		frame_bp_opt.grid(row = 3, column = 0, sticky = "EW")
+
+
+
+		frame_bp_command_inter = Tk.Frame(frame_principal)
+
+		bp_appliquer = Tk.Button(frame_bp_command_inter, text = "Appliquer", command = self.sauv_configuration)
+		bp_appliquer.grid(row=0,column=0,sticky='EW')
+
+		bp_quit = Tk.Button(frame_bp_command_inter, text = "Fermer",command = partial(self.fermeture_interface, object_tk))
+		bp_quit.grid(row=0,column=1,sticky='EW')
+		
+		frame_bp_command_inter.grid(row = 4, column = 0, sticky = "EW")
+
+		frame_principal.grid_columnconfigure(0,weight=1)
+		frame_principal.grid_rowconfigure(0,weight=0)
+		frame_principal.grid_rowconfigure(2,weight=1)
+
+
+
 	def sauvegarde_opt(self, option):
 		"""
 		methode de class qui permet la sauvegarde des données
@@ -74,195 +187,82 @@ class Options:
 		"""
 		self.param = self.get_param_defaut()
 		self.sauvegarde_opt(self.param)
-		
+		self.set_items(self.param)
 
 
-	def interface_option(self,object_tk):
+
+	def set_items(self, option):
 		"""
-		methode de class qui creer l'interface graphique
+		fonction qui modifie les items de l'interface graphique
 		"""
-		frame_principal = Tk.Frame(object_tk)
-		frame_principal.grid(row = 0, column = 0)
 
-		frame_ch_accees = Tk.LabelFrame(frame_principal, text = "gestion des chemins d'accées", padx = 5, pady = 5)
+		if not isinstance(option, dict):
+			raise TypeError("erreur option = {} n'est pas de type dict ".format(type(option)))
 
-		label_ch_sauv_image = Tk.Label(frame_ch_accees, text = "Chemin d'accès image: ")
-		entry_ch_accees_image = Tk.Entry(frame_ch_accees)
-		entry_ch_accees_image.insert(0, self.param["ch_img"])
+		self.value_long.set(self.param["h_canvas"])
 
-		label_ch_sauv_image.grid(row = 0, column = 0)
-		entry_ch_accees_image.grid(row = 0, column = 1, sticky = 'EW')
+		self.value_hot.set(self.param["l_canvas"])
 
-		label_ch_log = Tk.Label(frame_ch_accees, text = "Chemin d'accès log: ")
-		entry_ch_log = Tk.Entry(frame_ch_accees)
-		entry_ch_log.insert(0, self.param["ch_log"])
+		self.value_epais.set(self.param["e_t_canvas"])		
 
-		label_ch_log.grid(row = 1, column = 0, sticky = 'E')		
-		entry_ch_log.grid(row = 1, column = 1, sticky = 'EW')		
+		self.entry_ch_accees_image.delete(0,Tk.END)
+		self.entry_ch_accees_image.insert(0, self.param["ch_img"])
 
+		self.entry_ch_log.delete(0,Tk.END)
+		self.entry_ch_log.insert(0, self.param["ch_log"])
 
-		label_ch_mnist = Tk.Label(frame_ch_accees, text = "Chemin d'accès base Mnist: ")
-		entry_ch_mnist = Tk.Entry(frame_ch_accees)
-		entry_ch_mnist.insert(0, self.param["ch_mnist"])
+		self.entry_ch_mnist.delete(0,Tk.END)
+		self.entry_ch_mnist.insert(0, self.param["ch_mnist"])
 
-		label_ch_mnist.grid(row = 2, column = 0, sticky = 'E')		
-		entry_ch_mnist.grid(row = 2, column = 1, sticky = 'EW')	
+		self.lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])
 
-
-		frame_ch_accees.grid(row = 0, column = 0, sticky = "EW")
-
-
-		frame_opt_canvas = Tk.LabelFrame(frame_principal, text = "gestion de la table de dessin", padx = 5, pady = 5)
-
-		value_long = Tk.IntVar(frame_opt_canvas)
-		value_long.set(self.param["h_canvas"])
-		scale_long = Tk.Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = value_long, orient = 'h')
-		entry_long = Tk.Entry(frame_opt_canvas, textvariable = value_long, width = 10)
-		label_long = Tk.Label(frame_opt_canvas, text = "longueur canvas: ")
-
-		label_long.grid(row = 0, column = 0, sticky = 'E')
-		scale_long.grid(row = 0, column = 1)
-		entry_long.grid(row = 0, column = 2)
-
-		value_hot = Tk.IntVar(frame_opt_canvas)
-		value_hot.set(self.param["l_canvas"])
-		scale_hot = Tk.Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = value_hot, orient = 'h')
-		entry_hot = Tk.Entry(frame_opt_canvas, textvariable = value_hot, width = 10)		
-		label_hot = Tk.Label(frame_opt_canvas, text = "hauteur canvas: ")
-
-		label_hot.grid(row = 1, column = 0, sticky = 'E')
-		scale_hot.grid(row = 1, column = 1)
-		entry_hot.grid(row = 1, column = 2)
-
-		value_epais = Tk.IntVar(frame_opt_canvas)
-		value_epais.set(self.param["e_t_canvas"])
-		scale_epais = Tk.Scale(frame_opt_canvas,from_= 1, to = 5, showvalue = False, variable = value_epais, orient = 'h')
-		entry_epais = Tk.Entry(frame_opt_canvas, textvariable = value_epais, width = 10)		
-		label_epais = Tk.Label(frame_opt_canvas, text = "épaisseur canvas: ")
-		
-		label_epais.grid(row = 2, column = 0, sticky = 'E')
-		scale_epais.grid(row = 2, column = 1)
-		entry_epais.grid(row = 2, column = 2)
-
-		frame_opt_canvas.grid(row = 1, column = 0, sticky = 'EW')
-
-
-		frame_choix_tensorflow = Tk.Frame(frame_principal)
-
-		choix = Tk.Variable(frame_choix_tensorflow, ('machine learning basique', 'machine learning avancée'))
-		lb_choix_tensorflow = Tk.Listbox(frame_choix_tensorflow, listvariable = choix, selectmode = "single",  exportselection=0)
-		lb_choix_tensorflow.grid(row=0,column=0,sticky='WE')
-		lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])
-		frame_choix_tensorflow.grid(row = 2, column = 0, sticky = "EW")
-
-
-
-		frame_bp_opt = Tk.Frame(frame_principal)
-
-		bp_journal = Tk.Button(frame_bp_opt, text = "journal",command = partial(self.ouvrir_journal, object_tk))
-		bp_journal.grid(row=0,column=0,sticky='W')
-
-
-		bp_defaut = Tk.Button(frame_bp_opt, text = "Defaut",command = partial(self.opt_par_def))
-		bp_defaut.grid(row=0,column=1,sticky='W')
-
-		frame_bp_opt.grid(row = 3, column = 0, sticky = "EW")
-
-
-
-		frame_bp_command_inter = Tk.Frame(frame_principal)
-
-		bp_appliquer = Tk.Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, entry_ch_mnist, value_long, value_hot, value_epais, lb_choix_tensorflow))
-		bp_appliquer.grid(row=0,column=0,sticky='EW')
-
-		bp_quit = Tk.Button(frame_bp_command_inter, text = "Fermer",command = partial(self.fermeture_interface, object_tk))
-		bp_quit.grid(row=0,column=1,sticky='EW')
-		
-		frame_bp_command_inter.grid(row = 4, column = 0, sticky = "EW")
-
-		frame_principal.grid_columnconfigure(0,weight=1)
-		frame_principal.grid_rowconfigure(0,weight=0)
-		frame_principal.grid_rowconfigure(2,weight=1)
-
-
-
-	def sauv_configuration(self, item_ch_img, 
-							item_ch_log, 
-							entry_ch_mnist,
-							item_value_long, 
-							item_value_hot, 
-							item_value_epais, 
-							item_value_selec_tensorflow):
+	def sauv_configuration(self):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration
 		"""
 		#sauvegarde des chemin de fichier
-		self.save_ch_accees(item_ch_img, item_ch_log, entry_ch_mnist)
+		self.save_ch_accees()
 		#sauvegarde des attribut principaux du canvas
-		self.save_canvas(item_value_long, item_value_hot, item_value_epais)
+		self.save_canvas()
 		#sauvegarde du choix de tensorflow
-		self.save_choix_tensorflow(item_value_selec_tensorflow)
+		self.save_choix_tensorflow()
 		#enregistrement des nouvelles obtions dans le fichiers param
 		self.sauvegarde_opt(self.param)
 
 
 
 
-	def save_ch_accees(self, 
-						item_ch_img, 
-						item_ch_log,
-						item_ch_mnsit):
+	def save_ch_accees(self):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration des chemin d'accees
 		"""
-
-		if not isinstance(item_ch_img, Tk.Entry):
-			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_img)))
-		
-		if not isinstance(item_ch_log, Tk.Entry):
-			raise TypeError("erreur option = {} n'est pas de type Entry ".format(type(ch_log)))	
-
-		self.param["ch_img"] = item_ch_img.get()
-		self.param["ch_log"] = item_ch_log.get()
-		self.param["ch_mnist"] = item_ch_mnsit.get()
+				
+		self.param["ch_img"] = self.entry_ch_accees_image.get()
+		self.param["ch_log"] = self.entry_ch_log.get()
+		self.param["ch_mnist"] = self.entry_ch_mnist.get()
 
 
 
-	def save_canvas(self, 
-					item_value_long, 
-					item_value_hot, 
-					item_value_epais):
+	def save_canvas(self):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration attributs du canvas
 		"""
-		
-		if not isinstance(item_value_long, Tk.IntVar):
-			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_long)))
-		
-		if not isinstance(item_value_hot, Tk.IntVar):
-			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_hot)))
-		
-		if not isinstance(item_value_epais, Tk.IntVar):
-			raise TypeError("erreur option = {} n'est pas de type IntVar ".format(type(value_epais)))
 
-		self.param["h_canvas"] = item_value_hot.get()
-		self.param["l_canvas"] = item_value_long.get()
-		self.param["e_t_canvas"] = item_value_epais.get()
+		self.param["h_canvas"] = self.value_hot.get()
+		self.param["l_canvas"] = self.value_long.get()
+		self.param["e_t_canvas"] = self.value_epais.get()
 
 
 
 
-	def save_choix_tensorflow(self, item_value_selec_tensorflow):
+	def save_choix_tensorflow(self):
 		"""
 		methode de class qui sauvegarde la nouvelle selection de tensorflow
 		"""
 
-		if not isinstance(item_value_selec_tensorflow, Tk.Listbox):
-			raise TypeError("erreur option = {} n'est pas de type Listbox ".format(type(item_value_selec_tensorflow)))
-
-		index = item_value_selec_tensorflow.curselection()
+		index = self.lb_choix_tensorflow.curselection()
 		index = index[0]
-		self.param["tensorflow"] = item_value_selec_tensorflow.get(index)
+		self.param["tensorflow"] = self.lb_choix_tensorflow.get(index)
 		self.param["index_tensorflow"] = index
 
 
