@@ -36,9 +36,9 @@ import matplotlib.pyplot as plt
 FLAGS = None
 
 #tensorflow de base
-def machine_learning(donnee):
+def machine_learning(donnee, option):
   # importation des données
-  mnist = input_data.read_data_sets('/tmp/tensorflow/mnist/input_data', one_hot=True)
+  mnist = input_data.read_data_sets(option["ch_mnist"], one_hot=True)
 
   # creation du modele
   #x = images
@@ -102,9 +102,9 @@ def machine_learning(donnee):
 
 
 #tensorflow de base modifier
-def machine_learning_v2(donnee):
+def machine_learning_v2(donnee, option):
  # Import data
-  mnist = input_data.read_data_sets("/home/ledoux/Documents/Programmation/python/python-le-on/proj/machine_learning/code/tensorflow/mnist/input_data/", one_hot=True)
+  mnist = input_data.read_data_sets(option["ch_mnist"], one_hot=True)
 
   # Create the model
   x = tf.placeholder(tf.float32, [None, 784])
