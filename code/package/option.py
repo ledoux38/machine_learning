@@ -60,8 +60,8 @@ class Options:
 				 "h_canvas": 18, 
 				 "l_canvas": 18, 
 				 "e_t_canvas": 1, 
-				 "tensorflow": "machine_learning", 
-				 "index_tensorflow": 1 
+				 "tensorflow": "machine learning basique", 
+				 "index_tensorflow": 0
 				 }
 
 		return dic
@@ -149,7 +149,7 @@ class Options:
 
 		frame_choix_tensorflow = Tk.Frame(frame_principal)
 
-		choix = Tk.Variable(frame_choix_tensorflow, ('machine_learning', 'machine_learning_v2', 'machine_learning_v3'))
+		choix = Tk.Variable(frame_choix_tensorflow, ('machine learning basique', 'machine learning avancée'))
 		lb_choix_tensorflow = Tk.Listbox(frame_choix_tensorflow, listvariable = choix, selectmode = "single",  exportselection=0)
 		lb_choix_tensorflow.grid(row=0,column=0,sticky='WE')
 		lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])
