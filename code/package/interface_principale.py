@@ -111,48 +111,12 @@ class Interface_principale:
 		#affichage du tableau de numpy		
 		ud.print_array_convert(data, valeur = 0)
 
-		if self.opt["tensorflow"] == "machine_learning":
+		if self.opt["tensorflow"] == 'machine learning basique':
 			Mg.machine_learning(donnee = data)
 
-		elif self.opt["tensorflow"] == "machine_learning_v2":
+		elif self.opt["tensorflow"] == 'machine learning avancée':
 			Mg.machine_learning_v2(donnee = data)
-
-		elif self.opt["tensorflow"] == "machine_learning_v3":
-			Mg.machine_learning_v3(donnee = data)
-		
-
-		#conversion des pixels
-		#nv_liste = list()
-		#for x, cp in enumerate(liste):
-		#	nv_liste.append(liste[x][1]/255)
-
-		#integration de la liste dans un tableau de numpy
-		#arr = array(nv_liste)
-
-		#cretation d'un tableau a deux dimension
-		#arr = arr.reshape(28,28)
-
-		#lancement de tensorflow
-		"""
-		no_liste = list()
-		for x, cp in enumerate(nv_liste):
-			if nv_liste[x] == 1:
-				no_liste.append(0.)
-			else:
-				no_liste.append(1.)
-		"""
-		#data = vectorize(lambda x: 255 - x)(arr)
-		#print("\n\n\n",data, shape(data))
-
-
-		"""
-		arr = array(nv_liste)
-		print("\n\n\n",arr, shape(arr))
-
-		#data = vectorize(lambda x: 255 - x)(arr)
-		print("\n\n\n",data, shape(data))
-		"""
-
+			
 
 
 	def ouvrir_option(self, object_tk):
