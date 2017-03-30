@@ -54,16 +54,33 @@ class Options:
 		methode de class qui renvoi les attributs par defauts
 		"""
 
-		dic = {"ch_img":"./img", "ch_log":"./log/activity.log", "h_canvas":18, "l_canvas":18, "e_t_canvas":1, "tensorflow":"machine_learning", "index_tensorflow":1 }
+		dic = {"ch_img": "./img",
+				 "ch_log": "./log/activity.log", 
+				 "ch_mnist": "./MNIST_data",
+				 "h_canvas": 18, 
+				 "l_canvas": 18, 
+				 "e_t_canvas": 1, 
+				 "tensorflow": "machine_learning", 
+				 "index_tensorflow": 1 
+				 }
+
 		return dic
 
+
+
+	def opt_par_def(self):
+		"""
+		methode de class qui reset les variable par defaut
+		"""
+		self.param = self.get_param_defaut()
+		self.sauvegarde_opt(self.param)
+		
 
 
 	def interface_option(self,object_tk):
 		"""
 		methode de class qui creer l'interface graphique
 		"""
-
 		frame_principal = Tk.Frame(object_tk)
 		frame_principal.grid(row = 0, column = 0)
 
@@ -82,6 +99,15 @@ class Options:
 
 		label_ch_log.grid(row = 1, column = 0, sticky = 'E')		
 		entry_ch_log.grid(row = 1, column = 1, sticky = 'EW')		
+
+
+		label_ch_mnist = Tk.Label(frame_ch_accees, text = "Chemin d'accès base Mnist: ")
+		entry_ch_mnist = Tk.Entry(frame_ch_accees)
+		entry_ch_mnist.insert(0, self.param["ch_mnist"])
+
+		label_ch_mnist.grid(row = 2, column = 0, sticky = 'E')		
+		entry_ch_mnist.grid(row = 2, column = 1, sticky = 'EW')	
+
 
 		frame_ch_accees.grid(row = 0, column = 0, sticky = "EW")
 
@@ -136,13 +162,17 @@ class Options:
 		bp_journal = Tk.Button(frame_bp_opt, text = "journal",command = partial(self.ouvrir_journal, object_tk))
 		bp_journal.grid(row=0,column=0,sticky='W')
 
+
+		bp_defaut = Tk.Button(frame_bp_opt, text = "Defaut",command = partial(self.opt_par_def))
+		bp_defaut.grid(row=0,column=1,sticky='W')
+
 		frame_bp_opt.grid(row = 3, column = 0, sticky = "EW")
 
 
 
 		frame_bp_command_inter = Tk.Frame(frame_principal)
 
-		bp_appliquer = Tk.Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, value_long, value_hot, value_epais, lb_choix_tensorflow))
+		bp_appliquer = Tk.Button(frame_bp_command_inter, text = "Appliquer", command = partial(self.sauv_configuration, entry_ch_accees_image, entry_ch_log, entry_ch_mnist, value_long, value_hot, value_epais, lb_choix_tensorflow))
 		bp_appliquer.grid(row=0,column=0,sticky='EW')
 
 		bp_quit = Tk.Button(frame_bp_command_inter, text = "Fermer",command = partial(self.fermeture_interface, object_tk))
@@ -158,6 +188,7 @@ class Options:
 
 	def sauv_configuration(self, item_ch_img, 
 							item_ch_log, 
+							entry_ch_mnist,
 							item_value_long, 
 							item_value_hot, 
 							item_value_epais, 
@@ -166,7 +197,7 @@ class Options:
 		methode de class qui sauvegarde la nouvelle configuration
 		"""
 		#sauvegarde des chemin de fichier
-		self.save_ch_accees(item_ch_img, item_ch_log)
+		self.save_ch_accees(item_ch_img, item_ch_log, entry_ch_mnist)
 		#sauvegarde des attribut principaux du canvas
 		self.save_canvas(item_value_long, item_value_hot, item_value_epais)
 		#sauvegarde du choix de tensorflow
@@ -177,7 +208,10 @@ class Options:
 
 
 
-	def save_ch_accees(self, item_ch_img, item_ch_log):
+	def save_ch_accees(self, 
+						item_ch_img, 
+						item_ch_log,
+						item_ch_mnsit):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration des chemin d'accees
 		"""
@@ -190,10 +224,14 @@ class Options:
 
 		self.param["ch_img"] = item_ch_img.get()
 		self.param["ch_log"] = item_ch_log.get()
+		self.param["ch_mnist"] = item_ch_mnsit.get()
 
 
 
-	def save_canvas(self, item_value_long, item_value_hot, item_value_epais):
+	def save_canvas(self, 
+					item_value_long, 
+					item_value_hot, 
+					item_value_epais):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration attributs du canvas
 		"""
@@ -296,5 +334,7 @@ if __name__ == "__main__":
 		 
 		root.mainloop()
 
-
-	
+	elif choix_version == 2:
+		a = Options()
+		print(a.get_param_defaut())
+			
