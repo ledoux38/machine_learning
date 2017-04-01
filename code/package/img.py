@@ -1,7 +1,7 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
 from tkinter.filedialog import *
-from tkinter import Canvas
+import tkinter as Tk
 from PIL import Image
 from PIL import ImageDraw
 
@@ -78,7 +78,7 @@ class img:
 		creer une image via pillow
 		"""
 
-		if not isinstance(obj_canvas, Canvas):
+		if not isinstance(obj_canvas, interface_canvas):
 			raise TypeError("erreur obj_canvas = {} n'est pas de type Canvas ".format(type(obj_canvas)))
 
 		#creation d'une image pillow vierge
@@ -107,8 +107,7 @@ class img:
 		"""
 		modification de l'image 
 		"""
-
-		if not isinstance(obj_canvas, Canvas):
+		if not isinstance(obj_canvas, interface_canvas):
 			raise TypeError("erreur obj_canvas = {} n'est pas de type Canvas ".format(type(obj_canvas)))
 
 		self._image = self.creation_image(obj_canvas)
@@ -151,7 +150,7 @@ class img:
 
 
 
-from canvas import *
+from package.canvas import *
 if __name__ == "__main__":
 
 	

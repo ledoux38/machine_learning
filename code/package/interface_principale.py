@@ -3,16 +3,16 @@
 
 from functools import partial
 
-import log as Lg 
+import package.log as Lg 
 import tkinter as Tk
-import option as Opt 
-import canvas as Cv
+import package.option as Opt 
+import package.canvas as Cv
 import numpy as Np
-import img as Ig
-import machine_learning as Mg
-import load_image as limg
+import package.img as Ig
+import package.machine_learning as Mg
+import package.load_image as limg
 import tkinter.messagebox
-import utilitaire_debug as ud
+import package.utilitaire_debug as ud
 
 
 

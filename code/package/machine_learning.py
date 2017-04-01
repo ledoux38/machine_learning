@@ -101,7 +101,7 @@ class machine_learning_basique:
 		"""
 		methode de classe qui permet de tester le modele
 		"""
-		if not isinstance(data, numpy.ndarray):
+		if not isinstance(data, ndarray):
 			raise TypeError("erreur data = {} n'est pas de type numpy.ndarray ".format(type(data)))			
 
 		result = self.session.run(tf.argmax(self.variable_mnsit["y"],1), feed_dict={self.variable_mnsit["x"]: [data]})
