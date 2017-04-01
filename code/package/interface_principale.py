@@ -9,7 +9,7 @@ import option as Opt
 import canvas as Cv
 import numpy as Np
 import img as Ig
-import Machine_learning as Mg
+import machine_learning as Mg
 import load_image as limg
 import tkinter.messagebox
 import utilitaire_debug as ud
