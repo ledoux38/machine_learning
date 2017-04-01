@@ -136,7 +136,7 @@ class Options:
 		if not isinstance(option, dict):
 			raise TypeError("erreur option = {} n'est pas de type dict ".format(type(option)))
 		
-		with open("param", 'wb') as fichier:
+		with open("parametre/param", 'wb') as fichier:
 			mon_fichier = pickle.Pickler(fichier)
 			mon_fichier.dump(option)
 
@@ -150,7 +150,7 @@ class Options:
 		"""
 
 		try:
-			with open("param", 'rb') as fichier:
+			with open("parametre/param", 'rb') as fichier:
 				mon_fichier = pickle.Unpickler(fichier)
 				parametre = mon_fichier.load()
 				return parametre
