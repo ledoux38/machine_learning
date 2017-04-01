@@ -12,7 +12,7 @@ import PIL.ImageTk
 #from PIL import Image, ImageFont, ImageDraw, ImageTk
 import scipy.ndimage
 import journal as Ij
-import Machine_learning as Ml
+import machine_learning as Ml
 import utilitaire_debug as ud
 
 class load_image:
