@@ -31,8 +31,14 @@ class Interface_principale:
 
 		# instanciation de la class Options
 		self.inter_option = Opt.Options()
+		# recuperation des donnée option
 		self.opt = self.inter_option.param
+		# instanciation de la class image
 		self.image = Ig.img(option = self.opt)
+		# instanciation de la class machine_learning
+		self.machine_learning = Mg.machine_learning_basique(option = self.opt)
+		# initialisation de la machine_learning
+		self.init_machine_learning()
 
 
 
@@ -76,6 +82,17 @@ class Interface_principale:
 
 
 
+	def init_machine_learning(self):
+		"""
+		methode de class qui initialise la creation du modele et sont entrainement 
+		"""
+
+		self.machine_learning.recuperation_donnee_mnist()
+		self.machine_learning.creation_modele()
+		self.machine_learning.entrainement()
+
+
+
 	def quitter_interface(self, object_tk):
 		"""
 		methode de class qui permet de quitter le programme
@@ -112,11 +129,12 @@ class Interface_principale:
 		ud.print_array_convert(data, valeur = 0)
 
 		if self.opt["tensorflow"] == 'machine learning basique':
-			Mg.machine_learning(donnee = data)
+			self.machine_learning.test_modele(data = data)
 
 		elif self.opt["tensorflow"] == 'machine learning avancée':
-			Mg.machine_learning_v2(donnee = data)
-			
+			tkinter.messagebox.showinfo("ATTENTION", "MACHINE LEARNING AVANCÉE PAS ENCORE IMPLEMENTÉ")
+			#Mg.machine_learning_v2(donnee = data, option = self.opt)
+
 
 
 	def ouvrir_option(self, object_tk):
