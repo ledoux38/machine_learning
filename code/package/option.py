@@ -4,7 +4,7 @@
 
 
 import tkinter as Tk
-import interface_journal as Ij
+import journal as Ij
 import pickle
 import os
 from functools import partial

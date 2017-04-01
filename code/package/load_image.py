@@ -11,7 +11,7 @@ import PIL.ImageDraw
 import PIL.ImageTk
 #from PIL import Image, ImageFont, ImageDraw, ImageTk
 import scipy.ndimage
-import interface_journal as Ij
+import journal as Ij
 import Machine_learning as Ml
 import utilitaire_debug as ud
 
