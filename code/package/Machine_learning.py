@@ -59,12 +59,12 @@ class machine_learning_basique:
 		"""
 		methode de classe qui permet de créer le modele'
 		"""
-		
+		#creation des variables
 		self.variable_mnsit = {"x": tf.placeholder(tf.float32, [None, 784]),
 								"W": tf.Variable(tf.zeros([784, 10])), 
 								"b": tf.Variable(tf.zeros([10])),
 								"y_": tf.placeholder(tf.float32, [None, 10])}
-		
+		#remplissage des variables
 		self.variable_mnsit["y"] = tf.matmul(self.variable_mnsit["x"], self.variable_mnsit["W"]) + self.variable_mnsit["b"] 
 		
 		cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=self.variable_mnsit["y_"], logits=self.variable_mnsit["y"]))
