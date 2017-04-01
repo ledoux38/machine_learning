@@ -33,8 +33,83 @@ from numpy import *
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
-FLAGS = None
+class machine_learning_basique:
 
+	def __init__ (self, option = {"ch_mnist": "./MNIST_data"}):
+		if not isinstance(option, dict):
+			raise TypeError("erreur option = {} n'est pas de type dict ".format(type(option)))
+
+		self.option = option
+		self.session = None
+		self.donnee_mnist = None
+		self.variable_mnsit = {}
+
+
+
+	def recuperation_donnee_mnist(self):
+		"""
+		methode de class qui charge les données mnist
+		"""
+
+		self.mnist = input_data.read_data_sets(self.option["ch_mnist"], one_hot=True)
+
+
+
+	def creation_modele(self):
+		"""
+		methode de classe qui permet de créer le modele'
+		"""
+		
+		self.variable_mnsit = {"x": tf.placeholder(tf.float32, [None, 784]),
+								"W": tf.Variable(tf.zeros([784, 10])), 
+								"b": tf.Variable(tf.zeros([10])),
+								"y_": tf.placeholder(tf.float32, [None, 10])}
+		
+		self.variable_mnsit["y"] = tf.matmul(self.variable_mnsit["x"], self.variable_mnsit["W"]) + self.variable_mnsit["b"] 
+		
+		cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=self.variable_mnsit["y_"], logits=self.variable_mnsit["y"]))
+		
+		self.variable_mnsit["train_step"] = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+		self.session = tf.InteractiveSession()
+
+		tf.global_variables_initializer().run()
+
+
+
+
+	def entrainement(self):
+		"""
+		methode de classe qui permet d'entrainer le modele'
+		"""
+
+		for _ in range(1000):
+			batch_xs, batch_ys = self.mnist.train.next_batch(100)
+			self.session.run(self.variable_mnsit["train_step"], feed_dict={self.variable_mnsit["x"]: batch_xs, 
+																			self.variable_mnsit["y_"]: batch_ys})
+
+		correct_prediction = tf.equal(tf.argmax(self.variable_mnsit["y"], 1), tf.argmax(self.variable_mnsit["y_"], 1))
+
+		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+		print(self.session.run(accuracy, feed_dict={self.variable_mnsit["x"]: self.mnist.test.images, 
+											self.variable_mnsit["y_"]: self.mnist.test.labels}))
+
+
+
+	def test_modele(self, data):
+		"""
+		methode de classe qui permet de tester le modele
+		"""
+		if not isinstance(data, numpy.ndarray):
+			raise TypeError("erreur data = {} n'est pas de type numpy.ndarray ".format(type(data)))			
+
+		result = self.session.run(tf.argmax(self.variable_mnsit["y"],1), feed_dict={self.variable_mnsit["x"]: [data]})
+		print ('resultat ', result)
+
+
+
+"""
 #tensorflow de base
 def machine_learning(donnee, option):
   # importation des données
@@ -52,15 +127,6 @@ def machine_learning(donnee, option):
   # Define loss and optimizer
   y_ = tf.placeholder(tf.float32, [None, 10])
 
-  # The raw formulation of cross-entropy,
-  #
-  #   tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(tf.nn.softmax(y)),
-  #                                 reduction_indices=[1]))
-  #
-  # can be numerically unstable.
-  #
-  # So here we use tf.nn.softmax_cross_entropy_with_logits on the raw
-  # outputs of 'y', and then average across the batch.
   cross_entropy = tf.reduce_mean(
       tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
   train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
@@ -72,7 +138,7 @@ def machine_learning(donnee, option):
   for _ in range(1000):
     batch_xs, batch_ys = mnist.train.next_batch(100)
     sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
-    #print(FLAGS.donnee)
+
   # Test trained model
   correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
 
@@ -99,5 +165,18 @@ def machine_learning(donnee, option):
   result = sess.run(tf.argmax(y,1), feed_dict={x: [data]})
   #result = sess.run(y, feed_dict={x: [donnee]})
   print ('resultat ', result)
+"""
+
+
+
+if __name__ == "__main__":
+
+
+  a = machine_learning_basique()
+  print(a.variable_mnsit)
+
+  a.recuperation_donnee_mnist()
+  a.creation_modele()
+  a.entrainement()
 
 
