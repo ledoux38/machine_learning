@@ -1,30 +1,21 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
 
-from tkinter import *
+import interface_principale as Ip
 
-fenetre = Tk()
-panel_principal = PanedWindow(fenetre, orient=VERTICAL)
-panel_principal.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx=2)
-canvas = Canvas(panel_principal,width = 150, height = 120,background = 'yellow')
+#instanciation de la classe 
+a = Ip.Interface_principale()
 
-panel_principal.add(canvas)
+#creation de la fenetre principale
+app = Tk.Tk()
 
-panel_button = PanedWindow(fenetre,orient = HORIZONTAL)
+#integration de la fenetre principale dans la fenetre principale
+a.interface_principale(app)
 
-button_fermer = Button(panel_button, text = "Fermer", command = fenetre.quit)
-button_generer = Button(panel_button, text = "Generer")
-button_recommencer = Button(panel_button, text = "Recommencer")
-button_option = Button(panel_button, text = "Option")
+#modification des options
+app.title("MNIST")
+app.resizable(False, False)
 
-panel_button.add(button_fermer)
-panel_button.add(button_generer)
-panel_button.add(button_recommencer)
-panel_button.add(button_option)
-
-panel_principal.add(panel_button)
-
-panel_principal.pack()
-
-fenetre.mainloop()
+#affichage de la fenetre
+app.mainloop()
 
