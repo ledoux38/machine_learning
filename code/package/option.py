@@ -4,10 +4,11 @@
 
 
 import tkinter as Tk
-import package.journal as Ij
 import pickle
 import os
 from functools import partial
+
+import package.journal as Ij
 
 class Options:
 	def __init__(self):

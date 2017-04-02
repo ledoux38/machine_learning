@@ -2,16 +2,16 @@
 #-*-coding:UTF-8 -*
 
 from functools import partial
-
-import package.log as Lg 
+import numpy as Np
+import tkinter.messagebox
 import tkinter as Tk
+
 import package.option as Opt 
 import package.canvas as Cv
-import numpy as Np
+import package.log as Lg 
 import package.img as Ig
 import package.machine_learning as Mg
 import package.load_image as limg
-import tkinter.messagebox
 import package.utilitaire_debug as ud
 
 

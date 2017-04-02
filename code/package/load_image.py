@@ -11,6 +11,7 @@ import PIL.ImageDraw
 import PIL.ImageTk
 #from PIL import Image, ImageFont, ImageDraw, ImageTk
 import scipy.ndimage
+
 import package.journal as Ij
 import package.machine_learning as Ml
 import package.utilitaire_debug as ud

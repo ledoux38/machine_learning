@@ -1,15 +1,11 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
 
-from tkinter.filedialog import *
-from tkinter import *
-from numpy import *
-from PIL import Image
-from PIL import ImageDraw
+
+import tkinter as Tk
 
 
-
-class interface_canvas(Canvas):
+class interface_canvas(Tk.Canvas):
 	"""
 	canvas personaliser pour dessiner des lignes
 	"""
@@ -21,7 +17,7 @@ class interface_canvas(Canvas):
 		self.option = option
 
 		# je creer un canvas et je lui donne en parametre  les valeurs des options
-		Canvas.__init__(self, parent, height = self.option["h_canvas"], width = self.option["l_canvas"])
+		Tk.Canvas.__init__(self, parent, height = self.option["h_canvas"], width = self.option["l_canvas"])
 
 		
 		self.bind("<B1-Motion>", self.creation_forme)
@@ -83,7 +79,7 @@ class interface_canvas(Canvas):
 		methode de classe qui supprime tout les items
 		"""
 
-		self.delete(ALL)
+		self.delete(Tk.ALL)
 
 
 
