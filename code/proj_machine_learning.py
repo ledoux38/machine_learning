@@ -1,7 +1,7 @@
 #!usr/bin/python3.5
 #-*-coding:UTF-8 -*
-
-import interface_principale as Ip
+import tkinter as Tk
+import package.interface_principale as Ip
 
 #instanciation de la classe 
 a = Ip.Interface_principale()
