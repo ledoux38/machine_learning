@@ -115,7 +115,7 @@ class machine_learning_basique:
 		methode de class qui permet la sauvegarde des données
 		"""
 		saver = tf.train.Saver()
-		save_path = saver.save(self.session, "modeles/model_basique.ckpt")
+		save_path = saver.save(self.session, "modeles/basique/model_basique.ckpt")
 		print("Model saved in file: %s" % save_path)
 
 
@@ -124,7 +124,7 @@ class machine_learning_basique:
 		saver = tf.train.Saver()
 		with tf.Session() as self.session:
 			# Restore variables from disk.
-			saver.restore(self.session, "modeles/model_basique.ckpt")
+			saver.restore(self.session, "modeles/basique/model_basique.ckpt")
 			print("Model restored.")
 
 
@@ -261,7 +261,7 @@ class machine_learning_avancer:
 		methode de class qui permet la sauvegarde des données
 		"""
 		saver = tf.train.Saver()
-		save_path = saver.save(self.session, "modeles/model_avancer.ckpt")
+		save_path = saver.save(self.session, "modeles/avancer/model_avancer.ckpt")
 		print("Model saved in file: %s" % save_path)
 
 
@@ -270,12 +270,13 @@ class machine_learning_avancer:
 		saver = tf.train.Saver()
 		with tf.Session() as self.session:
 			# Restore variables from disk.
-			saver.restore(self.session, "modeles/model_avancer.ckpt")
+			saver.restore(self.session, "modeles/avancer/model_avancer.ckpt")
 			print("Model restored.")
 
+import scipy.ndimage
 
 if __name__ == "__main__":
-	version = 3
+	version = 1
 
 	#creation et sauvegarde du modele
 	if version == 0:
@@ -286,11 +287,31 @@ if __name__ == "__main__":
 		a.entrainement()
 		a.sauve_modele()
 
+		tableau_img = scipy.ndimage.imread("test/0v0.bmp", flatten=True)
+		print(tableau_img, shape(tableau_img))
+
+		flatten  = ndarray.flatten(tableau_img)
+		print(flatten, shape(flatten))
+
+		data = vectorize(lambda x: 255 - x)(flatten)
+		print(data, shape(data))
+		a.test_modele(data = data)
+
 	# chargement du modele
 	if version == 1:
 		a = machine_learning_basique()
 		a.creation_modele()
 		a.chargement_modele()
+
+		tableau_img = scipy.ndimage.imread("test/0v0.bmp", flatten=True)
+		print(tableau_img, shape(tableau_img))
+
+		flatten  = ndarray.flatten(tableau_img)
+		print(flatten, shape(flatten))
+
+		data = vectorize(lambda x: 255 - x)(flatten)
+		print(data, shape(data))
+		a.test_modele(data = data)
 
 	#creation et sauvegarde modele evoluer
 	if version == 2:

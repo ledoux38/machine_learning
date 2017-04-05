@@ -39,7 +39,10 @@ class Interface_principale:
 		self.machine_learning = Mg.machine_learning_basique(option = self.opt)
 		# initialisation de la machine_learning
 		self.init_machine_learning()
-
+		# instanciation de la class machine_learning_avancer
+		#self.machine_learning_avancer = Mg.machine_learning_avancer(option = self.opt)
+		# initialisation de la machine_learning_avancer
+		#self.init_machine_learning_avancer()
 
 
 	def interface_principale(self, object_tk):
@@ -86,11 +89,21 @@ class Interface_principale:
 		"""
 		methode de class qui initialise la creation du modele et sont entrainement 
 		"""
+		try:
+			self.machine_learning.creation_modele()
+			self.machine_learning.chargement_modele()
 
-		self.machine_learning.recuperation_donnee_mnist()
-		self.machine_learning.creation_modele()
-		self.machine_learning.entrainement()
+		except type_de_l_exception as exception_retournee:
+			print("erreur :", exception_retournee)
 
+			self.machine_learning.recuperation_donnee_mnist()
+			self.machine_learning.creation_modele()
+			self.machine_learning.entrainement()
+			self.machine_learning.sauve_modele()
+
+
+	def init_machine_learning_avancer(self):
+		pass
 
 
 	def quitter_interface(self, object_tk):
