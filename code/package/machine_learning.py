@@ -219,27 +219,27 @@ class machine_learning_avancer:
 
 		self.variable_mnsit["y_conv"] = tf.matmul(h_fc1_drop, W_fc2) + b_fc2
 				
-
+		cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(self.variable_mnsit["y_conv"], self.variable_mnsit["y_"]))
+		self.variable_mnsit["train_step"] = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+		self.correct_prediction = tf.equal(tf.argmax(self.variable_mnsit["y_conv"],1), tf.argmax(self.variable_mnsit["y_"] ,1))
+		self.variable_mnsit["accuracy"] = tf.reduce_mean(tf.cast(self.correct_prediction, tf.float32))
+		self.session.run(tf.global_variables_initializer())
 
 
 	def entrainement(self):
 		# Setup loss & Train
-		cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(self.variable_mnsit["y_conv"], self.variable_mnsit["y_"]))
-		train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
-		self.correct_prediction = tf.equal(tf.argmax(self.variable_mnsit["y_conv"],1), tf.argmax(self.variable_mnsit["y_"] ,1))
-		accuracy = tf.reduce_mean(tf.cast(self.correct_prediction, tf.float32))
-		self.session.run(tf.global_variables_initializer())
+
 		for i in range(1000):
 			batch = self.mnist.train.next_batch(50)
 			if i%100 == 0:
-				train_accuracy = accuracy.eval(feed_dict={self.variable_mnsit["x"]:batch[0], self.variable_mnsit["y_"] : batch[1], self.variable_mnsit["keep_prob"] : 1.0})
+				train_accuracy = self.variable_mnsit["accuracy"].eval(feed_dict={self.variable_mnsit["x"]:batch[0], self.variable_mnsit["y_"] : batch[1], self.variable_mnsit["keep_prob"] : 1.0})
 				print("step %d, training accuracy %g"%(i, train_accuracy))
-			train_step.run(feed_dict={self.variable_mnsit["x"] : batch[0], self.variable_mnsit["y_"]: batch[1], self.variable_mnsit["keep_prob"]: 0.5})
+			self.variable_mnsit["train_step"].run(feed_dict={self.variable_mnsit["x"] : batch[0], self.variable_mnsit["y_"]: batch[1], self.variable_mnsit["keep_prob"]: 0.5})
 
 		batchSize = 5000
 		for i in range(len(self.mnist.train.labels) // batchSize):
 			bat = self.mnist.test.next_batch(100)
-			print("test accuracy %g" % accuracy.eval(feed_dict={self.variable_mnsit["x"] : bat[0],  self.variable_mnsit["y_"]: bat[1], self.variable_mnsit["keep_prob"]: 1.0}))
+			print("test accuracy %g" % self.variable_mnsit["accuracy"].eval(feed_dict={self.variable_mnsit["x"] : bat[0],  self.variable_mnsit["y_"]: bat[1], self.variable_mnsit["keep_prob"]: 1.0}))
 
 
 
@@ -256,9 +256,26 @@ class machine_learning_avancer:
 
 
 
+	def sauve_modele(self):
+		"""
+		methode de class qui permet la sauvegarde des données
+		"""
+		saver = tf.train.Saver()
+		save_path = saver.save(self.session, "modeles/model_avancer.ckpt")
+		print("Model saved in file: %s" % save_path)
+
+
+
+	def chargement_modele(self):
+		saver = tf.train.Saver()
+		with tf.Session() as self.session:
+			# Restore variables from disk.
+			saver.restore(self.session, "modeles/model_avancer.ckpt")
+			print("Model restored.")
+
 
 if __name__ == "__main__":
-	version = 2
+	version = 3
 
 	#creation et sauvegarde du modele
 	if version == 0:
@@ -270,17 +287,24 @@ if __name__ == "__main__":
 		a.sauve_modele()
 
 	# chargement du modele
-	if version == 2:
+	if version == 1:
 		a = machine_learning_basique()
 		a.creation_modele()
 		a.chargement_modele()
 
-	#creation et modele evoluer
+	#creation et sauvegarde modele evoluer
 	if version == 2:
 		a = machine_learning_avancer()
 		a.recuperation_donnee_mnist()
 		a.creation_modele()
+		a.entrainement()
+		a.sauve_modele()
 		#a.entrainement()
+
+	if version == 3:
+		a = machine_learning_avancer()
+		a.creation_modele()
+		a.chargement_modele()
 
 """
 #tensorflow de base
