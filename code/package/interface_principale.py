@@ -36,7 +36,7 @@ class Interface_principale:
 		# instanciation de la class image
 		self.image = Ig.img(option = self.opt)
 		# instanciation de la class machine_learning
-		self.machine_learning = Mg.machine_learning_avancer(option = self.opt)
+		self.machine_learning = Mg.machine_learning_basique(option = self.opt)
 		# initialisation de la machine_learning
 		self.init_machine_learning()
 

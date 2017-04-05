@@ -26,6 +26,7 @@ from __future__ import print_function
 
 import argparse
 import sys
+import pickle
 
 from tensorflow.examples.tutorials.mnist import input_data
 from numpy import *
@@ -90,10 +91,10 @@ class machine_learning_basique:
 
 		correct_prediction = tf.equal(tf.argmax(self.variable_mnsit["y"], 1), tf.argmax(self.variable_mnsit["y_"], 1))
 
+		#self.variable_mnsit["accuracy"] = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-		print(self.session.run(accuracy, feed_dict={self.variable_mnsit["x"]: self.mnist.test.images, 
-											self.variable_mnsit["y_"]: self.mnist.test.labels}))
+		print(self.session.run(accuracy, feed_dict={self.variable_mnsit["x"]: self.mnist.test.images, self.variable_mnsit["y_"]: self.mnist.test.labels}))
 
 
 
@@ -109,9 +110,22 @@ class machine_learning_basique:
 
 
 
+	def sauve_modele(self):
+		"""
+		methode de class qui permet la sauvegarde des données
+		"""
+		saver = tf.train.Saver()
+		save_path = saver.save(self.session, "modeles/model_basique.ckpt")
+		print("Model saved in file: %s" % save_path)
 
 
 
+	def chargement_modele(self):
+		saver = tf.train.Saver()
+		with tf.Session() as self.session:
+			# Restore variables from disk.
+			saver.restore(self.session, "modeles/model_basique.ckpt")
+			print("Model restored.")
 
 
 
@@ -244,16 +258,25 @@ class machine_learning_avancer:
 
 
 if __name__ == "__main__":
-	version = 1
+	version = 2
 
+	#creation et sauvegarde du modele
 	if version == 0:
 		a = machine_learning_basique()
 		print(a.variable_mnsit)
 		a.recuperation_donnee_mnist()
 		a.creation_modele()
 		a.entrainement()
+		a.sauve_modele()
 
-	if version == 1:
+	# chargement du modele
+	if version == 2:
+		a = machine_learning_basique()
+		a.creation_modele()
+		a.chargement_modele()
+
+	#creation et modele evoluer
+	if version == 2:
 		a = machine_learning_avancer()
 		a.recuperation_donnee_mnist()
 		a.creation_modele()
