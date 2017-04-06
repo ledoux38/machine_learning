@@ -75,7 +75,7 @@ class machine_learning_basique:
 		self.session = tf.InteractiveSession()
 
 		tf.global_variables_initializer().run()
-
+		self.session.run(self.variable_mnsit["W"])
 
 
 
@@ -83,6 +83,7 @@ class machine_learning_basique:
 		"""
 		methode de classe qui permet d'entrainer le modele'
 		"""
+		
 
 		for _ in range(1000):
 			batch_xs, batch_ys = self.mnist.train.next_batch(100)
@@ -104,7 +105,7 @@ class machine_learning_basique:
 		"""
 		if not isinstance(data, ndarray):
 			raise TypeError("erreur data = {} n'est pas de type numpy.ndarray ".format(type(data)))			
-
+		self.session.run(self.variable_mnsit["W"])
 		result = self.session.run(tf.argmax(self.variable_mnsit["y"],1), feed_dict={self.variable_mnsit["x"]: [data]})
 		print ('resultat ', result)
 
@@ -122,10 +123,10 @@ class machine_learning_basique:
 
 	def chargement_modele(self):
 		saver = tf.train.Saver()
-		with tf.Session() as self.session:
-			# Restore variables from disk.
-			saver.restore(self.session, "modeles/basique/model_basique.ckpt")
-			print("Model restored.")
+		# Restore variables from disk.
+		saver.restore(self.session, "modeles/basique/model_basique.ckpt")
+		print("Model restored.")
+
 
 
 
@@ -268,10 +269,9 @@ class machine_learning_avancer:
 
 	def chargement_modele(self):
 		saver = tf.train.Saver()
-		with tf.Session() as self.session:
-			# Restore variables from disk.
-			saver.restore(self.session, "modeles/avancer/model_avancer.ckpt")
-			print("Model restored.")
+		# Restore variables from disk.
+		saver.restore(self.session, "modeles/avancer/model_avancer.ckpt")
+		print("Model restored.")
 
 import scipy.ndimage
 
@@ -302,6 +302,7 @@ if __name__ == "__main__":
 		a = machine_learning_basique()
 		a.creation_modele()
 		a.chargement_modele()
+		a.session.run(a.variable_mnsit["W"])
 
 		tableau_img = scipy.ndimage.imread("test/0v0.bmp", flatten=True)
 		print(tableau_img, shape(tableau_img))
