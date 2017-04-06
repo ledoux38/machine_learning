@@ -175,7 +175,9 @@ class Options:
 				 "l_canvas": 18, 
 				 "e_t_canvas": 1, 
 				 "tensorflow": "machine learning basique", 
-				 "index_tensorflow": 0
+				 "index_tensorflow": 0,
+				 "ch_model_basique": "modeles/basique/model_basique.ckpt",
+				 "ch_model_avancer": "modeles/avancer/model_avancer.ckpt"
 				 }
 
 		return dic
@@ -241,8 +243,8 @@ class Options:
 		self.param["ch_img"] = self.entry_ch_accees_image.get()
 		self.param["ch_log"] = self.entry_ch_log.get()
 		self.param["ch_mnist"] = self.entry_ch_mnist.get()
-
-
+		self.param["ch_model_basique"] = "modeles/basique/model_basique.ckpt"
+		self.param["ch_model_avancer"] = "modeles/avancer/model_avancer.ckpt"
 
 	def save_canvas(self):
 		"""
