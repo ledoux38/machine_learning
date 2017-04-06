@@ -13,7 +13,8 @@ import PIL.ImageTk
 import scipy.ndimage
 
 import package.journal as Ij
-import package.machine_learning as Ml
+import package.machine_learning_basique as Mgb
+import package.machine_learning_avancer as Mga
 import package.utilitaire_debug as ud
 
 class load_image:
@@ -115,13 +116,13 @@ class load_image:
 		generer tensorflow
 		"""
 		if self.option["tensorflow"] == "machine_learning":
-			Ml.machine_learning(donnee = self.tableau)
+			Mgb.machine_learning(donnee = self.tableau)
 
 		elif self.option["tensorflow"] == "machine_learning_v2":
-			Ml.machine_learning_v2(donnee = self.tableau)
+			Mgb.machine_learning_v2(donnee = self.tableau)
 
 		elif self.option["tensorflow"] == "machine_learning_v3":
-			Ml.machine_learning_v3(donnee = self.tableau)
+			Mgb.machine_learning_v3(donnee = self.tableau)
 
 
 
