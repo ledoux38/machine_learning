@@ -74,7 +74,6 @@ class machine_learning_basique:
 
 		correct_prediction = tf.equal(tf.argmax(self.variable_mnsit["y"], 1), tf.argmax(self.variable_mnsit["y_"], 1))
 
-		#self.variable_mnsit["accuracy"] = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 		print(self.session.run(accuracy, feed_dict={self.variable_mnsit["x"]: self.mnist.test.images, self.variable_mnsit["y_"]: self.mnist.test.labels}))
@@ -88,10 +87,10 @@ class machine_learning_basique:
 		if not isinstance(data, ndarray):
 			raise TypeError("erreur data = {} n'est pas de type numpy.ndarray ".format(type(data)))	
 
+		print(self.variable_mnsit["y"][0],"\n",self.variable_mnsit["x"][0],"\n",self.variable_mnsit["x"])
+
 		result = self.session.run(tf.argmax(self.variable_mnsit["y"],1), feed_dict={self.variable_mnsit["x"]: [data]})
 		print ('resultat ', result)
-
-
 
 	def sauve_modele(self):
 		"""
@@ -112,10 +111,28 @@ class machine_learning_basique:
 
 
 
+	def init_machine_learning(self):
+		"""
+		methode de class qui initialise la creation du modele et sont entrainement 
+		"""
+		try:
+			self.creation_modele()
+			self.chargement_modele()
+
+		except:
+			print("erreur")
+			self.recuperation_donnee_mnist()
+			self.creation_modele()
+			self.entrainement()
+			self.sauve_modele()
+
+
+
 
 if __name__ == "__main__":
 	import scipy.ndimage
-	version = 1
+	from PIL import Image
+	version = 2
 
 	#creation et sauvegarde du modele
 	if version == 0:
@@ -142,7 +159,7 @@ if __name__ == "__main__":
 		a.creation_modele()
 		a.chargement_modele()
 
-		tableau_img = scipy.ndimage.imread("test/0v0.bmp", flatten=True)
+		tableau_img = scipy.ndimage.imread("test/3v0.bmp", flatten=True)
 		print(tableau_img, shape(tableau_img))
 
 		flatten  = ndarray.flatten(tableau_img)
@@ -150,4 +167,50 @@ if __name__ == "__main__":
 
 		data = vectorize(lambda x: 255 - x)(flatten)
 		print(data, shape(data))
+		a.test_modele(data = data)
+
+
+	if version == 2:
+		a = machine_learning_basique()
+		a.init_machine_learning()
+		
+		#tableau_img = scipy.ndimage.imread("test/0v0.bmp", flatten=True)
+		chiffre = Image.open("test/0v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/1v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/2v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/3v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/4v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/5v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/6v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/7v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/8v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data = data)
+
+		chiffre = Image.open("test/9v0.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)

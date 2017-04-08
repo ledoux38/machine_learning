@@ -36,14 +36,16 @@ class Interface_principale:
 		self.opt = self.inter_option.param
 		# instanciation de la class image
 		self.image = Ig.img(option = self.opt)
-		# instanciation de la class machine_learning
+		# instanciation de la class machine_learning_basique
 		self.machine_learning = Mgb.machine_learning_basique(option = self.opt)
-		# initialisation de la machine_learning
-		self.init_machine_learning()
+		# initialisation de la machine_learning_basique
+		self.machine_learning.init_machine_learning()
+
+
 		# instanciation de la class machine_learning_avancer
-		#self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.opt)
+		self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.opt)
 		# initialisation de la machine_learning_avancer
-		#self.init_machine_learning_avancer()
+		self.machine_learning_avancer.init_machine_learning()
 
 
 	def interface_principale(self, object_tk):
@@ -86,26 +88,6 @@ class Interface_principale:
 
 
 
-	def init_machine_learning(self):
-		"""
-		methode de class qui initialise la creation du modele et sont entrainement 
-		"""
-		try:
-			self.machine_learning.creation_modele()
-			self.machine_learning.chargement_modele()
-
-		except type_de_l_exception as exception_retournee:
-			print("erreur :", exception_retournee)
-
-			self.machine_learning.recuperation_donnee_mnist()
-			self.machine_learning.creation_modele()
-			self.machine_learning.entrainement()
-			self.machine_learning.sauve_modele()
-
-
-	def init_machine_learning_avancer(self):
-		pass
-
 
 	def quitter_interface(self, object_tk):
 		"""
@@ -133,20 +115,18 @@ class Interface_principale:
 		self.image._set_image(self.canvas)
 		#recuperation de la list de l'image
 		data = self.image.get_data(resize = (28, 28))
-		#affichage du list
-		ud.print_array(data)
-		#creation d'un tableau de numpy type float
-		data = Np.array(data, dtype=Np.float32)
-		#conversion tout les 255 deviennent des 0 et inversement 
-		data = Np.vectorize(lambda x: 1 - x/255)(data)
-		#affichage du tableau de numpy		
-		ud.print_array_convert(data, valeur = 0)
+		#conversion de l'image en tableau
+		data = (255 - Np.array(data))/255
+		ud.print_array_convert(data)
 
 		if self.opt["tensorflow"] == 'machine learning basique':
+			#lancement de la recherche
 			self.machine_learning.test_modele(data = data)
 
 		elif self.opt["tensorflow"] == 'machine learning avancée':
-			tkinter.messagebox.showinfo("ATTENTION", "MACHINE LEARNING AVANCÉE PAS ENCORE IMPLEMENTÉ")
+			self.machine_learning_avancer.test_modele(data = data)
+
+			#tkinter.messagebox.showinfo("ATTENTION", "MACHINE LEARNING AVANCÉE PAS ENCORE IMPLEMENTÉ")
 			#Mgb.machine_learning_v2(donnee = data, option = self.opt)
 
 
