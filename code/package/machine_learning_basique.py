@@ -175,42 +175,48 @@ if __name__ == "__main__":
 		a.init_machine_learning()
 		
 		#tableau_img = scipy.ndimage.imread("test/0v0.bmp", flatten=True)
-		chiffre = Image.open("test/0v0.bmp").convert("L")
+		chiffre = Image.open("test/0v1.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/1v0.bmp").convert("L")
+		chiffre = Image.open("test/0v2.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/2v0.bmp").convert("L")
+		chiffre = Image.open("test/0v3.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/3v0.bmp").convert("L")
+		chiffre = Image.open("test/0v4.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/4v0.bmp").convert("L")
+		chiffre = Image.open("test/0v5.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/5v0.bmp").convert("L")
+
+
+
+		chiffre = Image.open("test/1v1.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/6v0.bmp").convert("L")
+		chiffre = Image.open("test/1v2.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/7v0.bmp").convert("L")
+		chiffre = Image.open("test/1v3.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/8v0.bmp").convert("L")
+		chiffre = Image.open("test/1v4.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
 
-		chiffre = Image.open("test/9v0.bmp").convert("L")
+		chiffre = Image.open("test/1v5.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data = data)
+
+		#plt.matshow(tf.reshape(data,(28, 28)).eval())
+		#plt.show()
