@@ -1,2 +1,2 @@
-model_checkpoint_path: "model_basique.ckpt"
-all_model_checkpoint_paths: "model_basique.ckpt"
+model_checkpoint_path: "model_basique"
+all_model_checkpoint_paths: "model_basique"
