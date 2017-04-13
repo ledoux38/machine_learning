@@ -52,48 +52,28 @@ class machine_learning_basique:
 		"""
 		methode de class qui initialise la creation du modele et sont entrainement 
 		"""
+		self.mnist  = input_data.read_data_sets(self.option["ch_mnist"], one_hot=True)
+		self.x = tf.placeholder(tf.float32, [None, 784], name="x")
+		W = tf.Variable(tf.zeros([784, 10]), name="W")
+		b = tf.Variable(tf.zeros([10]), name="b")
+		self.y  = tf.matmul(self.x, W, name="y") + b
+		y_ = tf.placeholder(tf.float32, [None, 10], name="y_")
+
+		cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = y_, logits = self.y ), name="cross_entropy")
+		train_step = tf.train.GradientDescentOptimizer(0.5,  name="train_step").minimize(cross_entropy)
+
+		saver = tf.train.Saver()
+		self.session = tf.Session()
+
+		print("debut du chargement! ")
+
 		try:
-			print("debut du chargement! ")
-
-			self.x = tf.placeholder(tf.float32, [None, 784])
-
-
-			self.session = tf.Session()
-			new_saver = tf.train.import_meta_graph("./modeles/basique/model_basique.meta")
-			new_saver.restore(self.session, tf.train.latest_checkpoint('./'))
-			all_vars = tf.get_collection('vars')
-			self.y  = tf.matmul(self.x, all_vars[0]) + all_vars[1]
-
-			for v in all_vars:
-				v_ = self.session.run(v)
-				print(v_)
-
-			print("chargement terminer")
-
+			saver.restore(self.session, "./modeles/basique/model_basique.ckpt")
 
 		except:
 			#creation d'un nouveau fichier
 			print("le chargement a echouer ! \n creation d'un nouveau modele !")
 
-			self.mnist  = input_data.read_data_sets(self.option["ch_mnist"], one_hot=True)
-
-
-			# creation des variables 
-			self.x = tf.placeholder(tf.float32, [None, 784], name="x")
-			W = tf.Variable(tf.zeros([784, 10]), name="W")
-			b = tf.Variable(tf.zeros([10]), name="b")
-			self.y  = tf.matmul(self.x, W, name="y") + b
-			y_ = tf.placeholder(tf.float32, [None, 10], name="y_")
-
-			cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = y_, logits = self.y ), name="cross_entropy")
-			train_step = tf.train.GradientDescentOptimizer(0.5,  name="train_step").minimize(cross_entropy)
-
-			#sauvegarde variable
-			tf.add_to_collection("vars", W)
-			tf.add_to_collection("vars", b)
-
-			
-			self.session = tf.Session()
 			init_op = tf.global_variables_initializer()
 			self.session.run(init_op)
 
@@ -108,9 +88,42 @@ class machine_learning_basique:
 			print(self.session.run(accuracy, feed_dict={self.x: self.mnist .test.images, y_: self.mnist .test.labels}))		
 
 			#sauvegarde des données
-			saver = tf.train.Saver()
-			save_path = saver.save(self.session, "./modeles/basique/model_basique")
+			save_path = saver.save(self.session, "./modeles/basique/model_basique.ckpt")
 			print("Model saved in file: %s" % save_path)
 
+		print("chargement terminer")
 
 
+
+if __name__ == "__main__":
+	import scipy.ndimage
+	from PIL import Image
+	version = 2
+
+	#creation et sauvegarde du modele
+
+	if version == 2:
+
+		a = machine_learning_basique()
+		
+		chiffre = Image.open("test/0v1.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data)
+
+
+		
+		chiffre = Image.open("test/0v2.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data)
+
+		chiffre = Image.open("test/0v3.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data)
+
+		chiffre = Image.open("test/0v4.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data)
+
+		chiffre = Image.open("test/0v5.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+		a.test_modele(data)

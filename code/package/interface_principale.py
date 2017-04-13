@@ -38,12 +38,10 @@ class Interface_principale:
 		self.image = Ig.img(option = self.opt)
 		# instanciation de la class machine_learning_basique et initialisation
 		self.machine_learning = Mgb.machine_learning_basique(option = self.opt)
-
-
 		# instanciation de la class machine_learning_avancer
-		#self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.opt)
+		self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.opt)
 		# initialisation de la machine_learning_avancer
-		#self.machine_learning_avancer.init_machine_learning()
+
 
 
 	def interface_principale(self, object_tk):
@@ -122,9 +120,9 @@ class Interface_principale:
 			self.machine_learning.test_modele(data = data)
 
 		elif self.opt["tensorflow"] == 'machine learning avancée':
-			#self.machine_learning_avancer.test_modele(data = data)
+			self.machine_learning_avancer.test_modele(data = data)
 
-			tkinter.messagebox.showinfo("ATTENTION", "MACHINE LEARNING AVANCÉE PAS ENCORE IMPLEMENTÉ")
+			#tkinter.messagebox.showinfo("ATTENTION", "MACHINE LEARNING AVANCÉE PAS ENCORE IMPLEMENTÉ")
 			#Mgb.machine_learning_v2(donnee = data, option = self.opt)
 
 
