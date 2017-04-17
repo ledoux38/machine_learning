@@ -67,7 +67,7 @@ class Interface_principale:
 		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NW")
 
 		frame = Tk.Frame(frame_principal)
-		bp_generer = Tk.Button(frame, text = "Generer", command = self.generer)
+		bp_generer = Tk.Button(frame, text = "Generer", command = partial(self.generer, object_tk))
 		bp_generer.grid(row = 0, column = 0, sticky = 'EW')
 
 		bp_recommencer = Tk.Button(frame, text = "Recommencer", command = self.recommencer_dessin)
@@ -103,7 +103,7 @@ class Interface_principale:
 
 
 
-	def generer(self):
+	def generer(self, object_tk):
 		"""
 		methode de class qui permet d'initialiser la recuperation du tableau
 		"""
@@ -113,11 +113,11 @@ class Interface_principale:
 		data = self.image.get_data(resize = (28, 28))
 		#conversion de l'image en tableau
 		data = (255 - Np.array(data))/255
-		ud.print_array_convert(data)
+		#ud.print_array_convert(data)
 
 		if self.opt["tensorflow"] == 'machine learning basique':
 			#lancement de la recherche
-			self.machine_learning.test_modele(data = data)
+			self.machine_learning.test_modele(object_tk = object_tk, data = data )
 
 		elif self.opt["tensorflow"] == 'machine learning avancée':
 			self.machine_learning_avancer.test_modele(data = data)

@@ -5,6 +5,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import tkinter as Tk
+
 import argparse
 import sys
 import pickle
@@ -20,6 +22,12 @@ try:
 except:
 	import utilitaire_debug as ud
 
+try:
+	import package.resultat as rt
+except:
+	import resultat as rt
+
+
 class machine_learning_basique:
 
 	def __init__ (self, option = {"ch_mnist": "./MNIST_data"}):
@@ -32,21 +40,22 @@ class machine_learning_basique:
 		self.x = None
 		self.y = None
 		self.mnist = None
-
 		self.init_machine_learning()
 
 
-	def test_modele(self, data):
+	def test_modele(self, object_tk, data):
 		"""
 		methode de classe qui permet de tester le modele
 		"""
 		if not isinstance(data, ndarray):
 			raise TypeError("erreur data = {} n'est pas de type numpy.ndarray ".format(type(data)))	
 
-		ud.print_array_convert(data)
-		result2 = self.session.run(tf.argmax(self.y,1), feed_dict={self.x: [data]})
-		print ('resultat ', result2)
+		#ud.print_array_convert(data)
+		result = self.session.run(tf.argmax(self.y,1), feed_dict={self.x: [data]})
 
+		texte = "Le resultat vue par l'ordinateur: {}".format(result)
+
+		self.ouvrir_affichage_resultat(object_tk, data, texte)
 
 	def init_machine_learning(self):
 		"""
@@ -95,6 +104,44 @@ class machine_learning_basique:
 
 
 
+	def ouvrir_affichage_resultat(self, object_tk, data, texte ):
+		"""
+		methode de class qui permet d'afficher les resultats
+		"""
+		a = rt.resultat()
+
+		if object_tk == None:
+			
+			app = Tk.Tk()
+			a.interface_resultat(object_tk = app, data = data)
+			a.insert_text(str(texte))
+			app.title("Resultat")
+			app.resizable(False, False)
+			app.mainloop()
+		else:
+
+			#je creer une fenetre pour inserer la frame de options
+			top = Tk.Toplevel(object_tk)
+			#les parametres de la fenetre des options
+			top.title("Resultat")
+			#je fais apparaître la fenetre enfant sur la fenetre parent
+			top.transient(object_tk)
+			#la fenêtre principale est bloquée par grab_set rend la fenêtre "modale"
+			top.grab_set()
+			#focus_set permet d'attraper les évènements sur la fenêtre principale
+			top.focus_set()
+			#j'empeche la fenetre d'etre redimenssionner
+			top.resizable(False, False)
+			# je fais toutes les modifications dont j'ai besoins
+			a.interface_resultat(object_tk = top, data = data)
+			a.insert_text(str(texte))
+			#pandant ce temps interface_principale et mit en pause
+			object_tk.wait_window(top)
+			#quand j'en n'ai fini avec les options je charge les nouvelles données
+
+
+
+
 if __name__ == "__main__":
 	import scipy.ndimage
 	from PIL import Image
@@ -111,7 +158,7 @@ if __name__ == "__main__":
 		a.test_modele(data)
 
 
-		
+		"""
 		chiffre = Image.open("test/0v2.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data)
@@ -127,3 +174,4 @@ if __name__ == "__main__":
 		chiffre = Image.open("test/0v5.bmp").convert("L")
 		data = (255 - array(chiffre.getdata()))/255
 		a.test_modele(data)
+		"""

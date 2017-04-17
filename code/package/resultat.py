@@ -10,7 +10,11 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
+from matplotlib import pylab as plt
 
+import scipy.ndimage
+from PIL import Image
+from numpy import *
 
 class resultat:
 	def __init__(self):
@@ -21,7 +25,7 @@ class resultat:
 
 
 
-	def interface_resultat(self,object_tk):
+	def interface_resultat(self,object_tk, data):
 		"""
 		methode de class qui creer l'interface graphique
 		"""
@@ -39,10 +43,10 @@ class resultat:
 		label_vue_tensorflow.grid(row = 0, column = 1)
 
 		graph_mnsit = graph(frame_img)
-		graph_mnsit.grid(row = 1, column = 0)
+		graph_mnsit.grid(row = 1, column = 0, sticky='EW')
 
-		graph_tensorflow = graph(frame_img)
-		graph_tensorflow.grid(row = 1, column = 1)
+		graph_tensorflow = graphv3(frame_img, data)
+		graph_tensorflow.grid(row = 1, column = 1, sticky='EW')
 
 
 
@@ -82,13 +86,29 @@ class resultat:
 
 
 
+	def insert_text(self, text = None):
+		"""
+		methode de class qui permet d'inserer le text dans l'entry
+		"""
+		#si j'envoi du text via la variable text, le parametre sera different	
+		if not text == None:
+			#je verifie que text et de type str
+			if not isinstance(text, str):
+				#si text different de str j'affiche une erreur
+				raise TypeError("erreur option = {} n'est pas de type str ".format(type(text)))
+				#sinon j'insert le texte dans self.text
+			self.text_resultat.insert(Tk.END, text)
+			#si variable text different de None j'affiche une erreur
+		else:
+			raise NameError("erreur pour charger du texte dans Text il faut instancier la fonction <<interface_journal>>")
+
 
 class graph(Tk.Frame):
 
 	def __init__(self, parent):
 		Tk.Frame.__init__(self, parent)
 
-		f = Figure(figsize=(2, 2), dpi=100)
+		f = Figure(figsize=(3, 3), dpi=100)
 		a = f.add_subplot(111)
 		a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
 
@@ -101,14 +121,79 @@ class graph(Tk.Frame):
 		canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=True)
 
 
+
+class graphv2(Tk.Frame):
+
+	def __init__(self, parent):
+		Tk.Frame.__init__(self, parent)
+
+		image = plt.imread("test/4v5.bmp")
+		f = Figure(figsize=(3, 3), dpi=100)
+		a = f.add_subplot(111)
+		im = a.imshow(image) # later use a.set_data(new_data)
+
+		# a tk.DrawingArea
+		canvas = FigureCanvasTkAgg(f, self)
+		canvas.show()
+		canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
+		canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=True)
+
+class graphv3(Tk.Frame):
+
+	def __init__(self, parent, data):
+		Tk.Frame.__init__(self, parent)
+
+		f = Figure(figsize=(3, 3), dpi=100)
+		a = f.add_subplot(111)
+		im = a.matshow(reshape(data, (28,28))) # later use a.set_data(new_data)
+
+		# a tk.DrawingArea
+		canvas = FigureCanvasTkAgg(f, self)
+		canvas.show()
+		canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
+		canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=True) 
+
+
+
 if __name__ == "__main__":
 	choix_version = 0
 	if choix_version == 0:
 
+		chiffre = Image.open("test/4v1.bmp").convert("L")
+		data = (255 - array(chiffre.getdata()))/255
+
 		a = resultat()
 		app = Tk.Tk()
-		a.interface_resultat(app)
+		a.interface_resultat(app, data)
 		app.title("Resultat")
+		a.insert_text(text = "[0] ------> 1.245645 \n")
+		a.insert_text(text = "[1] ------> 4.245645 \n")
+		a.insert_text(text = "[2] ------> 9.245645 \n")
+		a.insert_text(text = "[3] ------> 4.245645 \n")
+		a.insert_text(text = "[4] ------> 2.245645 \n")
+		a.insert_text(text = "[5] ------> 7.245645 \n")
+		a.insert_text(text = "[6] ------> 6.245645 \n")
+		a.insert_text(text = "[7] ------> 8.245645 \n")
+		a.insert_text(text = "[8] ------> 9.245645 \n")
+		a.insert_text(text = "[9] ------> 10.245645 \n")
 		#app.resizable(False,False)
 		app.mainloop()
 
+	if choix_version == 1:
+		fig, ax = plt.subplots()
+
+		# Example data
+		people = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+		y_pos = arange(len(people))
+		performance = 3 + 10 * random.rand(len(people))
+		error = random.rand(len(people))
+
+		ax.barh(y_pos, performance, xerr=error, align='center',
+		        color='green', ecolor='black')
+		ax.set_yticks(y_pos)
+		ax.set_yticklabels(people)
+		ax.invert_yaxis()  # labels read top-to-bottom
+		ax.set_xlabel('Performance')
+		ax.set_title('How fast do you want to go today?')
+
+		plt.show()
