@@ -14,13 +14,16 @@ from numpy import *
 
 import tensorflow as tf
 import matplotlib.pyplot as plt
-
+import tkinter as Tk
 try:
 	import package.utilitaire_debug as ud
 except:
 	import utilitaire_debug as ud
 
-
+try:
+	import package.resultat as rt
+except:
+	import resultat as rt
 
 class machine_learning_avancer:
 
@@ -116,10 +119,11 @@ class machine_learning_avancer:
 			save_path = saver.save(self.session, "./modeles/avancer/model_avancer.ckpt") #sauvegarde des données
 			print("Model saved in file: %s" % save_path)
 
-
 		print("chargement terminer")
 
-	def test_modele(self, data):
+
+
+	def test_modele(self, data, object_tk):
 		"""
 		methode de classe qui permet de tester le modele
 		"""
@@ -128,8 +132,49 @@ class machine_learning_avancer:
 
 		#result = self.session.run(tf.argmax(self.variable_mnsit["y_conv"],1), feed_dict={self.variable_mnsit["x"]: [data]})
 		[tableau_pourcent, result] = self.session.run([self.y_conv, tf.argmax(self.y_conv, 1)], feed_dict={self.x : [data], self.keep_prob: 1.0})
-		print ("l'ordinateur voit un ... {}", result)
-		print ("tableaux:  {}".format(tableau_pourcent))
+
+		texte = "Le resultat vue par l'ordinateur: {} \n tableau recapitulatif: \n".format(result)
+		for i , y in enumerate(tableau_pourcent[0]):
+			texte += "[{}] -----> {}% \n".format(i,y*10)
+
+		self.ouvrir_affichage_resultat(object_tk, data, texte)
+
+
+	def ouvrir_affichage_resultat(self, object_tk, data, texte ):
+		"""
+		methode de class qui permet d'afficher les resultats
+		"""
+		a = rt.resultat()
+
+		if object_tk == None:
+			
+			app = Tk.Tk()
+			a.interface_resultat(object_tk = app, data = data)
+			a.insert_text(str(texte))
+			app.title("Resultat")
+			app.resizable(False, False)
+			app.mainloop()
+		else:
+
+			#je creer une fenetre pour inserer la frame de options
+			top = Tk.Toplevel(object_tk)
+			#les parametres de la fenetre des options
+			top.title("Resultat")
+			#je fais apparaître la fenetre enfant sur la fenetre parent
+			top.transient(object_tk)
+			#la fenêtre principale est bloquée par grab_set rend la fenêtre "modale"
+			top.grab_set()
+			#focus_set permet d'attraper les évènements sur la fenêtre principale
+			top.focus_set()
+			#j'empeche la fenetre d'etre redimenssionner
+			top.resizable(False, False)
+			# je fais toutes les modifications dont j'ai besoins
+			a.interface_resultat(object_tk = top, data = data)
+			a.insert_text(str(texte))
+			#pandant ce temps interface_principale et mit en pause
+			object_tk.wait_window(top)
+			#quand j'en n'ai fini avec les options je charge les nouvelles données
+
 
 
 	def weight_variable(self, shape):
@@ -149,7 +194,6 @@ class machine_learning_avancer:
 
 
 
-
 	def max_pool_2x2(self, x):
 		return tf.nn.max_pool(x, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 
@@ -159,7 +203,7 @@ class machine_learning_avancer:
 if __name__ == "__main__":
 	import scipy.ndimage
 	from PIL import Image
-	version = 2
+	version = 3
 
 	if version == 1:
 		a = machine_learning_avancer()
@@ -226,3 +270,15 @@ if __name__ == "__main__":
 
 		#plt.matshow(tf.reshape(data,(28, 28)).eval())
 		#plt.show()
+
+
+	if version == 3:
+		u = [[-2.63639092,  2.91137624,  0.58372426,  3.49859715,  4.58603239, -4.23958731
+  -4.01916981,  1.08883286,  0.56773269,  2.38709688]]
+		texte = "Le resultat vue par l'ordinateur:  \n tableau recapitulatif: \n"
+		print(u)
+		for i , y in enumerate(u[0]):
+			print("coucou")
+			texte += "[{}] -----> {}% \n".format(i,y)
+
+	print(texte)

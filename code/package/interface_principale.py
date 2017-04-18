@@ -120,7 +120,7 @@ class Interface_principale:
 			self.machine_learning.test_modele(object_tk = object_tk, data = data )
 
 		elif self.opt["tensorflow"] == 'machine learning avancée':
-			self.machine_learning_avancer.test_modele(data = data)
+			self.machine_learning_avancer.test_modele(object_tk = object_tk, data = data)
 
 			#tkinter.messagebox.showinfo("ATTENTION", "MACHINE LEARNING AVANCÉE PAS ENCORE IMPLEMENTÉ")
 			#Mgb.machine_learning_v2(donnee = data, option = self.opt)
