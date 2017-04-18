@@ -59,7 +59,7 @@ class Options:
 
 		self.value_long = Tk.IntVar(frame_opt_canvas)
 		self.value_long.set(self.param["h_canvas"])
-		scale_long = Tk.Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.value_long, orient = 'h')
+		scale_long = Tk.Scale(frame_opt_canvas,from_= 18, to = 100, showvalue = False, variable = self.value_long, orient = 'h')
 		entry_long = Tk.Entry(frame_opt_canvas, textvariable = self.value_long, width = 10)
 		label_long = Tk.Label(frame_opt_canvas, text = "longueur canvas: ")
 
@@ -69,7 +69,7 @@ class Options:
 
 		self.value_hot = Tk.IntVar(frame_opt_canvas)
 		self.value_hot.set(self.param["l_canvas"])
-		scale_hot = Tk.Scale(frame_opt_canvas,from_= 18, to = 50, showvalue = False, variable = self.value_hot, orient = 'h')
+		scale_hot = Tk.Scale(frame_opt_canvas,from_= 18, to = 100, showvalue = False, variable = self.value_hot, orient = 'h')
 		entry_hot = Tk.Entry(frame_opt_canvas, textvariable = self.value_hot, width = 10)		
 		label_hot = Tk.Label(frame_opt_canvas, text = "hauteur canvas: ")
 
