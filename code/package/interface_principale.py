@@ -6,15 +6,44 @@ import numpy as Np
 import tkinter.messagebox
 import tkinter as Tk
 
-import package.option as Opt 
-import package.canvas as Cv
-import package.log as Lg 
-import package.img as Ig
-import package.machine_learning_basique as Mgb
-import package.machine_learning_avancer as Mga
-import package.load_image as limg
-import package.utilitaire_debug as ud
+try:
+	import package.option as Opt 
+except:
+	import option as Opt 
+try:
+	import package.canvas as Cv
+except:
+	import canvas as Cv
 
+try:
+	import package.log as Lg 
+except:
+	import log as Lg 
+
+try:
+	import package.img as Ig
+except:
+	import img as Ig
+
+try:
+	import package.machine_learning_basique as Mgb
+except:
+	import machine_learning_basique as Mgb
+
+try:
+	import package.machine_learning_avancer as Mga
+except:
+	import machine_learning_avancer as Mga
+
+try:
+	import package.load_image as limg
+except:
+	import load_image as limg
+
+try:
+	import package.utilitaire_debug as ud
+except:
+	import utilitaire_debug as ud
 
 
 class Interface_principale:

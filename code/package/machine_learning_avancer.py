@@ -15,6 +15,7 @@ from numpy import *
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import tkinter as Tk
+
 try:
 	import package.utilitaire_debug as ud
 except:

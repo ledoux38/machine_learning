@@ -12,10 +12,29 @@ import PIL.ImageTk
 #from PIL import Image, ImageFont, ImageDraw, ImageTk
 import scipy.ndimage
 
-import package.journal as Ij
-import package.machine_learning_basique as Mgb
-import package.machine_learning_avancer as Mga
-import package.utilitaire_debug as ud
+
+try:
+	import package.journal as Ij
+except:
+	import journal as Ij
+
+try:
+	import package.machine_learning_basique as Mgb
+except:
+	import machine_learning_basique as Mgb
+
+try:
+	import package.machine_learning_avancer as Mga	
+except:
+	import machine_learning_avancer as Mga	
+
+try:
+	import package.utilitaire_debug as ud	
+except:
+	import utilitaire_debug as ud	
+
+
+
 
 class load_image:
 	"""

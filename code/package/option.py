@@ -8,7 +8,12 @@ import pickle
 import os
 from functools import partial
 
-import package.journal as Ij
+
+try:
+	import package.journal as Ij
+except:
+	import journal as Ij
+
 
 class Options:
 	def __init__(self):
