@@ -82,6 +82,7 @@ class journal:
 			raise NameError("erreur pour charger du texte dans Text il faut instancier la fonction <<interface_journal>>")
 
 
+
 	def raz_journal(self):
 		"""
 		methode de class qui permet de supprimer integralement le contenu du fichier
@@ -91,6 +92,8 @@ class journal:
 			self.text.delete(0.0, Tk.END)
 		else:
 			raise NameError("erreur pour charger du texte dans Text il faut instancier la fonction <<interface_journal>>")
+
+
 
 	def raz_fichier_journal(self):
 		"""

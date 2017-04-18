@@ -21,9 +21,6 @@ class Options:
 
 
 
-
-
-
 	def interface_option(self,object_tk):
 		"""
 		methode de class qui creer l'interface graphique
@@ -224,6 +221,8 @@ class Options:
 
 		self.lb_choix_tensorflow.selection_set(self.param["index_tensorflow"])
 
+
+
 	def sauv_configuration(self):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration
@@ -239,7 +238,6 @@ class Options:
 
 
 
-
 	def save_ch_accees(self):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration des chemin d'accees
@@ -251,6 +249,8 @@ class Options:
 		self.param["ch_model_basique"] = "modeles/basique/model_basique.ckpt"
 		self.param["ch_model_avancer"] = "modeles/avancer/model_avancer.ckpt"
 
+
+
 	def save_canvas(self):
 		"""
 		methode de class qui sauvegarde la nouvelle configuration attributs du canvas
@@ -259,7 +259,6 @@ class Options:
 		self.param["h_canvas"] = self.value_hot.get()
 		self.param["l_canvas"] = self.value_long.get()
 		self.param["e_t_canvas"] = self.value_epais.get()
-
 
 
 
@@ -285,7 +284,7 @@ class Options:
 
 
 
-	def ouvrir_journal(self, fenetre):		
+	def ouvrir_journal(self, fenetre):
 		"""
 		methode de class qui ouvre l'interface graphique
 		"""
@@ -300,7 +299,6 @@ class Options:
 		top.resizable(False, False)
 		#j'integre dans la la fenetre la frame de journal
 		inter_journ.interface_journal(top)
-
 
 
 

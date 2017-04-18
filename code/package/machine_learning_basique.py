@@ -43,6 +43,7 @@ class machine_learning_basique:
 		self.init_machine_learning()
 
 
+
 	def test_modele(self, object_tk, data):
 		"""
 		methode de classe qui permet de tester le modele
@@ -56,6 +57,8 @@ class machine_learning_basique:
 		texte = "Le resultat vue par l'ordinateur: {}".format(result)
 
 		self.ouvrir_affichage_resultat(object_tk, data, texte)
+
+
 
 	def init_machine_learning(self):
 		"""
