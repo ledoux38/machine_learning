@@ -17,7 +17,7 @@ class interface_canvas(Tk.Canvas):
 		self.option = option
 
 		# je creer un canvas et je lui donne en parametre  les valeurs des options
-		Tk.Canvas.__init__(self, parent, height = self.option["h_canvas"], width = self.option["l_canvas"])
+		Tk.Canvas.__init__(self, parent, height = self.option["h_canvas"], width = self.option["l_canvas"], background = "white")
 
 		
 		self.bind("<B1-Motion>", self.creation_forme)

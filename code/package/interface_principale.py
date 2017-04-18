@@ -63,20 +63,24 @@ class Interface_principale:
 		menu_bar.add_cascade(label = "Fichier", menu = menu_fichier)
 		object_tk.config(menu = menu_bar)
 
+
+
+
+
 		self.canvas = Cv.interface_canvas(frame_principal, option = self.opt)
-		self.canvas.grid(row = 0, column = 0, rowspan = 3, sticky = "NW")
+		self.canvas.grid(row = 0, column = 0, sticky = "NW")
 
-		frame = Tk.Frame(frame_principal)
-		bp_generer = Tk.Button(frame, text = "Generer", command = partial(self.generer, object_tk))
-		bp_generer.grid(row = 0, column = 0, sticky = 'EW')
 
-		bp_recommencer = Tk.Button(frame, text = "Recommencer", command = self.recommencer_dessin)
-		bp_recommencer.grid(row = 1, column = 0, sticky = 'EW')
+		bp_generer = Tk.Button(frame_principal, text = "Generer", command = partial(self.generer, object_tk))
+		bp_generer.grid(row = 1, column = 0, sticky = 'EW')
 
-		frame.grid(row = 2, column = 2, sticky = "EW")
+		bp_recommencer = Tk.Button(frame_principal, text = "Recommencer", command = self.recommencer_dessin)
+		bp_recommencer.grid(row = 2, column = 0, sticky = 'EW')
+
 		
+
 		bp_quit = Tk.Button(frame_principal, text = "Quitter", command =partial(self.quitter_interface, object_tk))
-		bp_quit.grid(row = 4, column = 2, sticky = 'EW')
+		bp_quit.grid(row = 3, column = 0, sticky = 'EW')
 
 		frame_principal.grid_columnconfigure(0, weight = 1)
 		frame_principal.grid_rowconfigure(0, weight = 0)
