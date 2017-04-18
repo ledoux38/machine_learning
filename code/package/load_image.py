@@ -23,7 +23,7 @@ class load_image:
 	"""
  
  
-	def __init__(self, option = {"ch_img":"./test", "tensorflow" :"machine_learning"}):
+	def __init__(self, machine_learning, machine_learning_avancer, option = {"ch_img":"./test", "tensorflow" :"machine_learning"}):
 		if not isinstance(option, dict):
 			raise TypeError("erreur option = {} n'est pas de type list ".format(type(option)))
 
@@ -32,6 +32,8 @@ class load_image:
 		#ce tableau est rempli lors du chargement de l'image
 		self.tableau = None
 		self.journal = Ij.journal()
+		self.machine_learning = machine_learning
+		self.machine_learning_avancer = machine_learning_avancer
 
 
 
@@ -49,16 +51,13 @@ class load_image:
 		frame_bp.grid(row = 1, column = 0, sticky='NSEW')
  
 		bp_charger = Tk.Button(frame_bp, text = "Charger",command = partial(self.Charger, label))
-		bp_charger.grid(row=0,column=0,sticky='W')
+		bp_charger.grid(row = 2,column = 0, sticky='EW')
  
 		bp_generer = Tk.Button(frame_bp, text = "Generer",command = partial(self.generer, object_tk))
-		bp_generer.grid(row=0,column=1,sticky='W')
-		
-		bp_journal = Tk.Button(frame_bp, text = "Journal",command = partial(self.afficher_donnee, object_tk))
-		bp_journal.grid(row=0,column=2,sticky='W')
+		bp_generer.grid(row = 3,column = 0, sticky='EW')
 		
 		bp_annuler = Tk.Button(frame_bp, text = "Fermer",command = partial(self.quitter_interface, object_tk))
-		bp_annuler.grid(row=0,column=3,sticky='W')
+		bp_annuler.grid(row = 4,column = 0, sticky='EW')
 
 
 
@@ -91,7 +90,7 @@ class load_image:
 		else:
 			self.create_data(file_img = load)
 			image = PIL.Image.open(load)
-			image = image.resize((100, 100))
+			image = image.resize((70, 70))
 			self.img_convert = PIL.ImageTk.PhotoImage(image)
 			object_label.configure(image = self.img_convert)
 
@@ -115,14 +114,12 @@ class load_image:
 		"""
 		generer tensorflow
 		"""
-		if self.option["tensorflow"] == "machine_learning":
-			Mgb.machine_learning(donnee = self.tableau)
+		if self.option["tensorflow"] == 'machine learning basique':
+			#lancement de la recherche
+			self.machine_learning.test_modele(object_tk = object_tk, data = self.tableau )
 
-		elif self.option["tensorflow"] == "machine_learning_v2":
-			Mgb.machine_learning_v2(donnee = self.tableau)
-
-		elif self.option["tensorflow"] == "machine_learning_v3":
-			Mgb.machine_learning_v3(donnee = self.tableau)
+		elif self.option["tensorflow"] == 'machine learning avancée':
+			self.machine_learning_avancer.test_modele(object_tk = object_tk, data = self.tableau)
 
 
 
@@ -133,6 +130,12 @@ class load_image:
 		"""
 
 		#recupation des données
+		chiffre = PIL.Image.open(file_img).convert("L")
+		self.tableau = (255 - np.array(chiffre.getdata()))/255
+
+
+
+		"""
 		self.tableau = scipy.ndimage.imread(file_img, flatten=True)
 		#si les dimentions des données sont differente de (28,28)
 		#je redimentionne le tableau
@@ -140,11 +143,8 @@ class load_image:
 			self.tableau = resize(self.tableau, (28, 28))
 		#conversion d'un tableau en une dimension
 		self.tableau  = np.ndarray.flatten(self.tableau)
-		#affichage des données
-		ud.print_array_convert(self.tableau, valeur = 0.0)
 		self.tableau = np.vectorize(lambda x: 255 - x)(self.tableau)
-		#affichage des données
-		ud.print_array_convert(self.tableau, valeur = 255.0)
+		"""
 
 
 if __name__ == "__main__":

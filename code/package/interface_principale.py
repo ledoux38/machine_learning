@@ -162,7 +162,7 @@ class Interface_principale:
 		"""
 		methode de class qui permet d'acceder à l'interface chargement image
 		"""
-		inter_char_img = limg.load_image(self.opt)
+		inter_char_img = limg.load_image(self.machine_learning, self.machine_learning_avancer, self.opt)
 		#je creer une fenetre pour inserer la frame de chargement image
 		top = Tk.Toplevel(object_tk)
 		#les parametres de la fenetre chargement image
