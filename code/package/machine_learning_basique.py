@@ -55,8 +55,8 @@ class machine_learning_basique:
 		result = self.session.run(tf.argmax(self.y,1), feed_dict={self.x: [data]})
 
 		texte = "Le resultat vue par l'ordinateur: {}".format(result)
-
-		self.ouvrir_affichage_resultat(object_tk, data, texte)
+		tableau = None
+		self.ouvrir_affichage_resultat(object_tk, data, texte, tableau)
 
 
 
@@ -107,7 +107,7 @@ class machine_learning_basique:
 
 
 
-	def ouvrir_affichage_resultat(self, object_tk, data, texte ):
+	def ouvrir_affichage_resultat(self, object_tk, data, texte, tableau ):
 		"""
 		methode de class qui permet d'afficher les resultats
 		"""
@@ -116,7 +116,7 @@ class machine_learning_basique:
 		if object_tk == None:
 			
 			app = Tk.Tk()
-			a.interface_resultat(object_tk = app, data = data)
+			a.interface_resultat(object_tk = app, tableau = tableau, data = data)
 			a.insert_text(str(texte))
 			app.title("Resultat")
 			app.resizable(False, False)
@@ -136,7 +136,7 @@ class machine_learning_basique:
 			#j'empeche la fenetre d'etre redimenssionner
 			top.resizable(False, False)
 			# je fais toutes les modifications dont j'ai besoins
-			a.interface_resultat(object_tk = top, data = data)
+			a.interface_resultat(object_tk = top, tableau = tableau, data = data)
 			a.insert_text(str(texte))
 			#pandant ce temps interface_principale et mit en pause
 			object_tk.wait_window(top)

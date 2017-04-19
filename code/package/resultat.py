@@ -157,7 +157,7 @@ class graphv3(Tk.Frame):
 
 class graphv4(Tk.Frame):
 
-	def __init__(self, parent, tableau):
+	def __init__(self, parent, tableau = None):
 		Tk.Frame.__init__(self, parent)
 
 		f = Figure(figsize=(3, 3), dpi=100)
@@ -166,7 +166,11 @@ class graphv4(Tk.Frame):
 		# Example data
 		people = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 		y_pos = arange(len(people))
-		performance = tableau
+
+		if tableau == None:
+			performance = [0,0,0,0,0,0,0,0,0,0]
+		else:
+			performance = tableau
 
 		a.barh(y_pos, performance, align='center', color='red', ecolor='black')
 		a.set_yticks(y_pos)
