@@ -36,10 +36,10 @@ class resultat:
 		frame_img = Tk.Frame(frame_principal)
 		frame_img.grid(row = 1, column = 0, sticky='EW')
 
-		label_image_numpy = Tk.Label(frame_img, text = "image numpy ")
+		label_image_numpy = Tk.Label(frame_img, text = "vue tensorflow ")
 		label_image_numpy.grid(row = 0, column = 0)
 
-		label_vue_tensorflow = Tk.Label(frame_img, text = "vue tensorflow ")
+		label_vue_tensorflow = Tk.Label(frame_img, text = "image numpy ")
 		label_vue_tensorflow.grid(row = 0, column = 1)
 
 		graph_mnsit = graph(frame_img)
@@ -57,7 +57,7 @@ class resultat:
 		label_resultat = Tk.Label(frame_resultat, text = "Resultat ")
 		label_resultat.grid(row = 0, column = 0)
 
-		self.text_resultat = Tk.Text(frame_resultat)
+		self.text_resultat = Tk.Text(frame_resultat, height = 15, width = 60, bg = "white")
 		self.text_resultat.grid(row = 1, column = 0)
 		
 
