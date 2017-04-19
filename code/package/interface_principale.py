@@ -183,7 +183,7 @@ class Interface_principale:
 		object_tk.wait_window(top)
 		#quand j'en n'ai fini avec les options je charge les nouvelles données
 		self.canvas.set_canvas(nouv_option = self.inter_option.param)
-
+		self.opt = self.inter_option.param
 
 
 

@@ -25,7 +25,7 @@ class resultat:
 
 
 
-	def interface_resultat(self,object_tk, data):
+	def interface_resultat(self,object_tk, data, tableau):
 		"""
 		methode de class qui creer l'interface graphique
 		"""
@@ -42,7 +42,7 @@ class resultat:
 		label_vue_tensorflow = Tk.Label(frame_img, text = "image numpy ")
 		label_vue_tensorflow.grid(row = 0, column = 1)
 
-		graph_mnsit = graph(frame_img)
+		graph_mnsit = graphv4(frame_img, tableau)
 		graph_mnsit.grid(row = 1, column = 0, sticky='EW')
 
 		graph_tensorflow = graphv3(frame_img, data)
@@ -155,6 +155,32 @@ class graphv3(Tk.Frame):
 
 
 
+class graphv4(Tk.Frame):
+
+	def __init__(self, parent, tableau):
+		Tk.Frame.__init__(self, parent)
+
+		f = Figure(figsize=(3, 3), dpi=100)
+		a = f.add_subplot(111)
+
+		# Example data
+		people = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+		y_pos = arange(len(people))
+		performance = tableau
+
+		a.barh(y_pos, performance, align='center', color='red', ecolor='black')
+		a.set_yticks(y_pos)
+		a.set_yticklabels(people)
+		a.invert_yaxis()  # labels read top-to-bottom
+		a.set_xlabel('Performance')
+
+		canvas = FigureCanvasTkAgg(f, self)
+		canvas.show()
+		canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
+		canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=True) 
+
+
+
 if __name__ == "__main__":
 	choix_version = 0
 	if choix_version == 0:
@@ -186,9 +212,8 @@ if __name__ == "__main__":
 		people = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 		y_pos = arange(len(people))
 		performance = 3 + 10 * random.rand(len(people))
-		error = random.rand(len(people))
 
-		ax.barh(y_pos, performance, xerr=error, align='center',
+		ax.barh(y_pos, performance, align='center',
 		        color='green', ecolor='black')
 		ax.set_yticks(y_pos)
 		ax.set_yticklabels(people)

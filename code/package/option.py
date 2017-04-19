@@ -81,7 +81,7 @@ class Options:
 
 		self.value_epais = Tk.IntVar(frame_opt_canvas)
 		self.value_epais.set(self.param["e_t_canvas"])
-		scale_epais = Tk.Scale(frame_opt_canvas,from_= 1, to = 10, showvalue = False, variable = self.value_epais, orient = 'h')
+		scale_epais = Tk.Scale(frame_opt_canvas,from_= 1, to = 30, showvalue = False, variable = self.value_epais, orient = 'h')
 		entry_epais = Tk.Entry(frame_opt_canvas, textvariable = self.value_epais, width = 10)		
 		label_epais = Tk.Label(frame_opt_canvas, text = "épaisseur canvas: ")
 		

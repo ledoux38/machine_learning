@@ -138,10 +138,10 @@ class machine_learning_avancer:
 		for i , y in enumerate(tableau_pourcent[0]):
 			texte += "[{}] -----> {}% \n".format(i,y*10)
 
-		self.ouvrir_affichage_resultat(object_tk, data, texte)
+		self.ouvrir_affichage_resultat(object_tk, data, texte, tableau = tableau_pourcent[0])
 
 
-	def ouvrir_affichage_resultat(self, object_tk, data, texte ):
+	def ouvrir_affichage_resultat(self, object_tk, data, texte, tableau):
 		"""
 		methode de class qui permet d'afficher les resultats
 		"""
@@ -150,7 +150,7 @@ class machine_learning_avancer:
 		if object_tk == None:
 			
 			app = Tk.Tk()
-			a.interface_resultat(object_tk = app, data = data)
+			a.interface_resultat(object_tk = app, data = data, tableau = tableau)
 			a.insert_text(str(texte))
 			app.title("Resultat")
 			app.resizable(False, False)
@@ -170,7 +170,7 @@ class machine_learning_avancer:
 			#j'empeche la fenetre d'etre redimenssionner
 			top.resizable(False, False)
 			# je fais toutes les modifications dont j'ai besoins
-			a.interface_resultat(object_tk = top, data = data)
+			a.interface_resultat(object_tk = top, data = data, tableau = tableau)
 			a.insert_text(str(texte))
 			#pandant ce temps interface_principale et mit en pause
 			object_tk.wait_window(top)
