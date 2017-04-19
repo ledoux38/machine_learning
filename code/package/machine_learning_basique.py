@@ -52,11 +52,13 @@ class machine_learning_basique:
 			raise TypeError("erreur data = {} n'est pas de type numpy.ndarray ".format(type(data)))	
 
 		#ud.print_array_convert(data)
-		result = self.session.run(tf.argmax(self.y,1), feed_dict={self.x: [data]})
+		#result = self.session.run(tf.argmax(self.y,1), feed_dict={self.x: [data]})
+		[tableau_pourcent, result] = self.session.run([self.y, tf.argmax(self.y, 1)], feed_dict={self.x : [data]})
+		texte = "Le resultat vue par l'ordinateur: {} \n tableau recapitulatif: \n".format(result)
+		for i , y in enumerate(tableau_pourcent[0]):
+			texte += "[{}] -----> {}% \n".format(i,y*10)
 
-		texte = "Le resultat vue par l'ordinateur: {}".format(result)
-		tableau = None
-		self.ouvrir_affichage_resultat(object_tk, data, texte, tableau)
+		self.ouvrir_affichage_resultat(object_tk, data, texte, tableau = tableau_pourcent[0])
 
 
 

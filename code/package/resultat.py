@@ -167,10 +167,7 @@ class graphv4(Tk.Frame):
 		people = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 		y_pos = arange(len(people))
 
-		if tableau == None:
-			performance = [0,0,0,0,0,0,0,0,0,0]
-		else:
-			performance = tableau
+		performance = tableau
 
 		a.barh(y_pos, performance, align='center', color='red', ecolor='black')
 		a.set_yticks(y_pos)
