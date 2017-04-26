@@ -45,6 +45,11 @@ try:
 except:
 	import utilitaire_debug as ud
 
+try:
+	import package.progress_bar as pb
+except:
+	import progress_bar as pb
+
 
 class Interface_principale:
 	"""
@@ -66,11 +71,20 @@ class Interface_principale:
 		# instanciation de la class image
 		self.image = Ig.img(option = self.opt)
 		# instanciation de la class machine_learning_basique et initialisation
+		#self.machine_learning = Mgb.machine_learning_basique(option = self.opt)
+		# instanciation de la class machine_learning_avancer
+		#self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.opt)
+		# initialisation de la machine_learning_avancer
+
+
+
+	def initialisation_machine_learning(self):
+		#progression = pb.barre_progression_top_level(parent)
 		self.machine_learning = Mgb.machine_learning_basique(option = self.opt)
 		# instanciation de la class machine_learning_avancer
 		self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.opt)
-		# initialisation de la machine_learning_avancer
-
+		# initialisation de la machine_learning_avancer		
+		#progression.fermer_barre_progression()
 
 
 	def interface_principale(self, object_tk):

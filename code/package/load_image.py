@@ -42,7 +42,7 @@ class load_image:
 	"""
  
  
-	def __init__(self, machine_learning, machine_learning_avancer, option = {"ch_img":"./test", "tensorflow" :"machine_learning"}):
+	def __init__(self, option = {"ch_img":"./test", "tensorflow" :"machine_learning"}):
 		if not isinstance(option, dict):
 			raise TypeError("erreur option = {} n'est pas de type list ".format(type(option)))
 
@@ -51,8 +51,8 @@ class load_image:
 		#ce tableau est rempli lors du chargement de l'image
 		self.tableau = None
 		self.journal = Ij.journal()
-		self.machine_learning = machine_learning
-		self.machine_learning_avancer = machine_learning_avancer
+		#self.machine_learning = machine_learning
+		#self.machine_learning_avancer = machine_learning_avancer
 
 
 
