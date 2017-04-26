@@ -51,8 +51,18 @@ class load_image:
 		#ce tableau est rempli lors du chargement de l'image
 		self.tableau = None
 		self.journal = Ij.journal()
-		#self.machine_learning = machine_learning
-		#self.machine_learning_avancer = machine_learning_avancer
+		self.machine_learning = self.initialisation_machine_learning_basique()
+		self.machine_learning_avancer = self.initialisation_machine_learning_avancer()
+
+
+	def initialisation_machine_learning_basique(self):
+		# instanciation de la class machine_learning_basique
+		self.machine_learning = Mgb.machine_learning_basique(option = self.option)
+		
+
+	def initialisation_machine_learning_avancer(self):
+		# initialisation de la machine_learning_avancer	
+		self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.option)
 
 
 

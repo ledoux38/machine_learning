@@ -4,7 +4,6 @@
 import tkinter as Tk
 import tkinter.ttk as ttk
 from functools import partial
-import threading
 
 import package.interface_principale as ip
 
@@ -26,7 +25,7 @@ def affichage_choix(parent):
 	bp_interface_mnist = Tk.Button(frame_principal, text = "Interface mnist", command = partial(interface_mnist, parent, frame_principal))
 	bp_interface_mnist.grid(row = 1, column = 0, sticky = 'EW')
 
-	bp_etude_image = Tk.Button(frame_principal, text = "Chargement image", command = partial(interface_etude_image, parent))
+	bp_etude_image = Tk.Button(frame_principal, text = "Chargement image", command = partial(interface_etude_image, parent, frame_principal))
 	bp_etude_image.grid(row = 2, column = 0, sticky = 'EW')
 
 	bp_quitter = Tk.Button(frame_principal, text = "Quitter", command = partial(quitter, parent))
@@ -44,19 +43,23 @@ def interface_mnist(parent, frame):
 	frame_principal = Tk.Frame(parent)
 	frame_principal.grid(row = 0, column = 0)
 
-	barre_proression=ttk.Progressbar(frame_principal, mode="indeterminate")
+	barre_proression=ttk.Progressbar(frame_principal, mode="determinate")
 	barre_proression.grid(row = 1, column = 0, sticky = 'EW')
-	barre_proression.start(interval = 1)
 
-	parent.update()
+	barre_proression.update()
 
 	interface_mnist = ip.Interface_principale()
+	barre_proression["value"] += 20
+	barre_proression.update()
 
-	parent.update()
+	interface_mnist.initialisation_machine_learning_basique()
 
-	interface_mnist.initialisation_machine_learning(parent)
+	barre_proression["value"] += 60
+	barre_proression.update()
+	interface_mnist.initialisation_machine_learning_avancer()
 
-	barre_proression.stop()
+	barre_proression["value"] += 20
+	barre_proression.update()
 
 	if parent is not None:
 		parent.destroy()
@@ -69,21 +72,47 @@ def interface_mnist(parent, frame):
 	app.destroy()
 
 
-def interface_etude_image(parent):
+def interface_etude_image(parent, frame):
+
+	frame.destroy()
+
+	frame_principal = Tk.Frame(parent)
+	frame_principal.grid(row = 0, column = 0)
+
+	barre_proression=ttk.Progressbar(frame_principal, mode="determinate")
+	barre_proression.grid(row = 1, column = 0, sticky = 'EW')
+	#barre_proression.start(interval = 1)
+
+	barre_proression.update()
+
+	etude_image = li.load_image()
+	
+	barre_proression["value"] += 20
+	barre_proression.update()
+
+	interface_mnist.initialisation_machine_learning_basique()
+
+	barre_proression["value"] += 60
+	barre_proression.update()
+	interface_mnist.initialisation_machine_learning_avancer()
+
+	barre_proression["value"] += 20
+	barre_proression.update()
+
 	if parent is not None:
 		parent.destroy()
 
-	#creation de l'instance load_image
-	etude_image = li.load_image()
-	etude_image.interface_load_image(parent)
+	#creation de l'instance chargement image
+	app = Tk.Tk()
 
-
+	etude_image.interface_load_image(app)
+	app.mainloop()
+	app.destroy()
 
 if __name__ == "__main__":
 
 	app = Tk.Tk()
 	affichage_choix(parent = app)
-	#affichage de la fenetre
 	app.mainloop()
 
 

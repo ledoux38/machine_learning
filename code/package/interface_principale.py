@@ -78,13 +78,15 @@ class Interface_principale:
 
 
 
-	def initialisation_machine_learning(self):
-		#progression = pb.barre_progression_top_level(parent)
+	def initialisation_machine_learning_basique(self):
+		# instanciation de la class machine_learning_basique
 		self.machine_learning = Mgb.machine_learning_basique(option = self.opt)
-		# instanciation de la class machine_learning_avancer
+		
+
+	def initialisation_machine_learning_avancer(self):
+		# initialisation de la machine_learning_avancer	
 		self.machine_learning_avancer = Mga.machine_learning_avancer(option = self.opt)
-		# initialisation de la machine_learning_avancer		
-		#progression.fermer_barre_progression()
+
 
 
 	def interface_principale(self, object_tk):
