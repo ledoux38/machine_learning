@@ -4,6 +4,7 @@
 import tkinter as Tk
 import tkinter.ttk as ttk
 from functools import partial
+import tkinter.messagebox
 
 import package.interface_principale as ip
 
@@ -73,7 +74,8 @@ def interface_mnist(parent, frame):
 
 
 def interface_etude_image(parent, frame):
-
+	tkinter.messagebox.showinfo("ATTENTION", "CHARGEMENT_IMAGE PAS ENCORE IMPLEMENTÉ")
+	"""
 	frame.destroy()
 
 	frame_principal = Tk.Frame(parent)
@@ -86,7 +88,7 @@ def interface_etude_image(parent, frame):
 	barre_proression.update()
 
 	etude_image = li.load_image()
-	
+
 	barre_proression["value"] += 20
 	barre_proression.update()
 
@@ -108,6 +110,7 @@ def interface_etude_image(parent, frame):
 	etude_image.interface_load_image(app)
 	app.mainloop()
 	app.destroy()
+	"""
 
 if __name__ == "__main__":
 
